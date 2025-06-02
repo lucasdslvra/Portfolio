@@ -28,9 +28,6 @@ ios/
 *.iml
 *.hprof
 
-# Tailwind CSS (pas de build spécifique à ignorer, mais config si besoin)
-tailwind.config.js
-tailwind.config.cjs
 
 # Environnements
 .env
