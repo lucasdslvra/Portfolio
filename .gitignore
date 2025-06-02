@@ -1,0 +1,60 @@
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
+
+# Next.js
+.next/
+out/
+dist/
+
+# React Native
+android/
+ios/
+*.keystore
+*.jks
+*.p12
+*.pem
+*.key
+*.mobileprovision
+*.xcuserstate
+*.xcworkspace
+*.xcodeproj
+*.xcuserdata
+*.gradle
+*.iml
+*.hprof
+
+# Tailwind CSS (pas de build spécifique à ignorer, mais config si besoin)
+tailwind.config.js
+tailwind.config.cjs
+
+# Environnements
+.env
+.env.*
+!.env.example
+
+# Logs
+logs/
+*.log
+
+# VS Code
+.vscode/
+
+# macOS
+.DS_Store
+
+# Coverage
+coverage/
+
+# Expo (si utilisé)
+.expo/
+.expo-shared/
+
+# Misc
+*.swp
+*.swo
+.idea/
