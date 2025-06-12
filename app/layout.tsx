@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   },
   description: "Étudiant en informatique",
   openGraph: {
-    title: "lucasdslvra.com",
+    title: "Lucas Da Silveira | Portfolio",
     description:
       "Étudiant en informatique",
     url: "https://ldasilveira.fr",
