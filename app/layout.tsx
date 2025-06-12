@@ -7,16 +7,16 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export const metadata: Metadata = {
   title: {
-    default: "lucasdslvra",
-    template: "%s | lucasdslvra.com",
+    default: "Lucas Da Silveira | Portfolio",
+    template: "%s | ldasilveira.fr",
   },
   description: "Étudiant en informatique",
   openGraph: {
     title: "lucasdslvra.com",
     description:
       "Étudiant en informatique",
-    url: "https://lucasdslvra.com",
-    siteName: "lucasdslvra.com",
+    url: "https://ldasilveira.fr",
+    siteName: "ldasilveira.fr",
     images: [
       {
         url: "https://portfolio-vert-nine-zszkg9biux.vercel.app/og.png",  
@@ -55,7 +55,7 @@ const calSans = LocalFont({
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode;
+    children: React.ReactNode;
 }) {
   return (
     <html lang="en" className={[inter.variable, calSans.variable].join(" ")}>
