@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     siteName: "lucasdslvra.com",
     images: [
       {
-        url: "/og.png",
+        url: "https://portfolio-vert-nine-zszkg9biux.vercel.app/og.png",  
         width: 1920,
         height: 1080,
       },
