@@ -1,0 +1,114 @@
+---
+title: Stage
+description: Ce projet mené en stage m’a permis d’intervenir sur un système numérique complet (web, mobile, API, base de données) et de refondre une solution existante pour l’adapter à plusieurs supports, tout en optimisant ses performances, sa sécurité et sa maintenabilité.
+date: "2025-06-10"
+url: https://www.plan-etudiant-besancon.com/
+repository:
+published: true
+
+---
+
+## Introduction
+
+Lors de mon stage de 4 mois à l’agence Élixir, j’ai été chargé de refondre le back-office de l’application mobile « Le Plan des Étudiants de Besançon ».
+Cette refonte avait un double objectif : **adapter l’architecture aux différents supports** (mobile, web, back-office) et **optimiser le fonctionnement global** (performance, sécurité, maintenabilité). J’ai donc conçu une solution complète, de la base de données jusqu’aux interfaces, en passant par les API et les connexions entre composants.
+
+---
+
+## 1. Création d’un nouveau back-office sous Strapi
+
+L'ancien back-office, développé en PHP, n’était plus adapté. Il manquait de modularité, était difficile à maintenir, et ne proposait pas de gestion fine des rôles utilisateurs. Pour repartir sur une base saine, j’ai choisi d’utiliser **Strapi**, un CMS headless moderne, qui permet de générer une API personnalisable à partir de types de contenus définis graphiquement ou en code.
+
+
+![Strapi Content Type Builder](/images/content-type-builder.png)
+
+
+
+Cette capture montre la construction d’un “Content-Type” dans Strapi pour gérer les partenaires. Chaque champ est typé (texte, image, relation, booléen, etc.) et peut être validé (ex : champ requis, longueur minimale). 
+Ce système me permet de définir précisément la structure des données tout en offrant à l’équipe une interface de gestion claire. Grâce à cette structuration, le back-office devient non seulement plus clair pour les utilisateurs, mais aussi plus robuste côté base de données.
+
+---
+
+## 2. Migration des données de l’ancien système
+
+
+L’ancien système contenait plusieurs années de données dans une base MySQL aux formats obsolètes. Strapi impose des structures spécifiques (champs `createdAt`, `documentId`, etc.), donc une migration manuelle était impossible. J’ai donc automatisé le processus via un script JavaScript.
+
+
+![Migration Script](/images/script-migration.png)
+
+
+Le script lit les anciennes tables, transforme les noms de champs, génère des identifiants manquants, et injecte les données dans la nouvelle base utilisée par Strapi.
+Cela m’a permis de **gagner un temps considérable** tout en assurant l’exactitude des données transférées. Il reflète aussi une bonne capacité à comprendre deux systèmes hétérogènes et à construire une passerelle fiable entre eux.
+
+---
+
+## 3. Intégration de l’API dans l’application mobile
+
+
+L’application mobile existante fonctionnait avec l’ancienne API PHP. Pour assurer la transition sans tout réécrire, j’ai dû adapter les appels réseau de l’application pour qu’ils correspondent aux nouvelles routes de Strapi.
+
+![Appel API Mobile](/images/appel-api.png)
+
+
+L’image montre un exemple concret de refonte d’un appel réseau côté mobile. L’appel précédent utilisait une route PHP comme `/getPartenaires.php`, tandis que le nouveau fait appel à une route RESTful `/api/partenaires` exposée par Strapi.
+En plus du changement de route, j’ai aussi dû **adapter la structure des données attendues**. Ce travail a nécessité un bon équilibre entre compréhension du code mobile, configuration de l’API, et transformation des données.
+
+---
+
+## 4. Mise en place du QR code utilisateur
+
+
+Pour améliorer la traçabilité des interactions entre étudiants et partenaires, un système de QR code personnel a été mis en place. Chaque étudiant doit pouvoir afficher son code depuis l’application, et ce QR code doit être unique et stocké dans la base.
+
+<img
+  src="/images/qr-code.png"
+  alt="QR Code Étudiant"
+  style={{ display: "block", margin: "0 auto", maxWidth: "300px", height: "auto", alignSelf: "center" }}
+/>
+
+Cette capture montre l’écran de profil d’un étudiant, où son QR code personnel est affiché. Côté API, j’ai créé un `Content-Type` QR Code avec une route personnalisée pour l’enregistrement.
+Ce mécanisme garantit que **chaque étudiant a un seul QR code, toujours à jour**, et permet aux partenaires de scanner ce code pour comptabiliser les visites. L’aspect multi-support ressort ici clairement : base de données, API, et front mobile interagissent ensemble.
+
+---
+
+## 5. Problème d’authentification et compatibilité des hash
+
+
+Les mots de passe avaient été hashés avec une méthode différente dans l’ancien système. Résultat : impossibilité de se connecter avec les anciens comptes.
+
+
+![Hash Legacy](/images/ancien-hash.png)
+ancien hash non conforme
+
+![Hash Strapi](/images/nouveau-hash.png)
+nouveau hash conforme à Strapi
+
+
+Sur cette illustration, on voit la différence entre un hash “legacy” et un hash reconnu par Strapi. J’ai dû identifier la partie non conforme, corriger la base, et adapter la fonction de vérification de mot de passe dans Strapi. Cette solution **a évité la perte de tous les comptes étudiants**.
+
+---
+
+## 6. Développement d’un dashboard ReactJS pour les stats et QR partenaires
+
+
+Pour visualiser les données d’utilisation de l’application, j’ai conçu une **interface complémentaire en ReactJS**, connectée à l’API Strapi.
+
+
+![Dashboard ReactJS](/images/graphique-accueil.png)
+
+!![QR Code Partenaire](/images/qr-code-partenaire.png)
+
+
+Le visuel montre une interface claire affichant des métriques clés et un graphique dynamique. J’ai aussi intégré une section où l'on peut voir et **télécharger le QR code** du partenaire. Cela montre ma capacité à **développer un front web connecté à une API**, tout en gérant l’aspect ergonomique et la sécurité.
+
+---
+
+## Compétences acquises et validées
+
+À travers ces réalisations concrètes, j’ai validé plusieurs compétences de manière naturelle et démontrée :
+
+- J’ai **adapté une application à plusieurs supports** (mobile, web, back-office).
+- J’ai su **analyser des problèmes complexes** et les résoudre (migration, compatibilité de hash, sécurité).
+- J’ai maîtrisé Strapi, ReactJS, React Native et les APIs REST.
+- J’ai travaillé en autonomie, documenté mon code, et livré un système maintenable, en production.
