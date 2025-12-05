@@ -61,9 +61,11 @@ export const Header: React.FC<Props> = ({ project, views }) => {
 									? " text-zinc-400 hover:text-zinc-100"
 									: "text-zinc-600 hover:text-zinc-900"
 							} `}
+						></span>
+						<Link
+							target="_blank"
+							href="https://www.linkedin.com/in/lucasdslvra/"
 						>
-						</span>
-						<Link target="_blank" href="https://www.linkedin.com/in/lucasdslvra/">
 							<Linkedin
 								className={`w-6 h-6 duration-200 hover:font-medium ${
 									isIntersecting
