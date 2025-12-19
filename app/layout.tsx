@@ -6,6 +6,7 @@ import { Analytics } from "./components/analytics";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export const metadata: Metadata = {
+	metadataBase: new URL('https://ldasilveira.fr'),
 	title: {
 		default: "Lucas Da Silveira | Portfolio",
 		template: "%s | ldasilveira.fr",

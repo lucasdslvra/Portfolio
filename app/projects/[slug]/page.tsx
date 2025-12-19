@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { allProjects } from "contentlayer/generated";
 import { Mdx } from "@/app/components/mdx";
 import { Header } from "./header";
+import { Metadata } from "next";
 import "./mdx.css";
 
 export const revalidate = 60;
@@ -18,6 +19,37 @@ export async function generateStaticParams(): Promise<Props["params"][]> {
 		.map((p) => ({
 			slug: p.slug,
 		}));
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+	const slug = params?.slug;
+	const project = allProjects.find((project) => project.slug === slug);
+
+	if (!project) {
+		return {};
+	}
+
+	return {
+		title: project.title,
+		description: project.description,
+		openGraph: {
+			title: project.title,
+			description: project.description,
+			type: "article",
+			publishedTime: project.date,
+			url: `https://ldasilveira.fr/projects/${project.slug}`,
+			images: [
+				{
+					url: `https://ldasilveira.fr/og.png`, 
+				},
+			],
+		},
+		twitter: {
+			card: "summary_large_image",
+			title: project.title,
+			description: project.description,
+		},
+	};
 }
 
 export default async function PostPage({ params }: Props) {
