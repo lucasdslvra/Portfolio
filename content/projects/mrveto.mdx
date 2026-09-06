@@ -1,0 +1,71 @@
+---
+title: MrVeto
+description: Plateforme de mise en relation entre propriétaires d'animaux et vétérinaires — recherche de praticiens à proximité, prise de rendez-vous en ligne, gestion des plannings et carnet de santé — développée en équipe avec Symfony.
+date: "2026-06-24"
+url:
+repository: enzodaloia/MrVeto
+published: true
+
+---
+
+## Introduction
+
+MrVeto est une plateforme pensée comme un « Doctolib des vétérinaires » : elle permet aux propriétaires d’animaux de trouver un praticien à proximité sur une carte interactive et de prendre rendez-vous en ligne, pendant que les vétérinaires et leurs secrétaires gèrent plannings, disponibilités et dossiers patients depuis un espace dédié.
+
+C’est un projet d’équipe (7 contributeurs) mené sur plusieurs mois avec une organisation proche d’un vrai contexte professionnel : tickets référencés (`MRV-XX`), branches `dev` / `staging` / `main`, revues de code par pull request et intégration continue via GitHub Actions.
+
+![Logo du projet MrVeto](/images/mrveto/logo.png)
+
+---
+
+## 1. Recherche de vétérinaires et prise de rendez-vous
+
+Côté propriétaire d’animal, la recherche de vétérinaires se fait sur une carte interactive (Leaflet, avec regroupement des marqueurs) filtrable par distance. Une fois un praticien choisi, l’utilisateur accède à un calendrier de créneaux disponibles puis confirme son rendez-vous en précisant l’animal concerné.
+
+J’ai construit cette brique de bout en bout : la logique de création d’un rendez-vous entre un patient et un vétérinaire, le blocage des créneaux déjà pris pour éviter les doubles réservations, ainsi que l’écran de confirmation. J’ai ensuite prolongé cette fonctionnalité côté secrétariat, qui peut prendre un rendez-vous pour le compte d’un vétérinaire.
+
+![Illustration du parcours propriétaire sur MrVeto](/images/mrveto/hero.png)
+
+---
+
+## 2. Gestion des rendez-vous
+
+Une fois pris, un rendez-vous peut être consulté, filtré par statut, modifié ou annulé. J’ai développé l’historique des rendez-vous avec ses filtres, la logique de changement de statut, ainsi que la modification et la suppression d’un rendez-vous existant, en gérant notamment la synchronisation entre la date et l’heure affichées dans la modale d’annulation.
+
+---
+
+## 3. Profils utilisateur et vétérinaire
+
+J’ai réalisé la refonte de la navbar et des pages de profil, côté utilisateur comme côté vétérinaire : édition des informations personnelles, suppression de compte, et connexion de ces écrans au back-end Symfony. Je suis aussi revenu sur ces interfaces pour corriger des problèmes d’accessibilité et de responsive.
+
+---
+
+## 4. Notifications et archivage
+
+Pour garder les utilisateurs informés, j’ai mis en place des notifications de rappel — rendez-vous à venir et rappels de vaccination — ainsi qu’un système d’archivage légal des dossiers, nécessaire pour respecter les obligations de conservation des données côté vétérinaire.
+
+---
+
+## 5. Panel d’administration
+
+Le back-office admin permet de gérer les comptes utilisateurs, les vétérinaires et les cabinets. J’ai contribué à cette partie en corrigeant la création de comptes vétérinaire/admin, la suppression d’utilisateurs ayant des rendez-vous liés, et la navigation du panel.
+
+---
+
+## Stack technique
+
+- **Backend** : PHP 8.2+ / Symfony 7.4, Doctrine ORM, PostgreSQL
+- **Frontend** : Twig, Stimulus & Turbo (Symfony UX), Bootstrap 5, SCSS
+- **Fonctionnalités clés** : carte interactive (Leaflet + clustering), calendrier de créneaux (FullCalendar), génération de PDF (dompdf), vérification de SIRET pour les comptes professionnels
+- **Outillage** : tests avec Playwright, CI/CD via GitHub Actions (tests + déploiement staging), Composer, Webpack Encore
+
+---
+
+## Compétences acquises et validées
+
+Ce projet en équipe m’a permis de :
+
+- Travailler avec **Symfony** dans un contexte réel : entités Doctrine, formulaires, sécurité, routing.
+- Concevoir un **flux de réservation** complet, de la recherche du praticien à la confirmation du rendez-vous, en gérant les conflits de créneaux.
+- Collaborer sur un **projet Git multi-contributeurs** : branches de fonctionnalités, revues de pull request, résolution de conflits, intégration continue.
+- Prendre en compte des contraintes métier concrètes (archivage légal, notifications, gestion multi-profils) au-delà du simple exercice académique.
