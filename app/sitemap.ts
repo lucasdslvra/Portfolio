@@ -12,7 +12,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
 	const routes = [
 		{
-			url: "https://ldasilveira.fr",
+			url: "https://ldasilveira.fr/",
 			lastModified: new Date().toISOString().split("T")[0],
 			priority: 1,
 		},
