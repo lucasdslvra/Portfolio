@@ -1,0 +1,226 @@
+---
+title: AC Paddock
+description: "Application web privée pour un groupe d’amis qui joue à Assetto Corsa. Elle remplace les liens perdus dans Discord par un catalogue de mods commun, enrichi à plusieurs mains, et par un vote qui décide avant la soirée ce qui sera roulé et où le télécharger."
+date: "2026-09-05"
+url: https://ac-paddock.vercel.app/admin
+repository: lucasdslvra/AC-Paddock
+published: true
+
+---
+
+## Introduction
+
+Avant chaque soirée **Assetto Corsa**, le groupe passait par le même rituel : des liens de mods collés au fil de la discussion Discord, introuvables deux jours plus tard, et un « on joue quoi ce soir ? » tranché dans les dix minutes qui précèdent le départ.
+
+**AC Paddock** rapatrie tout ça au même endroit. Une fiche par mod, véhicule ou circuit, un catalogue commun que chacun peut compléter, un vote encadré avant la soirée, et à l’arrivée la liste de ce qui sera installé avec ses liens de téléchargement.
+
+Ce n’est volontairement **pas un outil communautaire** : l’accès est réservé aux membres d’un serveur Discord donné, sans inscription ni mot de passe. Deux contraintes ont guidé presque toutes les décisions techniques : un **budget d’hébergement nul** (paliers gratuits de Vercel, Supabase et Cloudflare) et une **maintenance réalisée par moi-même, sur mon temps libre**.
+
+Le projet est développé en **Next.js 16 / React 19 / TypeScript**, avec PostgreSQL et Prisma 7.
+
+![Page de connexion Discord](/images/acPaddock/login.png)
+
+---
+
+## 1. Le cycle d’une soirée
+
+C’est le cœur du domaine ; tout le reste en découle.
+
+| Étape | Ce qui se passe |
+| --- | --- |
+| **Catalogue** | En continu, n’importe quel membre propose une fiche de mod. |
+| **Programmation** | Un admin crée une soirée : date, heure, éventuellement un thème. |
+| **Engagement** | Les membres mettent des fiches du catalogue au programme, sans limite. |
+| **Vote** | Jusqu’à 30 min avant le départ, chacun répartit sa réserve de votes. |
+| **Fermeture** | La soirée retient les 8 véhicules les plus votés et le circuit le plus voté. |
+| **Retrait** | De la fermeture à 2 h après le départ, un bouton télécharge les mods retenus. |
+| **Archive** | Les fichiers s’effacent, les fiches et l’historique restent. |
+
+```text
+catalogue ──► engagement ──► vote ──┃ 30 min ┃── DÉPART ──── 2 h ────┃──► historique
+   (continu)     (libre)      (quotas)  ▲                             ▲
+                                    vote clos                    retrait clos
+                                    tirage au sort              fichiers effacés
+                                    retrait ouvert
+```
+
+---
+
+## 2. L’accès : le serveur Discord *est* la liste
+
+L’authentification passe par **Auth.js (NextAuth v5)** avec le provider Discord, sur les scopes `identify` et `guilds`. Au callback, l’application interroge `GET /users/@me/guilds` et vérifie que le membre appartient à **l’un des serveurs autorisés** : celui du déploiement, ou l’un de ceux ouverts depuis l’espace admin. Il n’y a donc aucune liste blanche à maintenir à la main.
+
+C’est le **seul moment** où cette appartenance est connue : Discord ne dit qu’au membre lui-même à quels serveurs il appartient. Elle est donc recopiée sur sa ligne en base avec sa date « membre de X » sans le moment où ça a été constaté ne vaudrait rien.
+
+Deux choix méritent d’être signalés :
+
+- **La session dure 30 jours glissants**, et la vérification n’a lieu qu’à la connexion : quelqu’un qui quitte le serveur garde l’accès jusqu’à l’expiration de son jeton. C’est assumé pour ce contexte.
+- **Le rôle n’est pas dans la session** : il est relu en base à chaque requête, pour qu’une promotion ou une rétrogradation prenne effet immédiatement, sans reconnexion.
+
+Le serveur d’appartenance découpe ensuite une partie de l’application, une soirée appartient à un serveur, « la soirée en cours » se lit par serveur, les annonces partent dans le salon de ce serveur, mais **le catalogue reste commun** : un mod est un mod.
+
+---
+
+## 3. Le catalogue et les fiches en usage wiki
+
+![Le catalogue et ses filtres](/images/acPaddock/catalogue.png)
+
+Une fiche appartient à tout le monde : **n’importe quel membre peut la corriger, l’enrichir, y ajouter un lien miroir**. Seul son auteur, ou un admin, peut la supprimer.
+
+**Le lien externe est facultatif.** On propose souvent un mod de mémoire, sans avoir la page sous la main, et refuser la fiche pour ça reviendrait à perdre la proposition entière plutôt qu’un seul champ. Le catalogue marque alors les fiches incomplètes pour qu’un autre membre vienne poser le lien.
+
+**Les tags** forment un vocabulaire libre, normalisé avant d’atteindre la base (minuscules, accents retirés, mots liés par des tirets) : `Drift`, `drift` et un `DRIFT` entouré d’espaces désignent la même ligne, garantie par une contrainte d’unicité , ce que l’autocomplétion seule ne suffit pas à assurer. Au filtrage, les tags se **combinent en ET**, et non « au moins un ».
+
+**Le fil des contributions.** Une fiche à plusieurs mains ne garde d’un membre que ce qu’il a laissé : une description remplacée ou un tag retiré ne se voient nulle part, et une simple colonne `updatedAt` ne dit ni qui ni quoi. Une table dédiée répond donc à la seule question que pose un wiki : « qui a touché à ça, et quand ? ».
+
+![Une fiche de mod](/images/acPaddock/ficheMod.png)
+
+**Côté requête**, un seul analyseur définit la requête catalogue , valeurs acceptées, valeurs par défaut, lecture et écriture de l’URL , et les deux côtés s’en servent : la route lit l’URL de la requête, la page lit la sienne. Un filtre bricolé à la main retombe des deux côtés sur la même valeur par défaut : une URL malformée affiche un catalogue, jamais une erreur.
+
+L’URL est d’ailleurs **la seule source de vérité des filtres** : la sélection survit à un rechargement et se partage par lien. Côté interface, une requête part par état de filtre et est annulée dès que l’état change , sans quoi une réponse lente partie sur `drift` pourrait arriver après celle partie sur `drift + jdm` et réafficher la liste large par-dessus l’étroite.
+
+---
+
+## 4. La détection de doublons
+
+Une fiche par mod, enrichie par tout le monde : encore faut-il repérer la fiche existante **avant** d’en créer une seconde, **sans jamais bloquer** , « Créer quand même » doit rester possible.
+
+**Sur le nom.** Une migration installe `pg_trgm` et pose un index GIN trigram sur le nom des fiches. Deux façons d’être proche, réunies par un OU et toutes deux servies par cet index : l’opérateur de similarité `%`, qui rattrape fautes de frappe et variantes (`silvia s15` ↔ `Silvia S-15`), et un `ILIKE '%…%'` qui rattrape le cas inverse , un terme court contenu dans un nom long, où la similarité globale reste sous le seuil.
+
+**Sur le lien.** Les URL sont comparées sous une forme normalisée, stockée dans une colonne indexée : la vérification est une lecture par index, pas un balayage.
+
+```text
+https://WWW.RaceDepartment.com/downloads/silvia.1234/?utm_source=discord#reviews
+→ racedepartment.com/downloads/silvia.1234
+```
+
+Protocole et `www.` retirés, ancre supprimée, paramètres de suivi écartés (`utm_*`, `fbclid`, `ref`, le `usp` des partages Drive…), paramètres restants triés, slash final coupé, minuscules.
+
+**L’aller-retour ne coûte pas la saisie.** « Voir la fiche existante » n’a d’intérêt que si y aller ne fait pas perdre ce qui est déjà tapé , sinon personne ne clique, et la détection ne sert à rien. Avant de quitter le formulaire, la saisie complète est mise de côté dans le `sessionStorage` de l’onglet, relue avec un schéma **Zod** parce que rien ne garantit ce qu’on retrouve dans un stockage navigateur. Au retour, les champs sont repeuplés dès l’initialisation de l’état, et non dans un effet : pas de formulaire vide qui se remplirait après coup.
+
+![Le formulaire de proposition d'une fiche](/images/acPaddock/ProposeMod.png)
+
+---
+
+## 5. Le vote : deux réserves, deux nombres de places
+
+| Type | Votes par membre | Mods retenus à la fin |
+| --- | --- | --- |
+| **Véhicules** | 8 | les 8 plus votés |
+| **Circuits** | 3 | le plus voté |
+
+Les deux côtés ne se ressemblent pas, et c’est voulu. Une soirée se joue avec une **grille** de voitures : chacun compose la sienne, la grille du soir est la somme des préférences. On ne roule en revanche que sur **un** circuit : les trois votes servent à dire « l’un de ces trois me va », pour qu’un second choix largement partagé l’emporte sur un premier choix isolé.
+
+**Les votes s’empilent** : un membre peut placer plusieurs voix sur le même mod, dans la limite de sa réserve, pour pousser un choix plutôt que de simplement le cocher. Une ligne en base par voix placée , le classement se trie **en base**, et l’ORM sait ordonner une relation par son nombre de lignes, jamais par la somme d’une colonne.
+
+**Le refus est porté côté serveur, une seule fois.** La même fonction sert les deux routes de vote , celle du catalogue et celle de la page soirée écrivent la même ligne, elles doivent compter la même chose , et refuse le vote de trop en **409**, avec une phrase qui dit quoi faire. Le comptage et l’écriture tiennent dans une transaction ouverte par un **verrou consultatif** `pg_advisory_xact_lock`, haché sur `membre : soirée : type` : sans lui, deux votes partis en même temps se comptent l’un l’autre comme absents, passent tous les deux le contrôle, et le membre place un neuvième véhicule.
+
+---
+
+## 6. Les ex æquo, tirés au sort à la fermeture
+
+Les places retenues tombent souvent au milieu d’une égalité : quatre véhicules à deux voix pour les deux dernières places. Départager par ordre d’engagement revenait à donner ces places à celui qui avait cliqué le premier, des heures avant que le vote ne dise quoi que ce soit. **À voix égales, c’est désormais le sort qui tranche** , et seulement entre égaux : les mods à une voix restent derrière quel que soit leur tirage.
+
+Le tirage a lieu **à la fermeture du vote**, pas à l’engagement : tirer à l’engagement reviendrait à connaître le vainqueur d’une égalité avant le premier vote. Il est écrit en tête de la première lecture de classement qui suit la fermeture, par un seul `UPDATE` conditionnel, et **une seule fois** , deux lectures simultanées ne tirent pas deux fois, la seconde attend les lignes verrouillées puis ne trouve plus rien à départager.
+
+Rejouer le tirage à chaque affichage serait le vrai défaut : la fermeture du vote est exactement l’instant où s’ouvre le retrait des fichiers retenus, et la liste changerait de mods pendant que le groupe télécharge. La valeur est donc en base, et c’est elle que lisent les deux tris , celui de PostgreSQL et celui de la page, qui reclasse en direct sur les votes optimistes. Les deux retiennent exactement les mêmes mods.
+
+![Le classement final d'une soirée passée](/images/acPaddock/Soiree.png)
+
+---
+
+## 7. Les trois phases
+
+| Phase | Quand | Ce qui est possible |
+| --- | --- | --- |
+| `OPEN` | jusqu’à T−30 min | voter, engager, retirer un engagement |
+| `LOCKED` | T−30 min → T+2 h | télécharger les mods retenus |
+| `OVER` | après T+2 h | rien , la soirée se relit |
+
+Un seul basculement, pas deux réglages qui pourraient se croiser : **ce qui n’est plus votable est téléchargeable**. Et le retrait dure deux heures après le départ, pour le retardataire et pour celui dont l’installation a raté.
+
+Le serveur applique ces bornes **partout où l’on écrit** : les deux routes de vote (POST **et** DELETE , retirer un vote après la fermeture déplacerait le classement autant qu’en ajouter un), l’engagement et le désengagement. Côté page, la soirée porte une horloge dont l’instant initial descend du rendu serveur , sans quoi le premier rendu du navigateur différerait , puis la page prend le relais toutes les 15 s : la bascule se voit sans rechargement.
+
+---
+
+## 8. Les fichiers de mod, temporaires par construction
+
+Le lien externe reste la méthode privilégiée ; l’upload sert aux mods difficiles à héberger ailleurs. Formats acceptés : `.zip`, `.rar`, `.7z`, avec un plafond par fichier réglable de 20 Mo à 1 Go depuis l’espace admin.
+
+**Le dépôt suppose un engagement.** Un fichier ne peut être déposé que sur un mod engagé dans la soirée en cours, parce qu’il ne vit que 24 h : le déposer sur une fiche que personne n’a mise au programme, c’est le voir expirer sans avoir servi. La route refuse en **409** , et non 403 : le membre a bien le droit, c’est la fiche qui n’est pas dans l’état voulu, et un clic sur « Engager » le répare.
+
+**Le fichier ne transite jamais par l’application.** La route valide, réserve la place et renvoie une **URL pré-signée** ; le navigateur écrit directement dans **Cloudflare R2** ; un `PUT` confirme. À la confirmation, l’objet déposé est **relu** : taille réelle, et surtout **signature des premiers octets**. L’extension et le type MIME viennent tous deux du client , renommer `charge.exe` en `mod.zip` suffit à les faire mentir les deux ; les premiers octets, eux, ne se renomment pas. Un fichier qui n’est pas l’archive qu’il annonce est retiré du bucket et refusé en **415**.
+
+**Le quota global du bucket** (10 Go, pour rester dans le palier gratuit) est mesuré **sur le bucket** et non déduit de la base : c’est ce que Cloudflare facture, et ça comprend ce que la base ignore , les objets d’envois abandonnés. Mais un objet n’apparaît dans le bucket qu’une fois l’envoi *terminé*, jusqu’à une heure pour 1 Go : deux membres qui démarrent ensemble passeraient tous les deux le même contrôle. D’où une table de **réservations** , une ligne posée à la signature, retirée à la confirmation, comptée dans le total tant que l’envoi est en vol.
+
+**L’expiration** retire l’objet de R2 **puis** vide les colonnes de la fiche. L’ordre n’est pas indifférent : vider la colonne d’abord laisserait, si le retrait échoue, un objet que plus rien ne désigne , donc introuvable au balayage suivant, et téléchargeable par qui en aurait gardé l’URL.
+
+**Le retrait, enfin, se joue côté navigateur** : un bouton lance les 8 véhicules et le circuit les uns après les autres, avec des clics volontairement espacés (lancés dans la même boucle, les navigateurs n’en retiennent qu’un). Une archive `.zip` construite par le serveur aurait fait passer jusqu’à 1 Go par fichier dans une fonction Vercel qui plafonne bien en dessous, en temps comme en volume.
+
+**Dans tous les cas, la fiche ne bouge pas** : nom, lien, description, tags, votes, historique. Vider le bucket fait disparaître des fichiers, jamais du catalogue.
+
+---
+
+## 9. Images d’aperçu et notifications Discord
+
+**Les images** sont ré-encodées à l’upload avec `sharp` : réduction à 1600 px sur le plus grand côté, WebP qualité 80, métadonnées supprimées , environ **79 % d’octets en moins** sur une photo de 2048×2048, sans différence visible aux deux tailles où l’image s’affiche. L’orientation EXIF est appliquée **avant** que les métadonnées soient retirées, sinon les photos de téléphone ressortent couchées ; et si le ré-encodage pèse plus lourd que l’original, l’original est conservé.
+
+Une image étant déposée *avant* que la fiche existe, deux mécanismes évitent qu’elle reste pour rien : la suppression immédiate quand le formulaire remplace une image déjà envoyée, et un balayage de rattrapage qui liste le bucket, soustrait les images référencées et supprime le reste au-delà d’un délai de grâce de 6 h , ce délai protège les formulaires encore ouverts, et le balayage rattrape l’onglet fermé sans publier, cas qu’aucun appel client ne peut couvrir.
+
+**Les notifications** sont le chemin de retour vers Discord : le salon reste l’endroit où l’on *apprend* qu’il se passe quelque chose, sans redevenir celui où on en discute. Un **webhook, pas un bot** , un bot demanderait une application, un jeton à faire tourner et un processus qui écoute, alors qu’il n’y a rien à écouter. Trois précautions :
+
+- **elles partent après la réponse**, dans un `after()` : le membre voit sa fiche sans attendre Discord, et l’envoi survit à la fin de la requête ;
+- **rien de ce qui part ne peut mentionner personne** : chaque envoi porte `allowed_mentions: { parse: [] }`, sinon un `@everyone` glissé dans un nom de fiche réveillerait tout un serveur ;
+- **le transport ne lève jamais** : la fiche est déjà écrite quand il part, un salon injoignable n’a pas à ressortir en 500 chez le membre.
+
+---
+
+## 10. Espace admin et tâches planifiées
+
+L’espace admin permet de modérer les fiches et les tags, supprimer une soirée, lire le **journal des suppressions**, voir les membres et par quel serveur ils sont entrés, ouvrir ou fermer l’accès à un serveur Discord et régler son webhook, lire l’occupation du bucket et le vider, régler la taille maximale des uploads.
+
+![L'espace admin : modération, journal des suppressions, serveurs autorisés, réglages et vocabulaire](/images/acPaddock/Admin.png)
+
+Tout y est fait pour qu’une décision se prenne sans aller chercher le contexte ailleurs : chaque entrée du journal dit qui, quoi, quand et à quel titre (`auteur` ou `admin`) ; le panneau de stockage affiche l’occupation réelle du bucket, la date du dernier nettoyage et un **avertissement quand il est en retard** , c’est le signe que la tâche planifiée ne tourne pas ; et le vocabulaire liste chaque tag avec le nombre de fiches qui le portent, parce que supprimer un tag utilisé par quatorze fiches n’est pas le même geste que supprimer une faute de frappe isolée.
+
+Le garde de rôle est appelé par **chaque route**, et non porté par le proxy : celui-ci est optimisé pour être déployé sur le CDN, loin de la base , et c’est en base que vit le rôle. Le layout fait la même vérification côté écrans et renvoie un non-admin **au catalogue**, pas à la page de connexion : il est bien connecté, c’est cette section-là qui ne le concerne pas.
+
+Une suppression étant irréversible, le **journal** recopie le nom de ce qui a disparu plutôt que de le référencer, journalise aussi les suppressions d’un auteur sur sa propre fiche , un journal qui n’en montrerait que la moitié n’expliquerait pas l’autre , et n’échoue jamais bruyamment : le contenu est déjà parti, une trace manquante ne doit pas ressortir en 500.
+
+| Tâche | Où | Fréquence |
+| --- | --- | --- |
+| Fichiers expirés, réservations, mods non retenus | `pg_cron` → route de maintenance | horaire |
+| Idem, en filet | crons Vercel | quotidien |
+| Images orphelines | crons Vercel | quotidien |
+| Tirage au sort des ex æquo | à la première lecture après fermeture |  |
+
+**Pourquoi `pg_cron` et pas seulement Vercel** : la fenêtre réelle doit être « 24 h » et non « 24 h + la période du job », or les crons Vercel sont limités à un déclenchement quotidien sur le plan gratuit. `pg_cron` tourne à l’heure, sans rien coûter. Et c’est `pg_net` qui appelle **l’application**, pas Cloudflare : supprimer un objet R2 demanderait une signature AWS SigV4 écrite en plpgsql et les identifiants Cloudflare recopiés dans la base , ils ne vivent ainsi qu’à un seul endroit.
+
+---
+
+## 11. Technologies utilisées
+
+| Domaine | Technologies |
+| --- | --- |
+| Framework | Next.js 16 (App Router, `proxy.ts`, `after()`), React 19 |
+| Langage | TypeScript |
+| Base de données | PostgreSQL (Supabase), Prisma 7 avec l’adaptateur `pg`, `pg_trgm`, `pg_cron` / `pg_net` |
+| Authentification | Auth.js / NextAuth v5, OAuth 2.0 Discord, sessions JWT |
+| Stockage | Supabase Storage (images), Cloudflare R2 en S3-compatible avec URL pré-signées |
+| Traitement d’images | `sharp` |
+| Validation | Zod, côté serveur comme côté formulaire |
+| Interface | Tailwind CSS v4, tokens CSS maison , aucune bibliothèque de composants |
+| Notifications | Webhooks Discord |
+| Déploiement | Vercel, migrations Prisma, crons `vercel.json` |
+
+---
+
+## Conclusion
+
+AC Paddock est un projet personnel mené de la conception à la mise en production, sur un domaine métier que je connais de l’intérieur : le besoin venait de mon propre groupe de jeu. Il m’a permis de travailler sur des problématiques que je n’avais jamais rencontrées ensemble :
+
+- la **concurrence en base**, avec des règles qui ne tiennent que si deux clics simultanés ne peuvent pas les contourner , verrou consultatif sur les quotas de vote, réservations sur le quota de stockage, tirage au sort écrit une fois pour toutes ;
+- l’**architecture de stockage sous contrainte budgétaire**, avec des fichiers qui ne transitent jamais par le serveur, un quota mesuré là où il est facturé et une durée de vie de 24 h assumée par construction ;
+- la **sécurité applicative** : validation systématique côté serveur même quand l’interface l’applique déjà, vérification des fichiers par leur signature binaire et non par leur extension, secrets qui ne sortent jamais du serveur ;
+- la **modélisation d’un domaine mouvant**, où chaque règle du jeu , quotas, places, phases , vit à un seul endroit et où l’historique survit à ce qu’il raconte ;
+- l’**écriture d’un code documenté par ses décisions** : les commentaires y expliquent *pourquoi*, et ce qui a été écarté , c’est la mémoire d’un projet maintenu seul.
