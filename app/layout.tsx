@@ -6,26 +6,56 @@ import { Analytics } from "./components/analytics";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export const metadata: Metadata = {
-	metadataBase: new URL('https://ldasilveira.fr'),
+	metadataBase: new URL("https://ldasilveira.fr"),
 	title: {
-		default: "Lucas Da Silveira | Portfolio",
-		template: "%s | ldasilveira.fr",
+		default: "Lucas Da Silveira — Portfolio | Étudiant en informatique",
+		template: "%s | Lucas Da Silveira",
 	},
-	description: "Étudiant en informatique",
+	description:
+		"Portfolio de Lucas Da Silveira, étudiant en informatique et développeur web. Projets en Next.js, React, TypeScript et Symfony, expériences professionnelles et contact.",
+	applicationName: "Lucas Da Silveira",
+	authors: [{ name: "Lucas Da Silveira", url: "https://ldasilveira.fr" }],
+	creator: "Lucas Da Silveira",
+	publisher: "Lucas Da Silveira",
+	keywords: [
+		"Lucas Da Silveira",
+		"Lucas Da Silveira portfolio",
+		"Lucas Da Silveira développeur",
+		"ldasilveira",
+		"lucasdslvra",
+		"développeur web",
+		"étudiant en informatique",
+		"Next.js",
+		"React",
+		"TypeScript",
+		"Symfony",
+	],
+	alternates: {
+		canonical: "/",
+	},
 	openGraph: {
-		title: "Lucas Da Silveira | Portfolio",
-		description: "Étudiant en informatique",
+		title: "Lucas Da Silveira — Portfolio",
+		description:
+			"Portfolio de Lucas Da Silveira, étudiant en informatique et développeur web : projets, expériences et contact.",
 		url: "https://ldasilveira.fr",
-		siteName: "ldasilveira.fr",
+		siteName: "Lucas Da Silveira",
 		images: [
 			{
-				url: "https://portfolio-vert-nine-zszkg9biux.vercel.app/og.png",
+				url: "/og.png",
 				width: 1920,
 				height: 1080,
+				alt: "Lucas Da Silveira — Portfolio",
 			},
 		],
-		locale: "fr-FR",
+		locale: "fr_FR",
 		type: "website",
+	},
+	twitter: {
+		card: "summary_large_image",
+		title: "Lucas Da Silveira — Portfolio",
+		description:
+			"Portfolio de Lucas Da Silveira, étudiant en informatique et développeur web.",
+		images: ["/og.png"],
 	},
 	robots: {
 		index: true,
@@ -40,6 +70,10 @@ export const metadata: Metadata = {
 	},
 	icons: {
 		shortcut: "/favicon.png",
+	},
+	verification: {
+		// Remplace par le code fourni par Google Search Console (balise HTML).
+		google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
 	},
 };
 const inter = Inter({
@@ -58,7 +92,7 @@ export default function RootLayout({
 	children: React.ReactNode;
 }) {
 	return (
-		<html lang="en" className={[inter.variable, calSans.variable].join(" ")}>
+		<html lang="fr" className={[inter.variable, calSans.variable].join(" ")}>
 			<head>
 				<Analytics />
 			</head>

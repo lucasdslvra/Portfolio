@@ -5,6 +5,22 @@ import { Navigation } from "../components/nav";
 import { Card } from "../components/card";
 import { Article } from "./article";
 
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+	title: "Projets",
+	description:
+		"Les projets universitaires et personnels de Lucas Da Silveira : applications web en Next.js, React, TypeScript et Symfony.",
+	alternates: { canonical: "/projects" },
+	openGraph: {
+		title: "Projets | Lucas Da Silveira",
+		description:
+			"Les projets universitaires et personnels de Lucas Da Silveira : applications web en Next.js, React, TypeScript et Symfony.",
+		url: "https://ldasilveira.fr/projects",
+		type: "website",
+	},
+};
+
 export const revalidate = 60;
 
 export default async function ProjectsPage() {

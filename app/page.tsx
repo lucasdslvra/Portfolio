@@ -7,24 +7,62 @@ const navigation = [
 	{ name: "Contact", href: "/contact" },
 ];
 
+const jsonLd = {
+	"@context": "https://schema.org",
+	"@graph": [
+		{
+			"@type": "Person",
+			"@id": "https://ldasilveira.fr/#person",
+			name: "Lucas Da Silveira",
+			alternateName: ["Lucas da Silveira", "lucasdslvra", "ldasilveira"],
+			url: "https://ldasilveira.fr",
+			image: "https://ldasilveira.fr/og.png",
+			jobTitle: "Étudiant en informatique",
+			description:
+				"Étudiant en informatique et développeur web. Projets en Next.js, React, TypeScript et Symfony.",
+			knowsAbout: [
+				"Développement web",
+				"Next.js",
+				"React",
+				"TypeScript",
+				"Symfony",
+				"PHP",
+			],
+			knowsLanguage: ["fr", "en"],
+			email: "mailto:lucasdslvra@gmail.com",
+			sameAs: [
+				"https://www.linkedin.com/in/lucasdslvra/",
+				"https://github.com/lucasdslvra",
+			],
+		},
+		{
+			"@type": "WebSite",
+			"@id": "https://ldasilveira.fr/#website",
+			url: "https://ldasilveira.fr",
+			name: "Lucas Da Silveira",
+			alternateName: "Portfolio de Lucas Da Silveira",
+			inLanguage: "fr-FR",
+			publisher: { "@id": "https://ldasilveira.fr/#person" },
+		},
+		{
+			"@type": "ProfilePage",
+			"@id": "https://ldasilveira.fr/#profilepage",
+			url: "https://ldasilveira.fr",
+			name: "Lucas Da Silveira — Portfolio",
+			isPartOf: { "@id": "https://ldasilveira.fr/#website" },
+			about: { "@id": "https://ldasilveira.fr/#person" },
+			inLanguage: "fr-FR",
+		},
+	],
+};
+
 export default function Home() {
 	return (
 		<div className="flex flex-col items-center justify-center w-screen h-screen overflow-hidden bg-gradient-to-tl from-black via-zinc-600/20 to-black">
 			<script
 				type="application/ld+json"
-				dangerouslySetInnerHTML={{
-					__html: JSON.stringify({
-						"@context": "https://schema.org",
-						"@type": "Person",
-						name: "Lucas Da Silveira",
-						url: "https://ldasilveira.fr",
-						jobTitle: "Étudiant en informatique",
-						sameAs: [
-							"https://www.linkedin.com/in/lucasdslvra/",
-							"https://github.com/lucasdslvra",
-						],
-					}),
-				}}
+				// biome-ignore lint: structured data
+				dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
 			/>
 			<nav className="my-16 animate-fade-in">
 				<ul className="flex items-center justify-center gap-4">
@@ -52,6 +90,13 @@ export default function Home() {
 			<div className="my-16 text-center animate-fade-in">
 				<h2 className="text-sm text-zinc-500 ">Étudiant en informatique </h2>
 			</div>
+
+			<p className="sr-only">
+				Lucas Da Silveira est étudiant en informatique et développeur web. Ce
+				portfolio présente ses projets réalisés en Next.js, React, TypeScript et
+				Symfony, ses expériences professionnelles ainsi que ses coordonnées de
+				contact.
+			</p>
 		</div>
 	);
 }
