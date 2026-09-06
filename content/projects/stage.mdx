@@ -20,7 +20,7 @@ Cette refonte avait un double objectif : **adapter l’architecture aux diffé
 L'ancien back-office, développé en PHP, n’était plus adapté. Il manquait de modularité, était difficile à maintenir, et ne proposait pas de gestion fine des rôles utilisateurs. Pour repartir sur une base saine, j’ai choisi d’utiliser **Strapi**, un CMS headless moderne, qui permet de générer une API personnalisable à partir de types de contenus définis graphiquement ou en code.
 
 
-![Strapi Content Type Builder](/images/content-type-builder.png)
+![Strapi Content Type Builder](/images/stage/content-type-builder.png)
 
 
 
@@ -35,7 +35,7 @@ Ce système me permet de définir précisément la structure des données tout e
 L’ancien système contenait plusieurs années de données dans une base MySQL aux formats obsolètes. Strapi impose des structures spécifiques (champs `createdAt`, `documentId`, etc.), donc une migration manuelle était impossible. J’ai donc automatisé le processus via un script JavaScript.
 
 
-![Migration Script](/images/script-migration.png)
+![Migration Script](/images/stage/script-migration.png)
 
 
 Le script lit les anciennes tables, transforme les noms de champs, génère des identifiants manquants, et injecte les données dans la nouvelle base utilisée par Strapi.
@@ -48,7 +48,7 @@ Cela m’a permis de **gagner un temps considérable** tout en assurant l’exac
 
 L’application mobile existante fonctionnait avec l’ancienne API PHP. Pour assurer la transition sans tout réécrire, j’ai dû adapter les appels réseau de l’application pour qu’ils correspondent aux nouvelles routes de Strapi.
 
-![Appel API Mobile](/images/appel-api.png)
+![Appel API Mobile](/images/stage/appel-api.png)
 
 
 L’image montre un exemple concret de refonte d’un appel réseau côté mobile. L’appel précédent utilisait une route PHP comme `/getPartenaires.php`, tandis que le nouveau fait appel à une route RESTful `/api/partenaires` exposée par Strapi.
@@ -62,7 +62,7 @@ En plus du changement de route, j’ai aussi dû **adapter la structure des donn
 Pour améliorer la traçabilité des interactions entre étudiants et partenaires, un système de QR code personnel a été mis en place. Chaque étudiant doit pouvoir afficher son code depuis l’application, et ce QR code doit être unique et stocké dans la base.
 
 <img
-  src="/images/qr-code.png"
+  src="/images/stage/qr-code.png"
   alt="QR Code Étudiant"
   style={{ display: "block", margin: "0 auto", maxWidth: "300px", height: "auto", alignSelf: "center" }}
 />
@@ -78,10 +78,10 @@ Ce mécanisme garantit que **chaque étudiant a un seul QR code, toujours à jou
 Les mots de passe avaient été hashés avec une méthode différente dans l’ancien système. Résultat : impossibilité de se connecter avec les anciens comptes.
 
 
-![Hash Legacy](/images/ancien-hash.png)
+![Hash Legacy](/images/stage/ancien-hash.png)
 ancien hash non conforme
 
-![Hash Strapi](/images/nouveau-hash.png)
+![Hash Strapi](/images/stage/nouveau-hash.png)
 nouveau hash conforme à Strapi
 
 
@@ -95,9 +95,9 @@ Sur cette illustration, on voit la différence entre un hash “legacy” et un 
 Pour visualiser les données d’utilisation de l’application, j’ai conçu une **interface complémentaire en ReactJS**, connectée à l’API Strapi.
 
 
-![Dashboard ReactJS](/images/graphique-accueil.png)
+![Dashboard ReactJS](/images/stage/graphique-accueil.png)
 
-![QR Code Partenaire](/images/qr-code-partenaire.png)
+![QR Code Partenaire](/images/stage/qr-code-partenaire.png)
 
 
 Le visuel montre une interface claire affichant des métriques clés et un graphique dynamique. J’ai aussi intégré une section où l'on peut voir et **télécharger le QR code** du partenaire. Cela montre ma capacité à **développer un front web connecté à une API**, tout en gérant l’aspect ergonomique et la sécurité.

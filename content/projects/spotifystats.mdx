@@ -1,0 +1,140 @@
+---
+title: SpotiFiles
+description: "Application web d’analyse de l’historique d’écoute Spotify. Elle transforme l’archive « Extended Streaming History » (ou une connexion directe au compte) en un tableau de bord complet : temps d’écoute, top artistes et titres, évolution mensuelle et toile des collaborations entre artistes."
+date: "2026-09-06"
+url:
+repository: lucasdslvra/spotify-stats
+published: true
+
+---
+
+## Introduction
+
+Spotify propose chaque année son « Wrapped », mais celui-ci reste très limité : il ne couvre que les douze derniers mois, ne montre que quelques chiffres et ne permet aucune exploration. Pourtant, chaque utilisateur peut demander à Spotify l’intégralité de son historique d’écoute, année par année, depuis la création de son compte.
+
+**SpotiFiles** part de ce constat : donner à l’utilisateur un véritable outil d’analyse de sa propre musique, sur l’ensemble de son historique, avec des chiffres précis et des visualisations exploitables. Le projet est développé en **Next.js 16 / React 19 / TypeScript**, avec un parti pris fort : **les données d’écoute ne quittent jamais le navigateur**.
+
+---
+
+## 1. Deux modes d’utilisation complémentaires
+
+L’application propose deux sources de données, qui répondent à deux besoins différents.
+
+| Mode | Source des données | Connexion Spotify | Profondeur d’historique |
+| --- | --- | --- | --- |
+| **Archives** | Fichiers `Streaming_History_Audio_*.json` de l’export Spotify | Non | Totalité du compte (plusieurs années) |
+| **En direct** | API Web Spotify (top 50 artistes / titres) | Oui, via OAuth | 4 semaines, 6 mois ou tout l’historique récent |
+
+Le mode **Archives** est le cœur du projet : l’utilisateur dépose ses fichiers `.json` par glisser-déposer et obtient immédiatement une analyse de l’ensemble de son historique. Le mode **En direct** sert d’alternative rapide pour les utilisateurs qui n’ont pas encore reçu leur archive (Spotify met de quelques jours à un mois à la fournir).
+
+Pour lever la principale difficulté d’usage s,avoir comment récupérer ses données, la page d’accueil intègre un tutoriel en quatre étapes : demander l’archive dans les paramètres de confidentialité, patienter, extraire le `.zip`, puis déposer les fichiers dans l’application.
+
+![Page d'accueil et tutoriel](/images/spotifyStats/Accueil.png)
+
+---
+
+## 2. Analyse des archives côté navigateur
+
+Une archive Spotify complète représente plusieurs fichiers JSON et souvent **plus de 100 000 lignes d’écoute**. Tout le traitement est réalisé dans le navigateur, via un hook React dédié (`useSpotifyData`) : les fichiers sont lus avec l’API `FileReader`, agrégés, puis transformés en statistiques.
+
+Plusieurs choix techniques ont été nécessaires pour que l’interface reste fluide :
+
+- **Filtrage des écoutes non significatives** : une lecture de moins de 30 secondes n’est pas comptabilisée, ce qui évite de gonfler les compteurs avec les titres passés.
+- **Agrégation en une seule passe**, dans des `Map` indexées par année, artiste, titre et mois, plutôt que de reparcourir les données à chaque affichage.
+- **Mémoïsation systématique** (`useMemo`) : changer le filtre d’années recalcule les graphiques à partir des agrégats déjà construits, sans relire les fichiers.
+
+**Aucune écoute n’est envoyée au serveur.** Seuls les noms d’artistes et de titres transitent par une route interne, uniquement pour récupérer les pochettes et photos correspondantes.
+
+---
+
+## 3. Le tableau de bord
+
+Une fois les fichiers analysés, l’application affiche un tableau de bord complet, filtrable par année (« Toutes », « Aucune », ou une sélection multiple des années disponibles).
+
+**Indicateurs clés** : temps d’écoute cumulé en heures, nombre de titres uniques, nombre d’artistes uniques et nombre de fichiers analysés.
+
+**Évolution mensuelle** : un histogramme comparatif qui superpose les années sélectionnées mois par mois. On visualise ainsi immédiatement les périodes de forte écoute et l’évolution des habitudes d’une année à l’autre.
+
+**Top 5 des titres dans le temps** : une courbe par titre favori, montrant le nombre de lectures mois par mois. C’est le graphique qui raconte le mieux l’histoire d’une année : on y voit un morceau exploser sur un ou deux mois puis retomber.
+
+**Top artistes / Top titres** : deux classements en barres, l’un en heures d’écoute cumulées, l’autre en nombre de lectures, enrichis des visuels Spotify.
+
+**Détail artistes / Détail titres** : deux listes défilantes classées, avec la valeur exacte pour chaque entrée, pour aller au-delà du top 10.
+
+![Indicateurs clés et évolution mensuelle](/images/spotifyStats/StatsP1.png)
+
+![Top 5 des titres, top artistes et détails](/images/spotifyStats/StatsP2.png)
+
+---
+
+## 4. La toile des artistes
+
+La fonctionnalité la plus aboutie visuellement est la **Toile des Artistes** : un graphe de force interactif (`react-force-graph-2d` + `d3-force`) qui relie les 100 artistes les plus écoutés entre eux.
+
+Deux types de liens sont calculés :
+
+- **Les featurings** : lorsqu’un titre associe plusieurs artistes présents dans la bibliothèque, un lien fort (poids 1) est créé entre eux. La détection s’appuie sur une normalisation des noms afin de rapprocher les variantes d’écriture.
+- **La proximité de genres** : deux artistes sont reliés s’ils partagent au moins deux genres, ou si leur **similarité de Jaccard** dépasse 0,5. Ces liens sont volontairement pondérés plus faiblement (0,5 par genre partagé) pour que les collaborations réelles restent dominantes.
+
+Le rendu est entièrement personnalisé via le `canvas` : chaque nœud affiche la **photo de l’artiste** détourée en cercle, avec un diamètre proportionnel au temps d’écoute cumulé, et l’épaisseur des liens traduit la force de la relation. Le graphe est navigable : déplacement, zoom, repositionnement des nœuds à la souris et se stabilise automatiquement grâce à la simulation physique de `d3-force`.
+
+Le résultat est une cartographie de ses goûts musicaux, où les scènes et les cercles d’artistes apparaissent naturellement sous forme de grappes.
+
+![Toile des artistes](/images/spotifyStats/Graph.png)
+
+---
+
+## 5. Le générateur d’album aléatoire
+
+Fonctionnalité pensée pour répondre à un problème très concret : ne pas savoir quoi écouter malgré une grande bibliothèque.
+
+En mode connecté, le générateur interroge l’API Spotify pour connaître le nombre total d’albums enregistrés, tire un décalage aléatoire, puis ne récupère que l’album correspondant. Ce choix évite de télécharger toute la bibliothèque : **une requête pour le total, une requête pour l’album**, quelle que soit sa taille.
+
+L’album tiré au sort est présenté dans une modale reprenant les couleurs de sa pochette, avec l’artiste, l’année, le nombre de titres, et un lien direct pour l’écouter sur Spotify.
+
+![Générateur d'album aléatoire](/images/spotifyStats/Random-album.png)
+
+![Album tiré au sort](/images/spotifyStats/Affichage-album.png)
+
+---
+
+## 6. Authentification et sécurité
+
+Le mode « En direct » repose sur **NextAuth** avec le provider Spotify (flux OAuth 2.0), limité aux scopes strictement nécessaires : `user-read-email`, `user-top-read`, `user-read-recently-played` et `user-library-read`.
+
+Les jetons Spotify n’étant valables qu’une heure, un mécanisme de **rafraîchissement automatique** a été implémenté dans le callback JWT : le jeton est renouvelé de façon transparente à partir du refresh token, sans déconnecter l’utilisateur.
+
+Plusieurs mesures ont été mises en place côté serveur :
+
+- **En-têtes de sécurité** : Content-Security-Policy restrictive (les images ne sont autorisées que depuis les CDN Spotify), HSTS, `X-Frame-Options: DENY`, `Permissions-Policy`, `Referrer-Policy`.
+- **Limitation de débit** sur la route publique de récupération des visuels : 30 requêtes par minute et par IP, avec bornes sur le nombre d’artistes et de titres demandés.
+- **Mise en cache du token « client credentials »** entre les requêtes, et envoi des appels Spotify par paquets espacés, pour éviter les erreurs 429.
+- **Aucune mise en cache des réponses d’API**, celles-ci dépendant de la session utilisateur.
+
+---
+
+## 7. Technologies utilisées
+
+| Domaine | Technologies |
+| --- | --- |
+| Framework | Next.js 16 (App Router, Turbopack), React 19 |
+| Langage | TypeScript |
+| Interface | Tailwind CSS 4, shadcn/ui, Radix UI, lucide-react |
+| Visualisation | Recharts, react-force-graph-2d, d3-force |
+| Authentification | NextAuth v4, OAuth 2.0 Spotify |
+| API | API Web Spotify, routes serveur Next.js |
+| Animations | anime.js |
+| Qualité | ESLint, typage strict, script `verify` (lint + typecheck + build) |
+| Déploiement | Vercel, PWA (manifest, icônes), sitemap et robots dynamiques |
+
+---
+
+## Conclusion
+
+SpotiFiles est un projet personnel complet, mené de la conception à la mise en production. Il m’a permis de travailler sur des problématiques variées :
+
+- le **traitement de gros volumes de données** dans le navigateur, avec les contraintes de performance associées ;
+- l’**intégration d’une API tierce** authentifiée, avec gestion des quotas, des jetons expirés et des erreurs ;
+- la **visualisation de données**, du simple histogramme au graphe de force ;
+- la **sécurité et la confidentialité**, avec une architecture où les données sensibles ne quittent jamais le poste de l’utilisateur ;
+- le **soin apporté à l’interface**, dans une direction artistique sombre et minimaliste assumée.
