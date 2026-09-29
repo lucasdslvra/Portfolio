@@ -30,8 +30,9 @@ C’est le cœur du domaine ; tout le reste en découle.
 | --- | --- |
 | **Catalogue** | En continu, n’importe quel membre propose une fiche de mod. |
 | **Programmation** | Un admin crée une soirée : date, heure, éventuellement un thème. |
-| **Engagement** | Les membres mettent des fiches du catalogue au programme, sans limite. |
-| **Vote** | Jusqu’à 30 min avant le départ, chacun répartit sa réserve de votes. |
+| **Participation** | Chaque membre *rejoint* la soirée : être sur le serveur Discord ne suffit plus. |
+| **Engagement** | Les inscrits mettent des fiches du catalogue au programme, sans limite. |
+| **Vote** | Jusqu’à 30 min avant le départ, chaque inscrit répartit sa réserve de votes. |
 | **Fermeture** | La soirée retient les 8 véhicules les plus votés et le circuit le plus voté. |
 | **Retrait** | De la fermeture à 2 h après le départ, un bouton télécharge les mods retenus. |
 | **Archive** | Les fichiers s’effacent, les fiches et l’historique restent. |
@@ -43,6 +44,8 @@ catalogue ──► engagement ──► vote ──┃ 30 min ┃── DÉPART
                                     tirage au sort              fichiers effacés
                                     retrait ouvert
 ```
+
+**Être sur le serveur ne suffit plus à être de la soirée.** Chaque membre la *rejoint* explicitement, et c’est ce geste , pas l’appartenance au serveur Discord , qui ouvre l’engagement et le vote : les deux routes refusent en **403** celui qui n’a pas rejoint. Tout le serveur n’est pas de toutes les soirées, et c’est la liste des inscrits , pas celle des membres connus , qui dit qui vote, qui compte dans « ont voté », et qui le rappel d’avant-fermeture doit relancer. On ne rejoint que la soirée en cours de son serveur, et seulement tant que le vote est ouvert : s’inscrire une fois le classement figé n’ouvrirait plus rien. **Quitter emporte ses votes** , le classement ne compte que les voix de ceux qui viennent , mais laisse les fiches engagées, car d’autres ont pu voter pour et les retirer déferait leurs votes à leur place.
 
 ---
 
@@ -113,7 +116,7 @@ Les deux côtés ne se ressemblent pas, et c’est voulu. Une soirée se joue av
 
 **Les votes s’empilent** : un membre peut placer plusieurs voix sur le même mod, dans la limite de sa réserve, pour pousser un choix plutôt que de simplement le cocher. Une ligne en base par voix placée , le classement se trie **en base**, et l’ORM sait ordonner une relation par son nombre de lignes, jamais par la somme d’une colonne.
 
-**Le refus est porté côté serveur, une seule fois.** La même fonction sert les deux routes de vote , celle du catalogue et celle de la page soirée écrivent la même ligne, elles doivent compter la même chose , et refuse le vote de trop en **409**, avec une phrase qui dit quoi faire. Le comptage et l’écriture tiennent dans une transaction ouverte par un **verrou consultatif** `pg_advisory_xact_lock`, haché sur `membre : soirée : type` : sans lui, deux votes partis en même temps se comptent l’un l’autre comme absents, passent tous les deux le contrôle, et le membre place un neuvième véhicule.
+**Le refus est porté côté serveur, une seule fois.** La même fonction sert les deux routes de vote , celle du catalogue et celle de la page soirée écrivent la même ligne, elles doivent compter la même chose , et refuse le vote de trop en **409**, avec une phrase qui dit quoi faire. Le comptage et l’écriture tiennent dans une transaction ouverte par un **verrou consultatif** `pg_advisory_xact_lock`, haché sur `membre : soirée : type` : sans lui, deux votes partis en même temps se comptent l’un l’autre comme absents, passent tous les deux le contrôle, et le membre place un neuvième véhicule. Ce même verrou couvre aussi le départ de la soirée : quitter retire ses votes sous la même clé, sans quoi un vote parti pendant qu’on s’en va pourrait passer le contrôle d’inscription avant la suppression puis s’écrire après , un vote orphelin d’un membre qui n’en est plus.
 
 ---
 
@@ -170,8 +173,10 @@ Une image étant déposée *avant* que la fiche existe, deux mécanismes éviten
 **Les notifications** sont le chemin de retour vers Discord : le salon reste l’endroit où l’on *apprend* qu’il se passe quelque chose, sans redevenir celui où on en discute. Un **webhook, pas un bot** , un bot demanderait une application, un jeton à faire tourner et un processus qui écoute, alors qu’il n’y a rien à écouter. Trois précautions :
 
 - **elles partent après la réponse**, dans un `after()` : le membre voit sa fiche sans attendre Discord, et l’envoi survit à la fin de la requête ;
-- **rien de ce qui part ne peut mentionner personne** : chaque envoi porte `allowed_mentions: { parse: [] }`, sinon un `@everyone` glissé dans un nom de fiche réveillerait tout un serveur ;
+- **une annonce ne réveille personne par accident** : par défaut chaque envoi porte `allowed_mentions: { parse: [] }`, sinon un `@everyone` glissé dans un nom de fiche réveillerait tout un serveur. Le rappel de vote est la seule exception , il *doit* mentionner , et n’autorise alors que la liste exacte des identifiants qu’il nomme, jamais `@everyone` ni un rôle ;
 - **le transport ne lève jamais** : la fiche est déjà écrite quand il part, un salon injoignable n’a pas à ressortir en 500 chez le membre.
+
+**Le rappel d’avant-fermeture** est la seule annonce adressée nommément. Trente minutes avant que le vote ne ferme, le salon reçoit un « ⏰ plus que 30 minutes pour voter » qui mentionne les inscrits qui n’ont pas vidé leur réserve , et seulement eux. Un type sans aucun mod engagé ne se vote pas et ne compte donc pas comme un retard ; pour les autres, l’embed reprend chaque membre avec sa progression (« 3/8 véhicules · 0/3 circuits »), où la mention s’affiche sans sonner une seconde fois. Au-delà de 50 membres, le rappel se poursuit en plusieurs messages plutôt que d’être refusé en bloc. Il ne part qu’**une seule fois** : la soirée est réservée (`voteReminderSentAt`) avant l’envoi, si bien que deux passages du planificateur ne peuvent pas la prendre tous les deux , au prix d’un envoi raté qui n’est pas retenté, un rappel en double gênant plus qu’un rappel manqué.
 
 ---
 
@@ -190,11 +195,12 @@ Une suppression étant irréversible, le **journal** recopie le nom de ce qui a 
 | Tâche | Où | Fréquence |
 | --- | --- | --- |
 | Fichiers expirés, réservations, mods non retenus | `pg_cron` → route de maintenance | horaire |
+| Rappel de vote aux inscrits en retard | `pg_cron` → route de maintenance | toutes les 5 min |
 | Idem, en filet | crons Vercel | quotidien |
 | Images orphelines | crons Vercel | quotidien |
 | Tirage au sort des ex æquo | à la première lecture après fermeture |  |
 
-**Pourquoi `pg_cron` et pas seulement Vercel** : la fenêtre réelle doit être « 24 h » et non « 24 h + la période du job », or les crons Vercel sont limités à un déclenchement quotidien sur le plan gratuit. `pg_cron` tourne à l’heure, sans rien coûter. Et c’est `pg_net` qui appelle **l’application**, pas Cloudflare : supprimer un objet R2 demanderait une signature AWS SigV4 écrite en plpgsql et les identifiants Cloudflare recopiés dans la base , ils ne vivent ainsi qu’à un seul endroit.
+**Pourquoi `pg_cron` et pas seulement Vercel** : la fenêtre réelle doit être « 24 h » et non « 24 h + la période du job », or les crons Vercel sont limités à un déclenchement quotidien sur le plan gratuit. `pg_cron` tourne à l’heure, sans rien coûter. Le rappel de vote pousse la même logique plus loin : viser une demi-heure avant la fermeture demande un passage toutes les cinq minutes, hors de portée d’un cron quotidien. Et c’est `pg_net` qui appelle **l’application**, pas Cloudflare : supprimer un objet R2 demanderait une signature AWS SigV4 écrite en plpgsql et les identifiants Cloudflare recopiés dans la base , ils ne vivent ainsi qu’à un seul endroit.
 
 ---
 

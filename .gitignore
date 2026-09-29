@@ -9,6 +9,7 @@ yarn.lock
 # Next.js
 .next/
 out/
+.contentlayer/
 dist/
 
 # React Native

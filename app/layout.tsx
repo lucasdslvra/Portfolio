@@ -8,7 +8,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 export const metadata: Metadata = {
 	metadataBase: new URL("https://ldasilveira.fr"),
 	title: {
-		default: "Lucas Da Silveira — Portfolio | Étudiant en informatique",
+		default: "Lucas Da Silveira - Portfolio | Étudiant en informatique",
 		template: "%s | Lucas Da Silveira",
 	},
 	description:
@@ -45,9 +45,9 @@ export const metadata: Metadata = {
 		canonical: "/",
 	},
 	openGraph: {
-		title: "Lucas Da Silveira — Portfolio",
+		title: "Lucas Da Silveira - Portfolio",
 		description:
-			"Moi c'est Lucas, étudiant en informatique passionné de développement web. Découvrez mes projets, mon parcours et comment me contacter.",
+			"Moi c'est Lucas, étudiant en informatique passionné de développement. Découvrez mes projets, mon parcours et comment me contacter.",
 		url: "https://ldasilveira.fr",
 		siteName: "Lucas Da Silveira",
 		images: [
@@ -55,7 +55,7 @@ export const metadata: Metadata = {
 				url: "/og.png",
 				width: 1920,
 				height: 1080,
-				alt: "Lucas Da Silveira — Portfolio",
+				alt: "Lucas Da Silveira _ Portfolio",
 			},
 		],
 		locale: "fr_FR",
@@ -63,9 +63,9 @@ export const metadata: Metadata = {
 	},
 	twitter: {
 		card: "summary_large_image",
-		title: "Lucas Da Silveira — Portfolio",
+		title: "Lucas Da Silveira - Portfolio",
 		description:
-			"Moi c'est Lucas, étudiant en informatique passionné de développement web. Venez découvrir mes projets !",
+			"Moi c'est Lucas, étudiant en informatique passionné de développement. Venez découvrir mes projets !",
 		images: ["/og.png"],
 	},
 	robots: {
