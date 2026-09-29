@@ -50,6 +50,7 @@ const jsonLd = {
 			url: "https://ldasilveira.fr",
 			name: "Lucas Da Silveira — Portfolio",
 			isPartOf: { "@id": "https://ldasilveira.fr/#website" },
+			mainEntity: { "@id": "https://ldasilveira.fr/#person" },
 			about: { "@id": "https://ldasilveira.fr/#person" },
 			inLanguage: "fr-FR",
 		},

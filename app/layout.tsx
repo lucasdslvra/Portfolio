@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 		template: "%s | Lucas Da Silveira",
 	},
 	description:
-		"Portfolio de Lucas Da Silveira, étudiant en informatique et développeur web. Projets en Next.js, React, TypeScript et Symfony, expériences professionnelles et contact.",
+		"Moi c'est Lucas Da Silveira, étudiant en informatique passionné de développement. Je crée des projets qui me passionnent, venez les découvrir !",
 	applicationName: "Lucas Da Silveira",
 	authors: [{ name: "Lucas Da Silveira", url: "https://ldasilveira.fr" }],
 	creator: "Lucas Da Silveira",
@@ -28,7 +28,18 @@ export const metadata: Metadata = {
 		"Next.js",
 		"React",
 		"TypeScript",
+		"JavaScript",
+		"Java",
+		"PHP",
+		"SQL",
 		"Symfony",
+		"HTML",
+		"CSS",
+		"Tailwind CSS",
+		"Python",
+		"PostgreSQL",
+		"MongoDB",
+		"Node.js"
 	],
 	alternates: {
 		canonical: "/",
@@ -36,7 +47,7 @@ export const metadata: Metadata = {
 	openGraph: {
 		title: "Lucas Da Silveira — Portfolio",
 		description:
-			"Portfolio de Lucas Da Silveira, étudiant en informatique et développeur web : projets, expériences et contact.",
+			"Moi c'est Lucas, étudiant en informatique passionné de développement web. Découvrez mes projets, mon parcours et comment me contacter.",
 		url: "https://ldasilveira.fr",
 		siteName: "Lucas Da Silveira",
 		images: [
@@ -54,7 +65,7 @@ export const metadata: Metadata = {
 		card: "summary_large_image",
 		title: "Lucas Da Silveira — Portfolio",
 		description:
-			"Portfolio de Lucas Da Silveira, étudiant en informatique et développeur web.",
+			"Moi c'est Lucas, étudiant en informatique passionné de développement web. Venez découvrir mes projets !",
 		images: ["/og.png"],
 	},
 	robots: {
