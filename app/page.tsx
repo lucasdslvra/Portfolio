@@ -19,7 +19,7 @@ const jsonLd = {
 			image: "https://ldasilveira.fr/og.png",
 			jobTitle: "Étudiant en informatique",
 			description:
-				"Étudiant en informatique et développeur web. Projets en Next.js, React, TypeScript et Symfony.",
+				"Moi c'est Lucas, étudiant en informatique passionné de développement web. Découvrez mes projets, mon parcours et comment me contacter",
 			knowsAbout: [
 				"Développement web",
 				"Next.js",
@@ -93,10 +93,8 @@ export default function Home() {
 			</div>
 
 			<p className="sr-only">
-				Lucas Da Silveira est étudiant en informatique et développeur web. Ce
-				portfolio présente ses projets réalisés en Next.js, React, TypeScript et
-				Symfony, ses expériences professionnelles ainsi que ses coordonnées de
-				contact.
+				Moi c'est Lucas, étudiant en informatique passionné de développement informatique. 
+				Découvrez mes projets, mon parcours et comment me contacter
 			</p>
 		</div>
 	);
