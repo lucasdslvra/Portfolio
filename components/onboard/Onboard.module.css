@@ -1,0 +1,377 @@
+/* Vue embarquée : toutes les tailles de l'habillage sont en unités de conteneur (cqw). */
+
+.scene {
+  position: absolute;
+  inset: 0;
+  container-type: inline-size;
+  overflow: hidden;
+  background: #5a5c61;
+  opacity: 0;
+  transform: scale(1.12);
+  pointer-events: none;
+  transition:
+    opacity 320ms ease 0ms,
+    transform 600ms ease 0ms;
+}
+
+.scene[data-open='true'] {
+  opacity: 1;
+  transform: scale(1);
+  transition:
+    opacity 320ms ease 300ms,
+    transform 600ms ease 300ms;
+}
+
+.media {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  visibility: hidden;
+}
+
+.mediaVisible {
+  visibility: visible;
+}
+
+.poster {
+  object-fit: cover;
+}
+
+.noClip {
+  background: #5a5c61;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  font-family: var(--font-tv);
+  font-variant-numeric: tabular-nums;
+  pointer-events: none;
+  color: var(--ink);
+}
+
+/* A · Badge — B · mention du clip */
+
+.badgeBox {
+  position: absolute;
+  left: 2.4cqw;
+  top: 2.4cqw;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.8cqw;
+}
+
+.badge {
+  display: flex;
+  align-items: stretch;
+  font-size: 1.9cqw;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.live {
+  background: var(--red);
+  color: #fff;
+  padding: 0.65cqw 1.1cqw;
+  display: flex;
+  align-items: center;
+  gap: 0.7cqw;
+}
+
+.liveDot {
+  width: 0.9cqw;
+  height: 0.9cqw;
+  border-radius: 50%;
+  background: #fff;
+  animation: blink 1.2s steps(1) infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0.2;
+  }
+}
+
+.badgeCorner {
+  background: #fff;
+  color: var(--ink);
+  padding: 0.65cqw 1.2cqw;
+}
+
+.clipHint {
+  background: rgba(20, 20, 20, 0.6);
+  color: #fff;
+  font-family: var(--font-sans);
+  font-size: 1.25cqw;
+  padding: 0.45cqw 0.9cqw;
+}
+
+/* C · Chrono — D · Mini-carte */
+
+.topRight {
+  position: absolute;
+  right: 2.4cqw;
+  top: 2.4cqw;
+  width: 20cqw;
+  display: flex;
+  flex-direction: column;
+  text-transform: uppercase;
+}
+
+.chronoRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1cqw;
+  background: var(--ink);
+  color: #fff;
+  padding: 0.6cqw 1.1cqw;
+}
+
+.chronoLabel {
+  font-size: 1.4cqw;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: #b8b8b4;
+}
+
+.chronoTime {
+  font-size: 2.7cqw;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.recordRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1cqw;
+  background: #fff;
+  color: var(--ink);
+  padding: 0.5cqw 1.1cqw;
+  font-size: 1.45cqw;
+  font-weight: 600;
+}
+
+.missing {
+  color: var(--red);
+}
+
+.miniMap {
+  margin-top: 0.8cqw;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 0.8cqw 0.9cqw 0.5cqw;
+}
+
+.miniMap svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.miniMapLabel {
+  display: block;
+  font-size: 1.25cqw;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--text-soft);
+  padding-top: 0.3cqw;
+}
+
+/* E · Bandeau projet — F · Étiquettes */
+
+.lowerThird {
+  position: absolute;
+  left: 2.4cqw;
+  bottom: 2.4cqw;
+  width: 58cqw;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.lowerTop {
+  display: flex;
+  align-items: stretch;
+}
+
+.lowerNumber {
+  background: var(--red);
+  color: #fff;
+  font-size: 4.6cqw;
+  font-weight: 700;
+  line-height: 1;
+  padding: 0.6cqw 1.4cqw;
+  display: flex;
+  align-items: center;
+}
+
+.lowerName {
+  background: #fff;
+  color: var(--ink);
+  padding: 0.75cqw 1.5cqw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.25cqw;
+}
+
+.lowerTitle {
+  font-size: 3.5cqw;
+  font-weight: 700;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+}
+
+.lowerMeta {
+  font-family: var(--font-sans);
+  font-size: 1.45cqw;
+  font-weight: 500;
+  color: #55554f;
+}
+
+.lowerShort {
+  background: var(--ink);
+  color: #fff;
+  font-family: var(--font-sans);
+  font-size: 1.65cqw;
+  line-height: 1.35;
+  padding: 0.9cqw 1.5cqw;
+  max-width: 100%;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5cqw;
+  margin-top: 0.6cqw;
+  font-size: 1.45cqw;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.tagStatus,
+.tag {
+  padding: 0.35cqw 0.8cqw;
+}
+
+.tagStatus {
+  background: var(--red);
+  color: #fff;
+}
+
+.tag {
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--ink);
+}
+
+/* G · Télémétrie */
+
+.telemetry {
+  position: absolute;
+  right: 2.4cqw;
+  bottom: 2.4cqw;
+  width: 27cqw;
+  background: var(--tv-panel);
+  color: #fff;
+  padding: 1cqw 1.2cqw;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9cqw;
+}
+
+.leds {
+  display: flex;
+  gap: 0.35cqw;
+}
+
+.led {
+  flex: 1;
+  height: 0.7cqw;
+}
+
+.telemetryRow {
+  display: flex;
+  align-items: stretch;
+  gap: 1.2cqw;
+}
+
+.gearBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 0.2cqw solid #fff;
+  padding: 0.2cqw 0.9cqw;
+  min-width: 4cqw;
+}
+
+.speedBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.telemetryLabel {
+  font-size: 1.15cqw;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: #b8b8b4;
+  text-transform: uppercase;
+}
+
+.bigNumber {
+  font-size: 4.4cqw;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.gauges {
+  margin-left: auto;
+  display: flex;
+  gap: 0.7cqw;
+}
+
+.gauge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3cqw;
+}
+
+.gaugeTrack {
+  width: 1.4cqw;
+  height: 5.2cqw;
+  background: #3a3b3e;
+  display: flex;
+  align-items: flex-end;
+}
+
+.gaugeFill {
+  width: 100%;
+}
+
+.gaugeLabel {
+  font-size: 1.05cqw;
+  font-weight: 600;
+  color: #b8b8b4;
+  text-transform: uppercase;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scene,
+  .scene[data-open='true'] {
+    transition: none;
+    transform: none;
+  }
+  .liveDot {
+    animation: none;
+  }
+}

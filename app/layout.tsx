@@ -1,120 +1,98 @@
-import "../global.css";
-import { Inter } from "next/font/google";
-import LocalFont from "next/font/local";
-import { Metadata } from "next";
-import { Analytics } from "./components/analytics";
-import { SpeedInsights } from "@vercel/speed-insights/next";
+import { SpeedInsights } from '@vercel/speed-insights/next';
+import type { Metadata } from 'next';
+import { Barlow_Condensed, Hanken_Grotesk } from 'next/font/google';
+import { Suspense, type ReactNode } from 'react';
+import { Analytics } from '@/components/Analytics';
+import { PageTransitions } from '@/components/PageTransitions';
+import { SITE_NAME, SITE_URL } from '@/lib/site';
+import './globals.css';
+
+const hanken = Hanken_Grotesk({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-hanken',
+  display: 'swap',
+});
+
+// Habillage TV uniquement : pas de préchargement, la police n'est utile qu'au survol.
+const barlow = Barlow_Condensed({
+  subsets: ['latin'],
+  weight: ['500', '600', '700'],
+  variable: '--font-barlow',
+  display: 'swap',
+  preload: false,
+});
+
+const description =
+  "Moi c'est Lucas Da Silveira, étudiant en informatique passionné de développement. Un tour du circuit de Magny-Cours, un projet par virage.";
 
 export const metadata: Metadata = {
-	metadataBase: new URL("https://ldasilveira.fr"),
-	title: {
-		default: "Lucas Da Silveira - Portfolio | Étudiant en informatique",
-		template: "%s | Lucas Da Silveira",
-	},
-	description:
-		"Moi c'est Lucas Da Silveira, étudiant en informatique passionné de développement. Je crée des projets qui me passionnent, venez les découvrir !",
-	applicationName: "Lucas Da Silveira",
-	authors: [{ name: "Lucas Da Silveira", url: "https://ldasilveira.fr" }],
-	creator: "Lucas Da Silveira",
-	publisher: "Lucas Da Silveira",
-	keywords: [
-		"Lucas Da Silveira",
-		"Lucas Da Silveira portfolio",
-		"Lucas Da Silveira développeur",
-		"ldasilveira",
-		"lucasdslvra",
-		"développeur web",
-		"étudiant en informatique",
-		"Next.js",
-		"React",
-		"TypeScript",
-		"JavaScript",
-		"Java",
-		"PHP",
-		"SQL",
-		"Symfony",
-		"HTML",
-		"CSS",
-		"Tailwind CSS",
-		"Python",
-		"PostgreSQL",
-		"MongoDB",
-		"Node.js"
-	],
-	alternates: {
-		canonical: "/",
-	},
-	openGraph: {
-		title: "Lucas Da Silveira - Portfolio",
-		description:
-			"Moi c'est Lucas, étudiant en informatique passionné de développement. Découvrez mes projets, mon parcours et comment me contacter.",
-		url: "https://ldasilveira.fr",
-		siteName: "Lucas Da Silveira",
-		images: [
-			{
-				url: "/og.png",
-				width: 1920,
-				height: 1080,
-				alt: "Lucas Da Silveira _ Portfolio",
-			},
-		],
-		locale: "fr_FR",
-		type: "website",
-	},
-	twitter: {
-		card: "summary_large_image",
-		title: "Lucas Da Silveira - Portfolio",
-		description:
-			"Moi c'est Lucas, étudiant en informatique passionné de développement. Venez découvrir mes projets !",
-		images: ["/og.png"],
-	},
-	robots: {
-		index: true,
-		follow: true,
-		googleBot: {
-			index: true,
-			follow: true,
-			"max-video-preview": -1,
-			"max-image-preview": "large",
-			"max-snippet": -1,
-		},
-	},
-	icons: {
-		shortcut: "/favicon.png",
-	},
-	verification: {
-		// Remplace par le code fourni par Google Search Console (balise HTML).
-		google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
-	},
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: 'Lucas Da Silveira — Portfolio | Étudiant en informatique',
+    template: '%s — Lucas Da Silveira',
+  },
+  description,
+  applicationName: SITE_NAME,
+  authors: [{ name: SITE_NAME, url: SITE_URL }],
+  creator: SITE_NAME,
+  publisher: SITE_NAME,
+  keywords: [
+    'Lucas Da Silveira',
+    'Lucas Da Silveira portfolio',
+    'Lucas Da Silveira développeur',
+    'ldasilveira',
+    'lucasdslvra',
+    'développeur web',
+    'étudiant en informatique',
+    'Next.js',
+    'React',
+    'TypeScript',
+    'Symfony',
+  ],
+  alternates: { canonical: '/' },
+  openGraph: {
+    title: 'Lucas Da Silveira — Portfolio',
+    description,
+    url: SITE_URL,
+    siteName: SITE_NAME,
+    images: [{ url: '/og.png', width: 1920, height: 1080, alt: 'Lucas Da Silveira — Portfolio' }],
+    locale: 'fr_FR',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Lucas Da Silveira — Portfolio',
+    description,
+    images: ['/og.png'],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, 'max-video-preview': -1, 'max-image-preview': 'large', 'max-snippet': -1 },
+  },
+  icons: { shortcut: '/favicon.png' },
+  themeColor: '#FFFFFF',
+  colorScheme: 'light',
+  verification: {
+    // Code fourni par Google Search Console (balise HTML).
+    google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
+  },
 };
-const inter = Inter({
-	subsets: ["latin"],
-	variable: "--font-inter",
-});
 
-const calSans = LocalFont({
-	src: "../public/fonts/CalSans-SemiBold.ttf",
-	variable: "--font-calsans",
-});
-
-export default function RootLayout({
-	children,
-}: {
-	children: React.ReactNode;
-}) {
-	return (
-		<html lang="fr" className={[inter.variable, calSans.variable].join(" ")}>
-			<head>
-				<Analytics />
-			</head>
-			<body
-				className={`bg-black ${
-					process.env.NODE_ENV === "development" ? "debug-screens" : undefined
-				}`}
-			>
-				{children}
-				<SpeedInsights />
-			</body>
-		</html>
-	);
+export default function RootLayout({ children }: { children: ReactNode }) {
+  return (
+    <html lang="fr" className={`${hanken.variable} ${barlow.variable}`}>
+      <head>
+        <Analytics />
+      </head>
+      <body>
+        {children}
+        <Suspense fallback={null}>
+          <PageTransitions />
+        </Suspense>
+        <SpeedInsights />
+      </body>
+    </html>
+  );
 }

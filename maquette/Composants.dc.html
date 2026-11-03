@@ -1,0 +1,569 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Composants — Lucas Da Silveira</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&amp;family=Hanken+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#FFFFFF}
+a{color:#141414}a:hover{color:#C4161C}
+code{font-family:ui-monospace,monospace;font-size:0.9em;background:#F1F0EC;padding:1px 5px}
+.sec{max-width:1280px;margin:0 auto;padding:64px 24px 0}
+.sec-h{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 16px;border-top:1px solid #141414;padding-top:16px;margin-bottom:32px}
+.sec-n{font-size:14px;font-weight:600;color:#C4161C}
+.sec-t{margin:0;font-size:36px;line-height:1.05;font-weight:600;letter-spacing:-0.02em}
+.sec-d{flex-basis:100%;margin:4px 0 0;font-size:16px;line-height:1.5;color:#3A3A38;max-width:720px}
+.grid{display:flex;flex-wrap:wrap;gap:40px 32px}
+.cmp{flex:1 1 400px;min-width:0;display:flex;flex-direction:column;gap:10px}
+.wide{flex-basis:100%}
+.cmp-h{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 12px}
+.cmp-h h3{margin:0;font-size:19px;font-weight:600}
+.use{font-size:13px;color:#6A6A66}
+.cmp-d{margin:0;font-size:15px;line-height:1.5;color:#3A3A38;max-width:680px}
+.spec{border:1px solid #E3E2DE;padding:24px;display:flex;flex-wrap:wrap;gap:24px 32px;align-items:flex-end;background:#FFFFFF;min-width:0}
+.dots{background-color:#FAFAF8;background-image:radial-gradient(#E3E2DE 1px,transparent 1px);background-size:16px 16px}
+.col{flex-direction:column;align-items:stretch}
+.var{display:flex;flex-direction:column;gap:8px;align-items:flex-start;min-width:0}
+.vl{font-size:12px;color:#6A6A66;font-family:ui-monospace,monospace}
+.btn{display:inline-flex;align-items:center;height:48px;padding:0 22px;background:#141414;color:#FFFFFF;font-size:16px;font-weight:600;text-decoration:none;box-sizing:border-box}
+.btn2{display:inline-flex;align-items:center;height:48px;padding:0 22px;border:1.5px solid #141414;background:#FFFFFF;color:#141414;font-size:16px;font-weight:600;text-decoration:none;box-sizing:border-box}
+.ph{background:#EEEDEA;display:flex;align-items:center;justify-content:center;font-size:14px;color:#55554F;text-align:center}
+.tv{font-family:'Barlow Condensed','Hanken Grotesk',sans-serif;font-variant-numeric:tabular-nums}
+.focus{outline:2px solid #C4161C;outline-offset:3px}
+</style>
+</helmet>
+<div style="background: #FFFFFF; color: #141414; font-family: 'Hanken Grotesk', Helvetica, sans-serif; font-variant-numeric: tabular-nums; padding-bottom: 96px">
+
+<header style="max-width: 1280px; margin: 0 auto; padding: 56px 24px 8px; display: flex; flex-wrap: wrap; gap: 32px 48px; align-items: flex-end">
+<div style="flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column; gap: 16px">
+<span style="font-size: 15px; font-weight: 600; color: {{red}}">Carte du circuit · bibliothèque</span>
+<h1 style="margin: 0; font-size: clamp(44px, 5vw, 64px); line-height: 1; font-weight: 600; letter-spacing: -0.035em">Composants du portfolio</h1>
+<p style="margin: 0; max-width: 720px; font-size: 20px; line-height: 1.5; color: #3A3A38">Tous les éléments présents sur le site, avec leurs variantes et leurs états, et les pages où on les retrouve. Les contenus sont ceux du site actuel.</p>
+</div>
+<nav aria-label="Sections" style="flex: 1 1 300px; display: grid; grid-template-columns: 1fr 1fr; column-gap: 24px; border-top: 1px solid #141414; font-size: 15px">
+<a href="#fondations" style="padding: 9px 0; border-bottom: 1px solid #E3E2DE; text-decoration: none"><span style="color: #6A6A66">00</span> Fondations</a>
+<a href="#nav" style="padding: 9px 0; border-bottom: 1px solid #E3E2DE; text-decoration: none"><span style="color: #6A6A66">01</span> Navigation</a>
+<a href="#actions" style="padding: 9px 0; border-bottom: 1px solid #E3E2DE; text-decoration: none"><span style="color: #6A6A66">02</span> Boutons et liens</a>
+<a href="#circuit" style="padding: 9px 0; border-bottom: 1px solid #E3E2DE; text-decoration: none"><span style="color: #6A6A66">03</span> Circuit</a>
+<a href="#onboard" style="padding: 9px 0; border-bottom: 1px solid #E3E2DE; text-decoration: none"><span style="color: #6A6A66">04</span> Vue embarquée</a>
+<a href="#projets" style="padding: 9px 0; border-bottom: 1px solid #E3E2DE; text-decoration: none"><span style="color: #6A6A66">05</span> Projets</a>
+<a href="#article" style="padding: 9px 0; border-bottom: 1px solid #E3E2DE; text-decoration: none"><span style="color: #6A6A66">06</span> Article</a>
+<a href="#contact" style="padding: 9px 0; border-bottom: 1px solid #E3E2DE; text-decoration: none"><span style="color: #6A6A66">07</span> Contact et états</a>
+</nav>
+</header>
+
+<section id="fondations" class="sec">
+<div class="sec-h"><span class="sec-n">00</span><h2 class="sec-t">Fondations</h2><p class="sec-d">Fond blanc, encre noire, un seul rouge pour signaler ce qui est actif. Les couleurs vives de la télémétrie ne servent que dans l’habillage TV.</p></div>
+<div class="grid">
+
+<div class="cmp wide">
+<div class="cmp-h"><h3>Couleurs</h3><span class="use">Toutes les pages</span></div>
+<div class="spec" style="align-items: stretch">
+<sc-for list="{{colors}}" as="c" hint-placeholder-count="9"><div class="var" style="width: 128px"><span style="width: 128px; height: 72px; background: {{c.hex}}; border: 1px solid #E3E2DE; box-sizing: border-box"></span><span style="font-size: 14px; font-weight: 600">{{c.name}}</span><span class="vl">{{c.hex}}</span><span style="font-size: 13px; line-height: 1.35; color: #3A3A38">{{c.use}}</span></div></sc-for>
+</div>
+<div class="spec" style="align-items: stretch; border-top: 0">
+<span class="vl" style="flex-basis: 100%">Habillage TV uniquement</span>
+<sc-for list="{{tvColors}}" as="c" hint-placeholder-count="4"><div class="var" style="width: 128px"><span style="width: 128px; height: 40px; background: {{c.hex}}"></span><span style="font-size: 14px; font-weight: 600">{{c.name}}</span><span class="vl">{{c.hex}}</span></div></sc-for>
+</div>
+</div>
+
+<div class="cmp" style="flex-basis: 620px">
+<div class="cmp-h"><h3>Typographie</h3><span class="use">Hanken Grotesk · Barlow Condensed (TV)</span></div>
+<div class="spec col" style="gap: 0; padding: 8px 24px">
+<div style="display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 16px; align-items: baseline; padding: 14px 0; border-bottom: 1px solid #E3E2DE"><span class="vl">Titre 1 · 44–80 / 600</span><span style="font-size: 56px; line-height: 1; font-weight: 600; letter-spacing: -0.035em">AC Paddock</span></div>
+<div style="display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 16px; align-items: baseline; padding: 14px 0; border-bottom: 1px solid #E3E2DE"><span class="vl">Titre 2 · 28–40 / 600</span><span style="font-size: 36px; line-height: 1.05; font-weight: 600; letter-spacing: -0.02em">Un vote sans triche</span></div>
+<div style="display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 16px; align-items: baseline; padding: 14px 0; border-bottom: 1px solid #E3E2DE"><span class="vl">Titre 3 · 19–20 / 600</span><span style="font-size: 20px; font-weight: 600">Me contacter</span></div>
+<div style="display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 16px; align-items: baseline; padding: 14px 0; border-bottom: 1px solid #E3E2DE"><span class="vl">Chapô · 20 / 400</span><span style="font-size: 20px; line-height: 1.5; color: #3A3A38">Moi c'est Lucas, étudiant en informatique passionné de développement.</span></div>
+<div style="display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 16px; align-items: baseline; padding: 14px 0; border-bottom: 1px solid #E3E2DE"><span class="vl">Corps · 18 / 400</span><span style="font-size: 18px; line-height: 1.7; color: #2C2C2A">Chaque membre dispose de 8 votes pour les véhicules et de 3 pour les circuits.</span></div>
+<div style="display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 16px; align-items: baseline; padding: 14px 0; border-bottom: 1px solid #E3E2DE"><span class="vl">Surtitre · 14–15 / 600</span><span style="font-size: 15px; font-weight: 600; color: {{red}}">Virage 1 · Estoril · septembre 2026</span></div>
+<div style="display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 16px; align-items: baseline; padding: 14px 0; border-bottom: 1px solid #E3E2DE"><span class="vl">Légende · 13–14 / 400</span><span style="font-size: 14px; color: #6A6A66">Le catalogue et ses filtres.</span></div>
+<div style="display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 16px; align-items: baseline; padding: 14px 0"><span class="vl">TV · Barlow Cond. 700</span><span class="tv" style="font-size: 34px; font-weight: 700; text-transform: uppercase; line-height: 1">Onboard · 0:04.512</span></div>
+</div>
+</div>
+
+<div class="cmp" style="flex-basis: 360px">
+<div class="cmp-h"><h3>Grille, filets et cibles</h3><span class="use">Toutes les pages</span></div>
+<div class="spec col" style="gap: 18px">
+<div style="display: flex; flex-direction: column; gap: 6px"><span class="vl">Conteneur 1280 px · marges 24 px (16 px mobile)</span><div style="display: flex; height: 36px; border: 1px dashed #B9B8B3"><span style="width: 24px; background: #F4F3F0"></span><span style="flex: 1; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #6A6A66">max 1280</span><span style="width: 24px; background: #F4F3F0"></span></div></div>
+<div style="display: flex; flex-direction: column; gap: 6px"><span class="vl">Filet de section · 1 px encre</span><span style="height: 1px; background: #141414"></span></div>
+<div style="display: flex; flex-direction: column; gap: 6px"><span class="vl">Filet de ligne · 1 px #E3E2DE</span><span style="height: 1px; background: #E3E2DE"></span></div>
+<div style="display: flex; gap: 16px; align-items: flex-end"><div class="var"><span style="width: 44px; height: 44px; border: 1.5px dashed {{red}}; box-sizing: border-box"></span><span class="vl">44 px min.</span></div><div class="var"><span style="width: 120px; height: 48px; background: #141414"></span><span class="vl">bouton 48 px</span></div></div>
+<div style="display: flex; flex-direction: column; gap: 6px"><span class="vl">Angles droits partout (aucun arrondi), pas d’ombre</span></div>
+</div>
+</div>
+
+</div>
+</section>
+
+<section id="nav" class="sec">
+<div class="sec-h"><span class="sec-n">01</span><h2 class="sec-t">Navigation</h2></div>
+<div class="grid">
+
+<div class="cmp wide">
+<div class="cmp-h"><h3>Barre de navigation (desktop)</h3><span class="use">Accueil · Projets · Article · Contact · 404</span></div>
+<p class="cmp-d">Logo à gauche (le tracé de Magny-Cours en pictogramme + le nom), trois liens à droite. La page en cours passe en rouge, avec <code>aria-current="page"</code>.</p>
+<div class="spec col" style="padding: 0; gap: 0">
+<div style="border-bottom: 1px solid #E3E2DE; padding: 12px 24px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 32px">
+<a href="Accueil.dc.html" style="display: flex; align-items: center; gap: 12px; min-height: 44px; text-decoration: none"><svg width="34" height="24" viewBox="0 0 680 480" aria-hidden="true"><path d="{{track}}" fill="none" stroke="#141414" stroke-width="44" stroke-linejoin="round"></path></svg><span style="font-size: 19px; font-weight: 600">Lucas Da Silveira</span></a>
+<div style="display: flex; flex-wrap: wrap; gap: 4px 32px; font-size: 16px; font-weight: 500"><a href="Projets.dc.html" style="padding: 12px 0; text-decoration: none">Projets</a><a href="Contact.dc.html" style="padding: 12px 0; text-decoration: none">Contact</a><a href="https://github.com/lucasdslvra" style="padding: 12px 0; text-decoration: none">GitHub ↗</a></div>
+</div>
+<span class="vl" style="padding: 8px 24px">Accueil : aucun lien actif</span>
+<div style="border-top: 1px solid #E3E2DE; border-bottom: 1px solid #E3E2DE; padding: 12px 24px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 32px">
+<a href="Accueil.dc.html" style="display: flex; align-items: center; gap: 12px; min-height: 44px; text-decoration: none"><svg width="34" height="24" viewBox="0 0 680 480" aria-hidden="true"><path d="{{track}}" fill="none" stroke="#141414" stroke-width="44" stroke-linejoin="round"></path></svg><span style="font-size: 19px; font-weight: 600">Lucas Da Silveira</span></a>
+<div style="display: flex; flex-wrap: wrap; gap: 4px 32px; font-size: 16px; font-weight: 500"><a href="Projets.dc.html" aria-current="page" style="padding: 12px 0; text-decoration: none; color: {{red}}">Projets</a><a href="Contact.dc.html" style="padding: 12px 0; text-decoration: none">Contact</a><a href="https://github.com/lucasdslvra" class="focus" style="padding: 12px 0; text-decoration: none">GitHub ↗</a></div>
+</div>
+<span class="vl" style="padding: 8px 24px">Projets / Article : « Projets » actif · « GitHub » montré avec le focus clavier</span>
+</div>
+</div>
+
+<div class="cmp">
+<div class="cmp-h"><h3>Barre mobile</h3><span class="use">Toutes les pages mobiles</span></div>
+<p class="cmp-d">Pictogramme réduit, nom, et un bouton texte « Menu » (pas d’icône burger). Une fois ouvert, il devient « Fermer », en noir plein.</p>
+<div class="spec dots" style="flex-direction: column; align-items: flex-start">
+<div class="var"><div style="width: 358px; height: 60px; padding: 0 16px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #E3E2DE; background: #FFFFFF; box-sizing: border-box"><span style="display: flex; align-items: center; gap: 10px"><svg width="28" height="20" viewBox="0 0 680 480" aria-hidden="true"><path d="{{track}}" fill="none" stroke="#141414" stroke-width="44" stroke-linejoin="round"></path></svg><span style="font-size: 17px; font-weight: 600">Lucas Da Silveira</span></span><a href="Mobile-Menu.dc.html" style="display: inline-flex; align-items: center; height: 44px; padding: 0 14px; border: 1.5px solid #141414; font-size: 15px; font-weight: 600; text-decoration: none">Menu</a></div><span class="vl">Fermé</span></div>
+<div class="var"><div style="width: 358px; height: 60px; padding: 0 16px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #E3E2DE; background: #FFFFFF; box-sizing: border-box"><span style="display: flex; align-items: center; gap: 10px"><svg width="28" height="20" viewBox="0 0 680 480" aria-hidden="true"><path d="{{track}}" fill="none" stroke="#141414" stroke-width="44" stroke-linejoin="round"></path></svg><span style="font-size: 17px; font-weight: 600">Lucas Da Silveira</span></span><a href="Mobile-Accueil.dc.html" style="display: inline-flex; align-items: center; height: 44px; padding: 0 14px; background: #141414; color: #FFFFFF; font-size: 15px; font-weight: 600; text-decoration: none">Fermer</a></div><span class="vl">Ouvert</span></div>
+</div>
+</div>
+
+<div class="cmp">
+<div class="cmp-h"><h3>Menu mobile plein écran</h3><span class="use">Mobile</span></div>
+<p class="cmp-d">Grands liens de 64 px de haut. La rubrique en cours est rouge, avec un compteur à droite ; les liens externes portent ↗.</p>
+<div class="spec dots">
+<nav aria-label="Exemple de menu mobile" style="width: 358px; padding: 0 16px; background: #FFFFFF; display: flex; flex-direction: column; box-sizing: border-box">
+<a href="Mobile-Accueil.dc.html" style="display: flex; align-items: center; min-height: 64px; border-bottom: 1px solid #E3E2DE; font-size: 32px; font-weight: 600; letter-spacing: -0.02em; text-decoration: none">Accueil</a>
+<a href="Mobile-Accueil.dc.html" style="display: flex; align-items: center; justify-content: space-between; min-height: 64px; border-bottom: 1px solid #E3E2DE; font-size: 32px; font-weight: 600; letter-spacing: -0.02em; text-decoration: none; color: {{red}}">Projets<span style="font-size: 15px; font-weight: 500; color: #6A6A66">4 virages</span></a>
+<a href="https://github.com/lucasdslvra" style="display: flex; align-items: center; justify-content: space-between; min-height: 64px; font-size: 32px; font-weight: 600; letter-spacing: -0.02em; text-decoration: none">GitHub<span style="font-size: 22px">↗</span></a>
+</nav>
+</div>
+</div>
+
+<div class="cmp">
+<div class="cmp-h"><h3>Fil d’Ariane</h3><span class="use">Article</span></div>
+<div class="spec"><nav aria-label="Fil d'Ariane" style="font-size: 15px; color: #6A6A66"><a href="Accueil.dc.html">Accueil</a> / <a href="Projets.dc.html">Projets</a> / AC Paddock</nav></div>
+</div>
+
+<div class="cmp">
+<div class="cmp-h"><h3>Pied de page</h3><span class="use">Toutes les pages</span></div>
+<div class="spec col" style="padding: 0; gap: 0">
+<div style="padding: 18px 24px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; font-size: 13px; color: #6A6A66"><span>© 2026 Lucas Da Silveira</span><span>Fait main en Next.js</span></div>
+<span class="vl" style="padding: 0 24px 8px">Accueil · Projets · Contact</span>
+<div style="border-top: 1px solid #E3E2DE; padding: 18px 24px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; font-size: 13px; color: #6A6A66"><span>© 2026 Lucas Da Silveira</span><a href="mailto:lucasdslvra@gmail.com">lucasdslvra@gmail.com</a></div>
+<span class="vl" style="padding: 0 24px 8px">Article · 404 : avec l’e-mail</span>
+</div>
+</div>
+
+</div>
+</section>
+
+<section id="actions" class="sec">
+<div class="sec-h"><span class="sec-n">02</span><h2 class="sec-t">Boutons et liens</h2><p class="sec-d">Deux boutons seulement, toujours accompagnés au plus d’un lien texte. Le survol passe le texte en rouge ; le focus clavier ajoute un contour rouge de 2 px.</p></div>
+<div class="grid">
+
+<div class="cmp wide">
+<div class="cmp-h"><h3>Boutons</h3><span class="use">Toutes les pages</span></div>
+<div class="spec">
+<div class="var"><a href="Article.dc.html" class="btn">Lire le projet</a><span class="vl">Principal · défaut</span></div>
+<div class="var"><a href="Article.dc.html" class="btn" style="background: {{red}}">Lire le projet</a><span class="vl">Principal · survol</span></div>
+<div class="var"><a href="Article.dc.html" class="btn focus">Lire le projet</a><span class="vl">Principal · focus</span></div>
+<div class="var"><a href="Contact.dc.html" class="btn2">Arrivée : me contacter</a><span class="vl">Secondaire · défaut</span></div>
+<div class="var"><a href="Contact.dc.html" class="btn2" style="border-color: {{red}}; color: {{red}}">Arrivée : me contacter</a><span class="vl">Secondaire · survol</span></div>
+<div class="var"><a href="https://ac-paddock.vercel.app" class="btn">Voir la démo ↗</a><span class="vl">Principal · externe</span></div>
+</div>
+</div>
+
+<div class="cmp">
+<div class="cmp-h"><h3>Liens texte</h3><span class="use">Toutes les pages</span></div>
+<div class="spec">
+<div class="var"><a href="https://ac-paddock.vercel.app" style="font-size: 16px">Voir la démo</a><span class="vl">Défaut (souligné)</span></div>
+<div class="var"><a href="https://github.com/enzodaloia/MrVeto" style="font-size: 16px; color: {{red}}">Code source</a><span class="vl">Survol</span></div>
+<div class="var"><a href="https://www.linkedin.com/in/lucasdslvra/" style="font-size: 16px; text-decoration: none">LinkedIn ↗</a><span class="vl">Externe, sans soulignement</span></div>
+</div>
+</div>
+
+<div class="cmp">
+<div class="cmp-h"><h3>Bouton copier</h3><span class="use">Contact</span></div>
+<p class="cmp-d">Copie l’adresse e-mail. Le libellé change pour confirmer l’action.</p>
+<div class="spec">
+<div class="var"><button type="button" onClick="{{copy}}" class="btn2" style="font: inherit; font-size: 15px; font-weight: 600; cursor: pointer; height: 48px">{{copyLabel}}</button><span class="vl">Cliquable</span></div>
+<div class="var"><span class="btn2" style="font-size: 15px">Adresse copiée ✓</span><span class="vl">Après clic</span></div>
+</div>
+</div>
+
+<div class="cmp wide">
+<div class="cmp-h"><h3>Filtres de catégorie</h3><span class="use">Projets</span></div>
+<p class="cmp-d">Boutons bascules avec <code>aria-pressed</code> et le nombre de projets. Un seul actif à la fois ; les virages hors filtre passent en gris sur la carte.</p>
+<div class="spec">
+<div role="group" aria-label="Filtrer par catégorie" style="display: flex; flex-wrap: wrap; gap: 8px">
+<sc-for list="{{filters}}" as="f" hint-placeholder-count="4"><button type="button" onClick="{{f.pick}}" aria-pressed="{{f.pressed}}" style="height: 44px; padding: 0 18px; border: 1.5px solid #141414; background: {{f.bg}}; color: {{f.fg}}; font: inherit; font-size: 15px; font-weight: 500; cursor: pointer">{{f.label}} <span style="opacity: 0.7">{{f.count}}</span></button></sc-for>
+</div>
+<span class="vl">Cliquables : actif = noir plein</span>
+</div>
+</div>
+
+</div>
+</section>
+
+<section id="circuit" class="sec">
+<div class="sec-h"><span class="sec-n">03</span><h2 class="sec-t">Circuit</h2><p class="sec-d">Le vrai tracé de Nevers Magny-Cours (4,4 km), dessiné en SVG. Chaque projet occupe un virage : 1 Estoril, 2 Adélaïde, 3 Château d’Eau, 4 Lycée.</p></div>
+<div class="grid">
+
+<div class="cmp">
+<div class="cmp-h"><h3>Pastille de virage</h3><span class="use">Accueil · Projets · Article · Mobile</span></div>
+<div class="spec">
+<div class="var"><span style="width: 30px; height: 30px; border-radius: 15px; border: 2px solid #141414; background: #FFFFFF; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; box-sizing: border-box">2</span><span class="vl">Inactive</span></div>
+<div class="var"><span style="width: 30px; height: 30px; border-radius: 15px; border: 2px solid {{red}}; background: {{red}}; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; box-sizing: border-box">1</span><span class="vl">Active</span></div>
+<div class="var"><span style="width: 30px; height: 30px; border-radius: 15px; background: #B9B8B3; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700">3</span><span class="vl">Hors filtre</span></div>
+<div class="var"><span style="width: 26px; height: 26px; border-radius: 13px; border: 2px solid #141414; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; box-sizing: border-box">4</span><span class="vl">Étape (article)</span></div>
+<div class="var"><span style="width: 13px; height: 13px; border-radius: 7px; background: #B9B8B3"></span><span class="vl">Repère (contact)</span></div>
+</div>
+</div>
+
+<div class="cmp">
+<div class="cmp-h"><h3>Drapeau à damier</h3><span class="use">Ligne d’arrivée · lien Contact</span></div>
+<div class="spec">
+<div class="var"><svg width="60" height="40" viewBox="0 0 30 20" aria-hidden="true"><rect width="30" height="20" fill="#FFFFFF" stroke="#141414" stroke-width="1.2"></rect><rect x="0" y="0" width="7.5" height="10" fill="#141414"></rect><rect x="15" y="0" width="7.5" height="10" fill="#141414"></rect><rect x="7.5" y="10" width="7.5" height="10" fill="#141414"></rect><rect x="22.5" y="10" width="7.5" height="10" fill="#141414"></rect></svg><span class="vl">Grand</span></div>
+<div class="var"><svg width="30" height="20" viewBox="0 0 30 20" aria-hidden="true"><rect width="30" height="20" fill="#FFFFFF" stroke="#141414" stroke-width="1.5"></rect><rect x="0" y="0" width="7.5" height="10" fill="#141414"></rect><rect x="15" y="0" width="7.5" height="10" fill="#141414"></rect><rect x="7.5" y="10" width="7.5" height="10" fill="#141414"></rect><rect x="22.5" y="10" width="7.5" height="10" fill="#141414"></rect></svg><span class="vl">Liste</span></div>
+<div class="var"><svg width="34" height="24" viewBox="0 0 680 480" aria-hidden="true"><path d="{{track}}" fill="none" stroke="#141414" stroke-width="44" stroke-linejoin="round"></path></svg><span class="vl">Pictogramme logo</span></div>
+</div>
+</div>
+
+<div class="cmp wide">
+<div class="cmp-h"><h3>Carte du circuit · 5 variantes</h3><span class="use">Une par page</span></div>
+<div class="spec" style="align-items: flex-start">
+<div class="var" style="flex: 1 1 200px"><svg width="100%" viewBox="0 0 680 480" aria-hidden="true"><path d="{{track}}" fill="none" stroke="#141414" stroke-width="12" stroke-linejoin="round" stroke-linecap="round"></path><path d="{{seg1}}" fill="none" stroke="{{red}}" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"></path><circle cx="622" cy="36" r="18" fill="{{red}}"></circle><circle cx="108" cy="456" r="18" fill="#FFFFFF" stroke="#141414" stroke-width="2.5"></circle><circle cx="30" cy="430" r="18" fill="#FFFFFF" stroke="#141414" stroke-width="2.5"></circle><circle cx="94" cy="24" r="18" fill="#FFFFFF" stroke="#141414" stroke-width="2.5"></circle></svg><span class="vl">Accueil · virage actif en rouge</span></div>
+<div class="var" style="flex: 1 1 200px"><svg width="100%" viewBox="0 0 680 480" aria-hidden="true"><path d="{{track}}" fill="none" stroke="#D6D5D1" stroke-width="12" stroke-linejoin="round" stroke-linecap="round"></path><path d="{{seg1}}" fill="none" stroke="#141414" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"></path><path d="{{seg2}}" fill="none" stroke="#141414" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"></path><circle cx="622" cy="36" r="20" fill="{{red}}"></circle><circle cx="108" cy="456" r="20" fill="{{red}}"></circle><circle cx="30" cy="430" r="20" fill="#B9B8B3"></circle><circle cx="94" cy="24" r="20" fill="#B9B8B3"></circle></svg><span class="vl">Projets · filtre « Perso »</span></div>
+<div class="var" style="flex: 1 1 200px"><svg width="100%" viewBox="0 0 680 480" aria-hidden="true"><path d="{{track}}" fill="none" stroke="#D6D5D1" stroke-width="12" stroke-linejoin="round" stroke-linecap="round"></path><path d="{{seg1}}" fill="none" stroke="#141414" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"></path><circle cx="622" cy="36" r="22" fill="{{red}}"></circle></svg><span class="vl">Article · mini-carte</span></div>
+<div class="var" style="flex: 1 1 200px"><svg width="100%" viewBox="0 0 680 480" aria-hidden="true"><path d="{{track}}" fill="none" stroke="#D6D5D1" stroke-width="12" stroke-linejoin="round" stroke-linecap="round"></path><path d="M89 147 L61 50 L62 45 L67 42 L89 40 L122 44 L130 48 L130 54 L129 60 L131 65 L149 71 L277 111" fill="none" stroke="#141414" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"></path><circle cx="622" cy="36" r="13" fill="#B9B8B3"></circle><circle cx="108" cy="456" r="13" fill="#B9B8B3"></circle><circle cx="30" cy="430" r="13" fill="#B9B8B3"></circle><circle cx="94" cy="24" r="13" fill="#B9B8B3"></circle></svg><span class="vl">Contact · ligne d’arrivée</span></div>
+<div class="var" style="flex: 1 1 200px"><svg width="100%" viewBox="0 0 680 480" aria-hidden="true"><ellipse cx="112" cy="452" rx="66" ry="24" fill="#EFE7D6" stroke="#C9BFA8" stroke-width="2" stroke-dasharray="4 6"></ellipse><path d="{{track}}" fill="none" stroke="#141414" stroke-width="12" stroke-linejoin="round" stroke-linecap="round"></path><path d="M250 404 C200 420 160 436 120 451" fill="none" stroke="{{red}}" stroke-width="3" stroke-dasharray="6 6"></path><circle cx="112" cy="454" r="11" fill="{{red}}"></circle></svg><span class="vl">404 · sortie de piste</span></div>
+</div>
+</div>
+
+<div class="cmp wide">
+<div class="cmp-h"><h3>Liste des virages</h3><span class="use">Accueil (desktop et mobile)</span></div>
+<p class="cmp-d">Chaque ligne est un vrai lien vers l’article. Sur desktop, le survol ou le focus sélectionne le virage et lance la vue embarquée ; quitter la liste revient à la carte.</p>
+<div class="spec" style="align-items: flex-start">
+<ol style="margin: 0; padding: 0; list-style: none; border-top: 1px solid #141414; flex: 1 1 420px; max-width: 560px">
+<li style="border-bottom: 1px solid #E3E2DE"><a href="Article.dc.html" style="display: grid; grid-template-columns: 40px minmax(0, 1fr) auto auto; gap: 14px; align-items: center; min-height: 64px; text-decoration: none; background: #F4F3F0"><span style="width: 30px; height: 30px; border-radius: 15px; border: 2px solid {{red}}; background: {{red}}; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; box-sizing: border-box">1</span><span style="display: flex; flex-direction: column; gap: 1px"><span style="font-size: 19px; font-weight: 600">AC Paddock</span><span style="font-size: 13px; color: #6A6A66">Virage 1 · Estoril</span></span><span style="font-size: 14px; color: #6A6A66">sept. 2026</span><span class="vl" style="padding-right: 8px">survol</span></a></li>
+<li style="border-bottom: 1px solid #E3E2DE"><a href="Article.dc.html" style="display: grid; grid-template-columns: 40px minmax(0, 1fr) auto auto; gap: 14px; align-items: center; min-height: 64px; text-decoration: none"><span style="width: 30px; height: 30px; border-radius: 15px; border: 2px solid #141414; background: #FFFFFF; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; box-sizing: border-box">2</span><span style="display: flex; flex-direction: column; gap: 1px"><span style="font-size: 19px">SpotiFiles</span><span style="font-size: 13px; color: #6A6A66">Virage 2 · Adélaïde</span></span><span style="font-size: 14px; color: #6A6A66">juil. 2026</span><span class="vl" style="padding-right: 8px">défaut</span></a></li>
+<li><a href="Contact.dc.html" style="display: grid; grid-template-columns: 40px minmax(0, 1fr) auto; gap: 14px; align-items: center; min-height: 60px; text-decoration: none"><svg width="30" height="20" viewBox="0 0 30 20" aria-hidden="true"><rect width="30" height="20" fill="#FFFFFF" stroke="#141414" stroke-width="1.5"></rect><rect x="0" y="0" width="7.5" height="10" fill="#141414"></rect><rect x="15" y="0" width="7.5" height="10" fill="#141414"></rect><rect x="7.5" y="10" width="7.5" height="10" fill="#141414"></rect><rect x="22.5" y="10" width="7.5" height="10" fill="#141414"></rect></svg><span style="font-size: 19px; font-weight: 500">Arrivée : me contacter</span><span class="vl" style="padding-right: 8px">dernière ligne</span></a></li>
+</ol>
+<ol style="margin: 0; padding: 0; list-style: none; border-top: 1px solid #141414; width: 358px">
+<li style="border-bottom: 1px solid #E3E2DE"><a href="Mobile-Article.dc.html" style="display: grid; grid-template-columns: 36px minmax(0, 1fr) auto; gap: 12px; align-items: center; min-height: 56px; text-decoration: none"><span style="width: 28px; height: 28px; border-radius: 14px; border: 2px solid {{red}}; background: {{red}}; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; box-sizing: border-box">1</span><span style="font-size: 17px; font-weight: 600">AC Paddock</span><span style="font-size: 13px; color: #6A6A66">sept. 2026</span></a></li>
+<li style="border-bottom: 1px solid #E3E2DE"><a href="Mobile-Article.dc.html" style="display: grid; grid-template-columns: 36px minmax(0, 1fr) auto; gap: 12px; align-items: center; min-height: 56px; text-decoration: none"><span style="width: 28px; height: 28px; border-radius: 14px; border: 2px solid #141414; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; box-sizing: border-box">2</span><span style="font-size: 17px">SpotiFiles</span><span style="font-size: 13px; color: #6A6A66">juil. 2026</span></a></li>
+<li><span class="vl" style="display: block; padding-top: 8px">Version mobile · 56 px</span></li>
+</ol>
+</div>
+</div>
+
+</div>
+</section>
+
+<section id="onboard" class="sec">
+<div class="sec-h"><span class="sec-n">04</span><h2 class="sec-t">Vue embarquée et habillage TV</h2><p class="sec-d">Desktop uniquement. Le clip Assetto Corsa du virage joue en boucle, muet ; l’habillage est en HTML par-dessus, donc lisible, traduisible et modifiable sans réenregistrer. Avec « réduire les animations », on affiche une image fixe du clip.</p></div>
+<div class="grid">
+
+<div class="cmp wide">
+<div class="cmp-h"><h3>Séquence au survol</h3><span class="use">Accueil</span></div>
+<div class="spec" style="align-items: flex-start">
+<div class="var" style="flex: 1 1 260px"><div style="width: 100%; aspect-ratio: 680 / 480; border: 1px solid #E3E2DE; box-sizing: border-box"><svg width="100%" height="100%" viewBox="0 0 680 480" aria-hidden="true"><path d="{{track}}" fill="none" stroke="#141414" stroke-width="12" stroke-linejoin="round" stroke-linecap="round"></path><circle cx="622" cy="36" r="18" fill="#FFFFFF" stroke="#141414" stroke-width="2.5"></circle><circle cx="108" cy="456" r="18" fill="#FFFFFF" stroke="#141414" stroke-width="2.5"></circle><circle cx="30" cy="430" r="18" fill="#FFFFFF" stroke="#141414" stroke-width="2.5"></circle><circle cx="94" cy="24" r="18" fill="#FFFFFF" stroke="#141414" stroke-width="2.5"></circle></svg></div><span style="font-size: 14px; font-weight: 600">1 · Au repos</span><span class="vl">carte entière</span></div>
+<div class="var" style="flex: 1 1 260px"><div style="width: 100%; aspect-ratio: 680 / 480; border: 1px solid #E3E2DE; box-sizing: border-box; overflow: hidden"><svg width="100%" height="100%" viewBox="480 0 200 141" aria-hidden="true"><path d="{{track}}" fill="none" stroke="#141414" stroke-width="12" stroke-linejoin="round" stroke-linecap="round"></path><path d="{{seg1}}" fill="none" stroke="{{red}}" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"></path><circle cx="622" cy="36" r="18" fill="{{red}}"></circle></svg></div><span style="font-size: 14px; font-weight: 600">2 · Survol : zoom ×3,4 sur le virage</span><span class="vl">500 ms, puis fondu de la carte</span></div>
+<div class="var" style="flex: 1 1 260px"><div style="width: 100%; aspect-ratio: 680 / 480; background: #5A5C61; position: relative; display: flex; align-items: center; justify-content: center; color: #FFFFFF; font-size: 13px"><span>clip du virage</span><span class="tv" style="position: absolute; left: 4%; bottom: 6%; display: flex"><span style="background: {{red}}; padding: 2px 6px; font-weight: 700">1</span><span style="background: #FFFFFF; color: #141414; padding: 2px 8px; font-weight: 700; text-transform: uppercase">AC Paddock</span></span><span style="position: absolute; right: 4%; bottom: 6%; width: 26%; height: 14%; background: rgba(20,20,20,0.88)"></span></div><span style="font-size: 14px; font-weight: 600">3 · Vue embarquée + habillage</span><span class="vl">fondu 320 ms après le zoom</span></div>
+</div>
+</div>
+
+<div class="cmp wide">
+<div class="cmp-h"><h3>Habillage complet</h3><span class="use">Accueil · valeurs d’exemple</span></div>
+<div class="spec dots" style="align-items: flex-start">
+<div style="flex: 0 1 760px; min-width: 0">
+<div style="position: relative; width: 100%; aspect-ratio: 680 / 480; overflow: hidden; container-type: inline-size; background: #8FA870">
+<svg style="position: absolute; inset: 0" width="100%" height="100%" viewBox="0 0 680 480" preserveAspectRatio="none" aria-hidden="true"><rect width="680" height="200" fill="#CFDCE7"></rect><path d="M0 200 Q120 170 240 186 T480 180 T680 190 V210 H0 Z" fill="#6E7D62"></path><path d="M300 200 L380 200 L640 480 L40 480 Z" fill="#56575C"></path><path d="M300 200 L310 200 L80 480 L40 480 Z" fill="#D62A1E"></path><path d="M370 200 L380 200 L640 480 L600 480 Z" fill="#EDEDED"></path></svg>
+<div class="tv" style="position: absolute; inset: 0">
+<div style="position: absolute; left: 2.4cqw; top: 2.4cqw; display: flex; flex-direction: column; align-items: flex-start; gap: 0.8cqw">
+<div style="display: flex; align-items: stretch; font-size: 1.9cqw; font-weight: 700; line-height: 1; letter-spacing: 0.05em; text-transform: uppercase"><span style="background: {{red}}; color: #FFFFFF; padding: 0.65cqw 1.1cqw; display: flex; align-items: center; gap: 0.7cqw"><span style="width: 0.9cqw; height: 0.9cqw; border-radius: 50%; background: #FFFFFF"></span>Onboard</span><span style="background: #FFFFFF; color: #141414; padding: 0.65cqw 1.2cqw">Virage 1 · Estoril</span></div>
+<span style="background: rgba(20,20,20,0.6); color: #FFFFFF; font-family: 'Hanken Grotesk', sans-serif; font-size: 1.25cqw; padding: 0.45cqw 0.9cqw">Aperçu de synthèse · clip à venir : clips/01-estoril.mp4</span>
+</div>
+<div style="position: absolute; right: 2.4cqw; top: 2.4cqw; width: 20cqw; display: flex; flex-direction: column; text-transform: uppercase">
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 1cqw; background: #141414; color: #FFFFFF; padding: 0.6cqw 1.1cqw"><span style="font-size: 1.4cqw; font-weight: 600; letter-spacing: 0.06em; color: #B8B8B4">Chrono</span><span style="font-size: 2.7cqw; font-weight: 700; line-height: 1">0:04.512</span></div>
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 1cqw; background: #FFFFFF; color: #141414; padding: 0.5cqw 1.1cqw; font-size: 1.45cqw; font-weight: 600"><span>Record perso</span><span style="color: {{red}}">[ton temps]</span></div>
+<div style="margin-top: 0.8cqw; background: rgba(255,255,255,0.9); padding: 0.8cqw 0.9cqw 0.5cqw"><svg width="100%" viewBox="0 0 680 480" aria-hidden="true" style="display: block"><path d="{{track}}" fill="none" stroke="#141414" stroke-width="18" stroke-linejoin="round" stroke-linecap="round"></path><path d="{{seg1}}" fill="none" stroke="{{red}}" stroke-width="18" stroke-linejoin="round" stroke-linecap="round"></path><circle cx="570" cy="46" r="24" fill="#FFFFFF" stroke="{{red}}" stroke-width="10"></circle></svg><div style="font-size: 1.25cqw; font-weight: 600; letter-spacing: 0.04em; color: #3A3A38; padding-top: 0.3cqw">Magny-Cours · 4,4 km</div></div>
+</div>
+<div style="position: absolute; left: 2.4cqw; bottom: 2.4cqw; width: 58cqw; display: flex; flex-direction: column; align-items: flex-start">
+<div style="display: flex; align-items: stretch"><span style="background: {{red}}; color: #FFFFFF; font-size: 4.6cqw; font-weight: 700; line-height: 1; padding: 0.6cqw 1.4cqw; display: flex; align-items: center">1</span><span style="background: #FFFFFF; color: #141414; padding: 0.75cqw 1.5cqw; display: flex; flex-direction: column; justify-content: center; gap: 0.25cqw"><span style="font-size: 3.5cqw; font-weight: 700; line-height: 1; text-transform: uppercase; letter-spacing: 0.01em">AC Paddock</span><span style="font-family: 'Hanken Grotesk', sans-serif; font-size: 1.45cqw; font-weight: 500; color: #55554F">Projet perso · septembre 2026</span></span></div>
+<div style="background: #141414; color: #FFFFFF; font-family: 'Hanken Grotesk', sans-serif; font-size: 1.65cqw; line-height: 1.35; padding: 0.9cqw 1.5cqw; box-sizing: border-box; max-width: 100%">Catalogue de mods partagé et vote avant chaque soirée Assetto Corsa.</div>
+<div style="display: flex; flex-wrap: wrap; gap: 0.5cqw; margin-top: 0.6cqw; font-size: 1.45cqw; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase"><span style="background: {{red}}; color: #FFFFFF; padding: 0.35cqw 0.8cqw">Démo en ligne</span><span style="background: rgba(255,255,255,0.92); color: #141414; padding: 0.35cqw 0.8cqw">Next.js</span><span style="background: rgba(255,255,255,0.92); color: #141414; padding: 0.35cqw 0.8cqw">TypeScript</span><span style="background: rgba(255,255,255,0.92); color: #141414; padding: 0.35cqw 0.8cqw">Supabase</span><span style="background: rgba(255,255,255,0.92); color: #141414; padding: 0.35cqw 0.8cqw">Prisma</span></div>
+</div>
+<div style="position: absolute; right: 2.4cqw; bottom: 2.4cqw; width: 27cqw; box-sizing: border-box; background: rgba(20,20,20,0.88); color: #FFFFFF; padding: 1cqw 1.2cqw; display: flex; flex-direction: column; gap: 0.9cqw">
+<div style="display: flex; gap: 0.35cqw"><span style="flex: 1; height: 0.7cqw; background: #2BB75C"></span><span style="flex: 1; height: 0.7cqw; background: #2BB75C"></span><span style="flex: 1; height: 0.7cqw; background: #2BB75C"></span><span style="flex: 1; height: 0.7cqw; background: #2BB75C"></span><span style="flex: 1; height: 0.7cqw; background: #2BB75C"></span><span style="flex: 1; height: 0.7cqw; background: #F2C200"></span><span style="flex: 1; height: 0.7cqw; background: #F2C200"></span><span style="flex: 1; height: 0.7cqw; background: #F2C200; opacity: 0.18"></span><span style="flex: 1; height: 0.7cqw; background: #F2C200; opacity: 0.18"></span><span style="flex: 1; height: 0.7cqw; background: #E5322B; opacity: 0.18"></span><span style="flex: 1; height: 0.7cqw; background: #E5322B; opacity: 0.18"></span><span style="flex: 1; height: 0.7cqw; background: #E5322B; opacity: 0.18"></span></div>
+<div style="display: flex; align-items: stretch; gap: 1.2cqw">
+<div style="display: flex; flex-direction: column; align-items: center; justify-content: center; border: 0.2cqw solid #FFFFFF; padding: 0.2cqw 0.9cqw; min-width: 4cqw"><span style="font-size: 1.15cqw; font-weight: 600; letter-spacing: 0.06em; color: #B8B8B4">RAPPORT</span><span style="font-size: 4.4cqw; font-weight: 700; line-height: 1">4</span></div>
+<div style="display: flex; flex-direction: column; justify-content: center"><span style="font-size: 4.4cqw; font-weight: 700; line-height: 1">158</span><span style="font-size: 1.15cqw; font-weight: 600; letter-spacing: 0.06em; color: #B8B8B4">KM/H</span></div>
+<div style="margin-left: auto; display: flex; gap: 0.7cqw">
+<div style="display: flex; flex-direction: column; align-items: center; gap: 0.3cqw"><div style="width: 1.4cqw; height: 5.2cqw; background: #3A3B3E; display: flex; align-items: flex-end"><div style="width: 100%; height: 72%; background: #2BB75C"></div></div><span style="font-size: 1.05cqw; font-weight: 600; color: #B8B8B4">GAZ</span></div>
+<div style="display: flex; flex-direction: column; align-items: center; gap: 0.3cqw"><div style="width: 1.4cqw; height: 5.2cqw; background: #3A3B3E; display: flex; align-items: flex-end"><div style="width: 100%; height: 0%; background: #E5322B"></div></div><span style="font-size: 1.05cqw; font-weight: 600; color: #B8B8B4">FREIN</span></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<ol style="flex: 1 1 300px; margin: 0; padding: 0; list-style: none; border-top: 1px solid #141414; font-size: 15px; line-height: 1.45">
+<li style="display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: 8px; padding: 10px 0; border-bottom: 1px solid #E3E2DE"><span style="color: {{red}}; font-weight: 600">A</span><span><b>Badge Onboard</b> : point « en direct » qui clignote, numéro et nom du virage.</span></li>
+<li style="display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: 8px; padding: 10px 0; border-bottom: 1px solid #E3E2DE"><span style="color: {{red}}; font-weight: 600">B</span><span><b>Mention du clip</b> : provisoire, disparaît quand la vidéo est branchée.</span></li>
+<li style="display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: 8px; padding: 10px 0; border-bottom: 1px solid #E3E2DE"><span style="color: {{red}}; font-weight: 600">C</span><span><b>Chrono et record perso</b> : temps écoulé dans le clip, ton record AC sur le virage.</span></li>
+<li style="display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: 8px; padding: 10px 0; border-bottom: 1px solid #E3E2DE"><span style="color: {{red}}; font-weight: 600">D</span><span><b>Mini-carte</b> : virage en rouge, point qui suit la voiture.</span></li>
+<li style="display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: 8px; padding: 10px 0; border-bottom: 1px solid #E3E2DE"><span style="color: {{red}}; font-weight: 600">E</span><span><b>Bandeau projet</b> : numéro, nom, type et date, résumé d’une ligne.</span></li>
+<li style="display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: 8px; padding: 10px 0; border-bottom: 1px solid #E3E2DE"><span style="color: {{red}}; font-weight: 600">F</span><span><b>Étiquettes</b> : statut en rouge, puis 4 technos maximum.</span></li>
+<li style="display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: 8px; padding: 10px 0; border-bottom: 1px solid #E3E2DE"><span style="color: {{red}}; font-weight: 600">G</span><span><b>Télémétrie</b> : LED de passage, rapport, vitesse, gaz et frein ; à caler sur ta télémétrie AC.</span></li>
+<li style="padding: 10px 0; color: #6A6A66; font-size: 13px">Toutes les tailles sont en unités de conteneur (<code>cqw</code>) : l’habillage garde ses proportions quelle que soit la largeur du bloc.</li>
+</ol>
+</div>
+</div>
+
+<div class="cmp wide">
+<div class="cmp-h"><h3>Éléments de l’habillage, isolés</h3><span class="use">Taille de référence : bloc de 760 px</span></div>
+<div class="spec tv" style="background: #5A5C61; border-color: #5A5C61; align-items: flex-end">
+<div class="var"><div style="display: flex; font-size: 14px; font-weight: 700; line-height: 1; letter-spacing: 0.05em; text-transform: uppercase"><span style="background: {{red}}; color: #FFFFFF; padding: 5px 8px; display: flex; align-items: center; gap: 5px"><span style="width: 7px; height: 7px; border-radius: 50%; background: #FFFFFF"></span>Onboard</span><span style="background: #FFFFFF; color: #141414; padding: 5px 9px">Virage 2 · Adélaïde</span></div><span class="vl" style="color: #E3E2DE">A · badge</span></div>
+<div class="var"><div style="width: 152px; display: flex; flex-direction: column; text-transform: uppercase"><div style="display: flex; justify-content: space-between; align-items: center; background: #141414; color: #FFFFFF; padding: 5px 8px"><span style="font-size: 11px; font-weight: 600; color: #B8B8B4">Chrono</span><span style="font-size: 20px; font-weight: 700; line-height: 1">0:02.087</span></div><div style="display: flex; justify-content: space-between; background: #FFFFFF; color: #141414; padding: 4px 8px; font-size: 11px; font-weight: 600"><span>Record perso</span><span style="color: {{red}}">[ton temps]</span></div></div><span class="vl" style="color: #E3E2DE">C · chrono</span></div>
+<div class="var"><div style="display: flex"><span style="background: {{red}}; color: #FFFFFF; font-size: 35px; font-weight: 700; line-height: 1; padding: 5px 11px; display: flex; align-items: center">3</span><span style="background: #FFFFFF; color: #141414; padding: 6px 11px; display: flex; flex-direction: column; gap: 2px"><span style="font-size: 27px; font-weight: 700; line-height: 1; text-transform: uppercase">MrVeto</span><span style="font-family: 'Hanken Grotesk', sans-serif; font-size: 11px; font-weight: 500; color: #55554F">Projet d’équipe · 7 personnes · juin 2026</span></span></div><span class="vl" style="color: #E3E2DE">E · bandeau projet</span></div>
+<div class="var"><div style="display: flex; flex-wrap: wrap; gap: 4px; font-size: 11px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase"><span style="background: {{red}}; color: #FFFFFF; padding: 3px 6px">Code source public</span><span style="background: #FFFFFF; color: #141414; padding: 3px 6px">Symfony 7</span><span style="background: #FFFFFF; color: #141414; padding: 3px 6px">PostgreSQL</span></div><div style="display: flex; flex-wrap: wrap; gap: 4px; font-size: 11px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase"><span style="background: {{red}}; color: #FFFFFF; padding: 3px 6px">Démo en ligne</span><span style="background: {{red}}; color: #FFFFFF; padding: 3px 6px">Site en ligne</span></div><span class="vl" style="color: #E3E2DE">F · statuts et étiquettes</span></div>
+<div class="var"><div style="width: 205px; box-sizing: border-box; background: rgba(20,20,20,0.88); color: #FFFFFF; padding: 8px 9px; display: flex; align-items: stretch; gap: 9px"><div style="display: flex; flex-direction: column; align-items: center; justify-content: center; border: 1.5px solid #FFFFFF; padding: 2px 7px"><span style="font-size: 9px; font-weight: 600; color: #B8B8B4">RAPPORT</span><span style="font-size: 33px; font-weight: 700; line-height: 1">2</span></div><div style="display: flex; flex-direction: column; justify-content: center"><span style="font-size: 33px; font-weight: 700; line-height: 1">74</span><span style="font-size: 9px; font-weight: 600; color: #B8B8B4">KM/H</span></div><div style="margin-left: auto; display: flex; gap: 5px; align-items: flex-end"><div style="width: 11px; height: 40px; background: #3A3B3E; display: flex; align-items: flex-end"><div style="width: 100%; height: 0%; background: #2BB75C"></div></div><div style="width: 11px; height: 40px; background: #3A3B3E; display: flex; align-items: flex-end"><div style="width: 100%; height: 85%; background: #E5322B"></div></div></div></div><span class="vl" style="color: #E3E2DE">G · télémétrie au freinage</span></div>
+</div>
+</div>
+
+</div>
+</section>
+
+<section id="projets" class="sec">
+<div class="sec-h"><span class="sec-n">05</span><h2 class="sec-t">Projets</h2></div>
+<div class="grid">
+
+<div class="cmp wide">
+<div class="cmp-h"><h3>Fiche projet</h3><span class="use">Projets (liste) · Accueil (projet sélectionné)</span></div>
+<p class="cmp-d">Capture, surtitre de virage, titre lien, description, métadonnées, puis un bouton et un lien. L’image passe au-dessus du texte quand la place manque.</p>
+<div class="spec" style="padding: 0 24px">
+<article style="display: flex; flex-wrap: wrap; gap: 24px 40px; padding: 28px 0; width: 100%">
+<div class="ph" style="flex: 5 1 340px; aspect-ratio: 16 / 10">[ acPaddock/catalogue.png ]</div>
+<div style="flex: 6 1 380px; min-width: 0; display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; align-items: center; gap: 12px"><span style="width: 32px; height: 32px; border-radius: 16px; background: {{red}}; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 700">1</span><span style="font-size: 14px; font-weight: 600; color: {{red}}">Virage 1 · Estoril · septembre 2026</span></div>
+<h2 style="margin: 0; font-size: 36px; line-height: 1.05; font-weight: 600; letter-spacing: -0.02em"><a href="Article.dc.html" style="text-decoration: none">AC Paddock</a></h2>
+<p style="margin: 0; font-size: 18px; line-height: 1.55; color: #3A3A38; max-width: 620px">Une appli privée pour un groupe d’amis sur Assetto Corsa : un catalogue de mods qu’on construit ensemble, et un vote avant chaque soirée pour choisir les voitures et le circuit.</p>
+<dl style="margin: 0; display: grid; grid-template-columns: 90px minmax(0, 1fr); row-gap: 8px; font-size: 15px"><dt style="color: #6A6A66">Type</dt><dd style="margin: 0">Projet perso</dd><dt style="color: #6A6A66">Stack</dt><dd style="margin: 0">Next.js, TypeScript, Supabase, Prisma, Cloudflare R2</dd></dl>
+<div style="display: flex; flex-wrap: wrap; gap: 20px; align-items: center"><a href="Article.dc.html" class="btn">Lire le projet</a><a href="https://ac-paddock.vercel.app" style="font-size: 16px">Voir la démo</a></div>
+</div>
+</article>
+</div>
+</div>
+
+<div class="cmp">
+<div class="cmp-h"><h3>Fiche projet mobile</h3><span class="use">Mobile · Accueil</span></div>
+<div class="spec dots">
+<section style="width: 358px; background: #FFFFFF; padding: 18px 16px 24px; border-top: 1px solid #141414; display: flex; flex-direction: column; gap: 12px; box-sizing: border-box">
+<span style="font-size: 13px; font-weight: 600; color: {{red}}">Virage 2 · Adélaïde · juillet 2026</span>
+<div class="ph" style="aspect-ratio: 16 / 10; font-size: 12px">[ spotifyStats/StatsP1.png ]</div>
+<h2 style="margin: 0; font-size: 28px; font-weight: 600; letter-spacing: -0.02em">SpotiFiles</h2>
+<p style="margin: 0; font-size: 16px; line-height: 1.55; color: #3A3A38">Une appli qui transforme l’historique d’écoute Spotify en tableau de bord. Tout est traité dans le navigateur.</p>
+<span style="font-size: 14px; color: #6A6A66">Next.js, TypeScript, Recharts, OAuth Spotify</span>
+<a href="Mobile-Article.dc.html" style="display: flex; align-items: center; justify-content: center; height: 48px; background: #141414; color: #FFFFFF; font-size: 16px; font-weight: 600; text-decoration: none">Lire le projet</a>
+</section>
+</div>
+</div>
+
+<div class="cmp">
+<div class="cmp-h"><h3>Petits éléments</h3><span class="use">Projets · Article · Accueil</span></div>
+<div class="spec col" style="gap: 22px">
+<div class="var"><span style="font-size: 14px; font-weight: 600; color: {{red}}">Virage 3 · Château d’Eau · juin 2026</span><span class="vl">Surtitre de virage</span></div>
+<div class="var" style="width: 100%"><dl style="margin: 0; display: grid; grid-template-columns: 90px minmax(0, 1fr); row-gap: 8px; font-size: 15px"><dt style="color: #6A6A66">Type</dt><dd style="margin: 0">Projet d’équipe · 7 personnes</dd><dt style="color: #6A6A66">Stack</dt><dd style="margin: 0">Symfony 7, PostgreSQL, Twig, Leaflet, Playwright</dd><dt style="color: #6A6A66">Statut</dt><dd style="margin: 0">Code source public</dd></dl><span class="vl">Métadonnées (dl)</span></div>
+<div class="var" style="width: 100%"><div class="ph" style="width: 100%; aspect-ratio: 16 / 7">[ stage/graphique-accueil.png ]</div><span class="vl">Emplacement de capture, en attendant tes images</span></div>
+</div>
+</div>
+
+</div>
+</section>
+
+<section id="article" class="sec">
+<div class="sec-h"><span class="sec-n">06</span><h2 class="sec-t">Article</h2></div>
+<div class="grid">
+
+<div class="cmp wide">
+<div class="cmp-h"><h3>En-tête d’article</h3><span class="use">Article</span></div>
+<div class="spec" style="align-items: flex-end">
+<div style="flex: 999 1 520px; min-width: 0; display: flex; flex-direction: column; gap: 16px">
+<nav aria-label="Fil d'Ariane (exemple)" style="font-size: 15px; color: #6A6A66"><a href="Accueil.dc.html">Accueil</a> / <a href="Projets.dc.html">Projets</a> / AC Paddock</nav>
+<span style="font-size: 15px; font-weight: 600; color: {{red}}">Virage 1 · Estoril · 5 septembre 2026</span>
+<span style="font-size: 64px; line-height: 1; font-weight: 600; letter-spacing: -0.035em">AC Paddock</span>
+<p style="margin: 0; max-width: 680px; font-size: 20px; line-height: 1.55; color: #3A3A38">Une application web privée pour un groupe d’amis qui joue à Assetto Corsa.</p>
+<div style="display: flex; flex-wrap: wrap; gap: 20px; align-items: center"><a href="https://ac-paddock.vercel.app" class="btn">Voir la démo ↗</a><a href="https://github.com/lucasdslvra/AC-Paddock" style="font-size: 16px">Code source sur GitHub</a></div>
+</div>
+<div style="flex: 1 1 240px; display: flex; flex-direction: column; gap: 10px">
+<svg width="100%" viewBox="0 0 680 480" aria-hidden="true"><path d="{{track}}" fill="none" stroke="#D6D5D1" stroke-width="12" stroke-linejoin="round" stroke-linecap="round"></path><path d="{{seg1}}" fill="none" stroke="#141414" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"></path><circle cx="622" cy="36" r="22" fill="{{red}}"></circle><text x="622" y="43" text-anchor="middle" font-size="20" font-weight="700" fill="#FFFFFF" font-family="Hanken Grotesk, sans-serif">1</text></svg>
+<dl style="margin: 0; display: grid; grid-template-columns: 70px minmax(0, 1fr); row-gap: 6px; font-size: 14px"><dt style="color: #6A6A66">Type</dt><dd style="margin: 0">Projet perso</dd><dt style="color: #6A6A66">Statut</dt><dd style="margin: 0">En ligne</dd></dl>
+</div>
+</div>
+</div>
+
+<div class="cmp" style="flex-basis: 300px">
+<div class="cmp-h"><h3>Sommaire</h3><span class="use">Article desktop</span></div>
+<div class="spec col">
+<nav aria-label="Sommaire (exemple)" style="display: flex; flex-direction: column; border-top: 1px solid #141414">
+<span style="font-size: 13px; font-weight: 600; color: #6A6A66; padding: 10px 0">Dans ce projet</span>
+<a href="#article" style="display: flex; gap: 10px; align-items: baseline; padding: 9px 0; border-top: 1px solid #E3E2DE; text-decoration: none; font-size: 15px"><span style="color: #6A6A66; font-size: 13px">01</span>Le contexte</a>
+<a href="#article" style="display: flex; gap: 10px; align-items: baseline; padding: 9px 0; border-top: 1px solid #E3E2DE; text-decoration: none; font-size: 15px"><span style="color: #6A6A66; font-size: 13px">02</span>Le cycle d’une soirée</a>
+<a href="#article" style="display: flex; gap: 10px; align-items: baseline; padding: 9px 0; border-top: 1px solid #E3E2DE; text-decoration: none; font-size: 15px; color: {{red}}"><span style="font-size: 13px">03</span>Accès et catalogue</a>
+</nav>
+<span class="vl">La 3ᵉ ligne montre l’état survol</span>
+</div>
+</div>
+
+<div class="cmp" style="flex-basis: 300px">
+<div class="cmp-h"><h3>Sommaire repliable</h3><span class="use">Article mobile</span></div>
+<div class="spec col">
+<details style="border-top: 1px solid #141414; border-bottom: 1px solid #E3E2DE"><summary style="min-height: 52px; display: flex; align-items: center; font-size: 15px; font-weight: 600; cursor: pointer">Dans ce projet · 8 parties</summary><div style="display: flex; flex-direction: column; padding-bottom: 8px; font-size: 15px"><a href="#article" style="padding: 8px 0; text-decoration: none">01 Le contexte</a><a href="#article" style="padding: 8px 0; text-decoration: none">02 Le cycle d’une soirée</a></div></details>
+<span class="vl">Élément natif details / summary, cliquable</span>
+</div>
+</div>
+
+<div class="cmp" style="flex-basis: 300px">
+<div class="cmp-h"><h3>Bloc stack</h3><span class="use">Article</span></div>
+<div class="spec col">
+<div style="display: flex; flex-direction: column; gap: 10px; border-top: 1px solid #141414; padding-top: 10px"><span style="font-size: 13px; font-weight: 600; color: #6A6A66">Stack</span><div style="display: flex; flex-wrap: wrap; gap: 6px"><sc-for list="{{stack}}" as="k" hint-placeholder-count="8"><span style="font-size: 13px; padding: 5px 8px; border: 1px solid #D6D5D1">{{k.t}}</span></sc-for></div></div>
+</div>
+</div>
+
+<div class="cmp wide">
+<div class="cmp-h"><h3>Section d’article</h3><span class="use">Article</span></div>
+<p class="cmp-d">Numéro rouge, titre, paragraphe (700 px max), puis au choix une liste d’étapes ou une figure avec sa légende.</p>
+<div class="spec" style="align-items: flex-start">
+<section style="flex: 1 1 420px; min-width: 0; display: flex; flex-direction: column; gap: 14px">
+<span style="font-size: 14px; font-weight: 600; color: {{red}}">02</span>
+<span style="font-size: 32px; line-height: 1.1; font-weight: 600; letter-spacing: -0.02em">Le cycle d’une soirée</span>
+<p style="margin: 0; font-size: 18px; line-height: 1.7; color: #2C2C2A">Une soirée suit toujours le même déroulé, du catalogue jusqu’aux archives :</p>
+<ol style="margin: 0; padding: 0; list-style: none; border-top: 1px solid #141414">
+<li style="display: grid; grid-template-columns: 40px minmax(0, 1fr); gap: 12px; align-items: center; min-height: 48px; border-bottom: 1px solid #E3E2DE"><span style="width: 26px; height: 26px; border-radius: 13px; border: 2px solid #141414; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; box-sizing: border-box">1</span><span style="font-size: 17px">Le catalogue reste ouvert en continu</span></li>
+<li style="display: grid; grid-template-columns: 40px minmax(0, 1fr); gap: 12px; align-items: center; min-height: 48px; border-bottom: 1px solid #E3E2DE"><span style="width: 26px; height: 26px; border-radius: 13px; border: 2px solid #141414; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; box-sizing: border-box">2</span><span style="font-size: 17px">Un admin programme la soirée</span></li>
+<li style="display: grid; grid-template-columns: 40px minmax(0, 1fr); gap: 12px; align-items: center; min-height: 48px; border-bottom: 1px solid #E3E2DE"><span style="width: 26px; height: 26px; border-radius: 13px; border: 2px solid #141414; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; box-sizing: border-box">3</span><span style="font-size: 17px">Les membres s’inscrivent</span></li>
+</ol>
+<span class="vl">Variante avec liste d’étapes</span>
+</section>
+<section style="flex: 1 1 420px; min-width: 0; display: flex; flex-direction: column; gap: 14px">
+<span style="font-size: 14px; font-weight: 600; color: {{red}}">06</span>
+<span style="font-size: 32px; line-height: 1.1; font-weight: 600; letter-spacing: -0.02em">Fichiers et images</span>
+<p style="margin: 0; font-size: 18px; line-height: 1.7; color: #2C2C2A">Les mods partent directement vers Cloudflare R2 via des URL pré-signées. Les images sont ré-encodées avec <code>sharp</code> : WebP, 1 600 px maximum.</p>
+<figure style="margin: 0; display: flex; flex-direction: column; gap: 8px"><div class="ph" style="aspect-ratio: 16 / 9">[ acPaddock/ficheMod.png ]</div><figcaption style="font-size: 14px; color: #6A6A66">Une fiche de mod.</figcaption></figure>
+<span class="vl">Variante avec figure · code en ligne</span>
+</section>
+</div>
+</div>
+
+<div class="cmp wide">
+<div class="cmp-h"><h3>Projets voisins</h3><span class="use">Fin d’article</span></div>
+<div class="spec col">
+<nav aria-label="Projets voisins (exemple)" style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; border-top: 1px solid #141414; padding-top: 20px">
+<a href="Contact.dc.html" style="display: flex; flex-direction: column; gap: 4px; text-decoration: none"><span style="font-size: 13px; color: #6A6A66">← Arrivée</span><span style="font-size: 20px; font-weight: 600">Me contacter</span></a>
+<a href="Projets.dc.html" style="display: flex; flex-direction: column; gap: 4px; text-decoration: none; text-align: right"><span style="font-size: 13px; color: #6A6A66">Virage 2 · Adélaïde →</span><span style="font-size: 20px; font-weight: 600">SpotiFiles</span></a>
+</nav>
+</div>
+</div>
+
+</div>
+</section>
+
+<section id="contact" class="sec">
+<div class="sec-h"><span class="sec-n">07</span><h2 class="sec-t">Contact et états</h2></div>
+<div class="grid">
+
+<div class="cmp wide">
+<div class="cmp-h"><h3>Lignes de contact</h3><span class="use">Contact</span></div>
+<div class="spec col">
+<div style="display: flex; flex-direction: column; border-top: 1px solid #141414">
+<div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px; padding: 20px 0; border-bottom: 1px solid #E3E2DE"><div style="display: flex; flex-direction: column; gap: 4px"><span style="font-size: 14px; color: #6A6A66">E-mail</span><a href="mailto:lucasdslvra@gmail.com" style="font-size: 30px; font-weight: 600; text-decoration: none">lucasdslvra@gmail.com</a></div><div style="display: flex; gap: 10px"><span class="btn2" style="font-size: 15px">Copier l’adresse</span><a href="mailto:lucasdslvra@gmail.com" class="btn" style="font-size: 15px">Écrire</a></div></div>
+<a href="https://www.linkedin.com/in/lucasdslvra/" style="display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 20px 0; border-bottom: 1px solid #E3E2DE; text-decoration: none"><span style="display: flex; flex-direction: column; gap: 4px"><span style="font-size: 14px; color: #6A6A66">LinkedIn</span><span style="font-size: 24px; font-weight: 600">in/lucasdslvra</span></span><span style="font-size: 22px">↗</span></a>
+</div>
+<span class="vl">Ligne principale (e-mail + actions) · ligne lien externe</span>
+</div>
+</div>
+
+<div class="cmp wide">
+<div class="cmp-h"><h3>Bandeaux « Arrivée »</h3><span class="use">Accueil · Projets · Mobile</span></div>
+<div class="spec col" style="gap: 0; padding: 0">
+<div style="padding: 32px 24px; display: flex; flex-wrap: wrap; gap: 24px; justify-content: space-between; align-items: center"><div style="display: flex; align-items: center; gap: 16px"><svg width="44" height="30" viewBox="0 0 30 20" aria-hidden="true"><rect width="30" height="20" fill="#FFFFFF" stroke="#141414" stroke-width="1.5"></rect><rect x="0" y="0" width="7.5" height="10" fill="#141414"></rect><rect x="15" y="0" width="7.5" height="10" fill="#141414"></rect><rect x="7.5" y="10" width="7.5" height="10" fill="#141414"></rect><rect x="22.5" y="10" width="7.5" height="10" fill="#141414"></rect></svg><span style="font-size: 34px; font-weight: 600; letter-spacing: -0.02em">Arrivée : me contacter</span></div><div style="display: flex; flex-wrap: wrap; gap: 8px 24px; font-size: 17px"><a href="mailto:lucasdslvra@gmail.com">lucasdslvra@gmail.com</a><a href="https://www.linkedin.com/in/lucasdslvra/">LinkedIn</a><a href="https://github.com/lucasdslvra">GitHub</a></div></div>
+<span class="vl" style="padding: 0 24px 12px">Accueil · fin de page</span>
+<div style="border-top: 1px solid #E3E2DE; padding: 32px 24px; display: flex; flex-wrap: wrap; gap: 24px; justify-content: space-between; align-items: center"><span style="font-size: 28px; font-weight: 600">Un projet vous parle ?</span><a href="Contact.dc.html" class="btn2">Arrivée : me contacter</a></div>
+<span class="vl" style="padding: 0 24px 12px">Projets · fin de page</span>
+</div>
+</div>
+
+<div class="cmp">
+<div class="cmp-h"><h3>Liste vide</h3><span class="use">Projets (filtre sans résultat)</span></div>
+<div class="spec col"><p style="margin: 0; padding: 24px 0; border-top: 1px solid #141414; font-size: 18px; color: #3A3A38">Aucun projet dans cette catégorie pour l'instant.</p></div>
+</div>
+
+<div class="cmp">
+<div class="cmp-h"><h3>Page introuvable</h3><span class="use">404</span></div>
+<div class="spec col" style="gap: 14px">
+<span style="font-size: 15px; font-weight: 600; color: {{red}}">Erreur 404</span>
+<span style="font-size: 48px; line-height: 1; font-weight: 600; letter-spacing: -0.035em">Sortie de piste</span>
+<p style="margin: 0; font-size: 18px; line-height: 1.5; color: #3A3A38">Cette page n'existe pas, ou elle a été déplacée. Rien de cassé : on vous remet sur la trajectoire.</p>
+<div style="display: flex; flex-wrap: wrap; gap: 20px; align-items: center"><a href="Accueil.dc.html" class="btn">Revenir sur la piste</a><a href="Projets.dc.html" style="font-size: 16px">Voir les projets</a></div>
+</div>
+</div>
+
+<div class="cmp wide">
+<div class="cmp-h"><h3>Règles d’accessibilité communes</h3><span class="use">Toutes les pages</span></div>
+<div class="spec col" style="gap: 0; padding: 8px 24px">
+<div style="display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 16px; padding: 12px 0; border-bottom: 1px solid #E3E2DE; font-size: 15px"><span style="font-weight: 600">Animations</span><span style="color: #3A3A38">Zoom, clip et chrono s’arrêtent avec <code>prefers-reduced-motion</code> : on montre l’image fixe du clip et l’habillage.</span></div>
+<div style="display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 16px; padding: 12px 0; border-bottom: 1px solid #E3E2DE; font-size: 15px"><span style="font-weight: 600">Survol = focus</span><span style="color: #3A3A38">Tout ce qui réagit au survol réagit aussi au focus clavier (liste des virages).</span></div>
+<div style="display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 16px; padding: 12px 0; border-bottom: 1px solid #E3E2DE; font-size: 15px"><span style="font-weight: 600">Cibles tactiles</span><span style="color: #3A3A38">44 px minimum, 48 px pour les boutons.</span></div>
+<div style="display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 16px; padding: 12px 0; border-bottom: 1px solid #E3E2DE; font-size: 15px"><span style="font-weight: 600">Cartes SVG</span><span style="color: #3A3A38">Chaque carte a un <code>aria-label</code> qui décrit ce qui est mis en évidence ; les pictogrammes sont <code>aria-hidden</code>.</span></div>
+<div style="display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 16px; padding: 12px 0; font-size: 15px"><span style="font-weight: 600">États</span><span style="color: #3A3A38"><code>aria-current</code> sur la page en cours, <code>aria-pressed</code> sur les filtres ; la couleur n’est jamais le seul indice (gras, fond, numéro).</span></div>
+</div>
+</div>
+
+</div>
+</section>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"red":{"editor":"color","default":"#C4161C","options":["#C4161C","#1A5FD6","#0E8A4F","#141414"]},"$preview":{"width":1440,"height":9800}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { filter: 'all', copied: false }; }
+  renderVals() {
+    const red = this.props.red ?? '#C4161C';
+    const track = 'M277 111 L397 148 L412 147 L423 145 L453 125 L491 99 L496 92 L506 74 L520 59 L533 52 L539 49 L555 46 L570 46 L583 50 L593 54 L606 63 L616 74 L623 86 L628 101 L628 114 L626 125 L620 141 L594 185 L577 208 L563 225 L551 236 L424 334 L410 343 L382 359 L358 370 L152 439 L145 440 L141 435 L141 430 L144 425 L189 383 L265 347 L275 343 L412 245 L417 243 L424 244 L441 248 L451 248 L465 244 L477 238 L498 223 L523 199 L546 173 L552 159 L554 145 L551 133 L541 123 L531 121 L523 122 L515 127 L510 134 L501 156 L496 163 L487 173 L473 183 L458 190 L411 203 L399 208 L387 214 L220 329 L212 330 L175 325 L168 327 L151 337 L142 343 L123 359 L114 369 L75 417 L70 417 L60 410 L55 398 L52 386 L53 365 L55 344 L63 318 L87 225 L91 204 L93 173 L89 147 L61 50 L62 45 L67 42 L89 40 L122 44 L130 48 L130 54 L129 60 L131 65 L149 71 Z';
+    const seg1 = 'M496 92 L506 74 L520 59 L533 52 L539 49 L555 46 L570 46 L583 50 L593 54 L606 63 L616 74 L623 86 L628 101 L628 114 L626 125 L620 141';
+    const seg2 = 'M358 370 L152 439 L145 440 L141 435 L141 430 L144 425 L189 383';
+    const colors = [
+      { name: 'Encre', hex: '#141414', use: 'Texte, tracé, boutons, filets de section' },
+      { name: 'Rouge piste', hex: red, use: 'Virage actif, page en cours, surtitres' },
+      { name: 'Texte doux', hex: '#3A3A38', use: 'Chapôs et descriptions' },
+      { name: 'Gris légende', hex: '#6A6A66', use: 'Dates, légendes, libellés' },
+      { name: 'Gris piste', hex: '#D6D5D1', use: 'Tracé en arrière-plan, bordure des tags' },
+      { name: 'Pastille éteinte', hex: '#B9B8B3', use: 'Virages hors filtre' },
+      { name: 'Filet', hex: '#E3E2DE', use: 'Séparateurs de lignes' },
+      { name: 'Survol', hex: '#F4F3F0', use: 'Fond de ligne survolée' },
+      { name: 'Capture', hex: '#EEEDEA', use: 'Emplacement d’image' }
+    ];
+    const tvColors = [
+      { name: 'Gaz / LED', hex: '#2BB75C' }, { name: 'LED milieu', hex: '#F2C200' }, { name: 'Frein / LED', hex: '#E5322B' }, { name: 'Panneau TV', hex: 'rgba(20,20,20,0.88)' }
+    ];
+    const projects = [{ key: 'perso' }, { key: 'perso' }, { key: 'equipe' }, { key: 'stage' }];
+    const f = this.state.filter;
+    const defs = [['all', 'Tous'], ['perso', 'Perso'], ['equipe', 'Équipe'], ['stage', 'Stage']];
+    const filters = defs.map(([key, label]) => ({
+      label, count: key === 'all' ? projects.length : projects.filter((p) => p.key === key).length,
+      pressed: key === f ? 'true' : 'false', bg: key === f ? '#141414' : '#FFFFFF', fg: key === f ? '#FFFFFF' : '#141414',
+      pick: () => this.setState({ filter: key })
+    }));
+    const stack = ['Next.js 16', 'React 19', 'TypeScript', 'PostgreSQL (Supabase)', 'Prisma 7', 'Auth.js v5', 'Cloudflare R2', 'Tailwind CSS 4'].map((t) => ({ t }));
+    const copy = () => { try { navigator.clipboard && navigator.clipboard.writeText('lucasdslvra@gmail.com'); } catch (e) {} this.setState({ copied: true }); };
+    return { red, track, seg1, seg2, colors, tvColors, filters, stack, copy, copyLabel: this.state.copied ? 'Adresse copiée ✓' : 'Copier l’adresse' };
+  }
+}
+</script>
+</body>
+</html>

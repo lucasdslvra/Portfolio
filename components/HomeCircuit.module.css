@@ -1,0 +1,82 @@
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas:
+    'intro'
+    'visual'
+    'card'
+    'list';
+  column-gap: 48px;
+  row-gap: 0;
+  padding-top: 32px;
+}
+
+.intro {
+  grid-area: intro;
+  padding-bottom: 8px;
+}
+
+.list {
+  grid-area: list;
+  padding-bottom: 32px;
+}
+
+.visual {
+  grid-area: visual;
+  position: relative;
+  aspect-ratio: 680 / 480;
+  overflow: hidden;
+  background: var(--bg);
+  min-width: 0;
+}
+
+.map {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.visual[data-open='true'] .map {
+  pointer-events: none;
+}
+
+@media (max-width: 959px) {
+  .visual {
+    overflow: visible;
+    margin: 12px 0 20px;
+  }
+}
+
+.card {
+  grid-area: card;
+  border-top: 1px solid var(--ink);
+  padding-top: 18px;
+  padding-bottom: 32px;
+}
+
+@media (min-width: 960px) {
+  .grid {
+    grid-template-columns: minmax(340px, 420px) minmax(0, 1fr);
+    grid-template-rows: auto 1fr auto;
+    grid-template-areas:
+      'intro visual'
+      'list visual'
+      'card card';
+    padding-top: 64px;
+  }
+  .intro {
+    padding-bottom: 26px;
+  }
+  .list {
+    padding-bottom: 40px;
+  }
+  .visual {
+    align-self: start;
+  }
+  .card {
+    padding-top: 32px;
+    padding-bottom: 72px;
+  }
+}
+

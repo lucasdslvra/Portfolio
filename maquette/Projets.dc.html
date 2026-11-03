@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Projets — Lucas Da Silveira</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#FFFFFF}
+a{color:#141414}a:hover{color:#C4161C}
+</style>
+</helmet>
+<div style="background: #FFFFFF; color: #141414; font-family: 'Hanken Grotesk', Helvetica, sans-serif; font-variant-numeric: tabular-nums">
+
+<nav style="border-bottom: 1px solid #E3E2DE">
+<div style="max-width: 1280px; margin: 0 auto; padding: 12px 24px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 32px">
+<a href="Accueil.dc.html" style="display: flex; align-items: center; gap: 12px; min-height: 44px; text-decoration: none"><svg width="34" height="24" viewBox="0 0 680 480" aria-hidden="true"><path d="{{track}}" fill="none" stroke="#141414" stroke-width="44" stroke-linejoin="round"></path></svg><span style="font-size: 19px; font-weight: 600">Lucas Da Silveira</span></a>
+<div style="display: flex; flex-wrap: wrap; gap: 4px 32px; font-size: 16px; font-weight: 500"><a href="Projets.dc.html" aria-current="page" style="padding: 12px 0; text-decoration: none; color: {{red}}">Projets</a><a href="Contact.dc.html" style="padding: 12px 0; text-decoration: none">Contact</a><a href="https://github.com/lucasdslvra" style="padding: 12px 0; text-decoration: none">GitHub ↗</a></div>
+</div>
+</nav>
+
+<header style="max-width: 1280px; margin: 0 auto; padding: 56px 24px 32px; display: flex; flex-wrap: wrap; gap: 40px; align-items: flex-end">
+<div style="flex: 999 1 520px; min-width: 0; display: flex; flex-direction: column; gap: 18px">
+<h1 style="margin: 0; font-size: clamp(44px, 5vw, 64px); line-height: 1; font-weight: 600; letter-spacing: -0.035em">Projets</h1>
+<p style="margin: 0; max-width: 600px; font-size: 20px; line-height: 1.5; color: #3A3A38">Mes projets universitaires, personnels et en entreprise. Chaque projet occupe un virage du circuit de Nevers Magny-Cours, du plus récent au plus ancien.</p>
+<div role="group" aria-label="Filtrer par catégorie" style="display: flex; flex-wrap: wrap; gap: 8px">
+<sc-for list="{{filters}}" as="f" hint-placeholder-count="4"><button type="button" onClick="{{f.pick}}" aria-pressed="{{f.pressed}}" style="height: 44px; padding: 0 18px; border: 1.5px solid #141414; background: {{f.bg}}; color: {{f.fg}}; font: inherit; font-size: 15px; font-weight: 500; cursor: pointer">{{f.label}} <span style="opacity: 0.7">{{f.count}}</span></button></sc-for>
+</div>
+</div>
+<div style="flex: 1 1 320px; max-width: 420px">
+<svg width="100%" viewBox="0 0 680 480" role="img" aria-label="Carte des virages ; les projets filtrés sont en noir">
+<path d="{{track}}" fill="none" stroke="#D6D5D1" stroke-width="12" stroke-linejoin="round" stroke-linecap="round"></path>
+<path d="M496 92 L506 74 L520 59 L533 52 L539 49 L555 46 L570 46 L583 50 L593 54 L606 63 L616 74 L623 86 L628 101 L628 114 L626 125 L620 141" fill="none" stroke="{{g1}}" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"></path><path d="M358 370 L152 439 L145 440 L141 435 L141 430 L144 425 L189 383" fill="none" stroke="{{g2}}" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"></path><path d="M114 369 L75 417 L70 417 L60 410 L55 398 L52 386" fill="none" stroke="{{g3}}" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"></path><path d="M89 147 L61 50 L62 45 L67 42 L89 40 L122 44 L130 48 L130 54 L129 60 L131 65 L149 71" fill="none" stroke="{{g4}}" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"></path>
+<g><circle cx="622" cy="36" r="20" fill="{{f1}}"></circle><text x="622" y="43" text-anchor="middle" font-size="20" font-weight="700" fill="#FFFFFF" font-family="Hanken Grotesk, sans-serif">1</text></g>
+<g><circle cx="108" cy="456" r="20" fill="{{f2}}"></circle><text x="108" y="463" text-anchor="middle" font-size="20" font-weight="700" fill="#FFFFFF" font-family="Hanken Grotesk, sans-serif">2</text></g>
+<g><circle cx="30" cy="430" r="20" fill="{{f3}}"></circle><text x="30" y="437" text-anchor="middle" font-size="20" font-weight="700" fill="#FFFFFF" font-family="Hanken Grotesk, sans-serif">3</text></g>
+<g><circle cx="94" cy="24" r="20" fill="{{f4}}"></circle><text x="94" y="31" text-anchor="middle" font-size="20" font-weight="700" fill="#FFFFFF" font-family="Hanken Grotesk, sans-serif">4</text></g>
+</svg>
+</div>
+</header>
+
+<section style="max-width: 1280px; margin: 0 auto; padding: 0 24px 72px; display: flex; flex-direction: column">
+<sc-for list="{{visible}}" as="r" hint-placeholder-count="4">
+<article style="display: flex; flex-wrap: wrap; gap: 24px 40px; padding: 36px 0; border-top: 1px solid #141414">
+<div style="flex: 5 1 380px; aspect-ratio: 16 / 10; background: #EEEDEA; display: flex; align-items: center; justify-content: center; font-size: 14px; color: #55554F">[ {{r.img}} ]</div>
+<div style="flex: 6 1 420px; min-width: 0; display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; align-items: center; gap: 12px"><span style="width: 32px; height: 32px; border-radius: 16px; background: {{red}}; color: #FFFFFF; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 700">{{r.no}}</span><span style="font-size: 14px; font-weight: 600; color: {{red}}">Virage {{r.no}} · {{r.corner}} · {{r.month}}</span></div>
+<h2 style="margin: 0; font-size: 36px; line-height: 1.05; font-weight: 600; letter-spacing: -0.02em"><a href="{{r.href}}" style="text-decoration: none">{{r.name}}</a></h2>
+<p style="margin: 0; font-size: 18px; line-height: 1.55; color: #3A3A38; max-width: 620px">{{r.desc}}</p>
+<dl style="margin: 0; display: grid; grid-template-columns: 90px minmax(0, 1fr); row-gap: 8px; font-size: 15px"><dt style="color: #6A6A66">Type</dt><dd style="margin: 0">{{r.cat}}</dd><dt style="color: #6A6A66">Stack</dt><dd style="margin: 0">{{r.stack}}</dd></dl>
+<div style="display: flex; flex-wrap: wrap; gap: 20px; align-items: center"><a href="{{r.href}}" style="display: inline-flex; align-items: center; height: 48px; padding: 0 22px; background: #141414; color: #FFFFFF; font-size: 16px; font-weight: 600; text-decoration: none">Lire le projet</a><a href="{{r.extUrl}}" style="font-size: 16px">{{r.extLabel}}</a></div>
+</div>
+</article>
+</sc-for>
+<sc-if value="{{empty}}" hint-placeholder-val="{{ false }}"><p style="margin: 0; padding: 36px 0; border-top: 1px solid #141414; font-size: 18px; color: #3A3A38">Aucun projet dans cette catégorie pour l'instant.</p></sc-if>
+</section>
+
+<section style="border-top: 1px solid #141414">
+<div style="max-width: 1280px; margin: 0 auto; padding: 40px 24px; display: flex; flex-wrap: wrap; gap: 24px; justify-content: space-between; align-items: center">
+<h2 style="margin: 0; font-size: 28px; font-weight: 600">Un projet vous parle ?</h2>
+<a href="Contact.dc.html" style="display: inline-flex; align-items: center; gap: 12px; height: 48px; padding: 0 22px; border: 1.5px solid #141414; font-size: 16px; font-weight: 600; text-decoration: none">Arrivée : me contacter</a>
+</div>
+</section>
+<footer style="border-top: 1px solid #E3E2DE"><div style="max-width: 1280px; margin: 0 auto; padding: 18px 24px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; font-size: 13px; color: #6A6A66"><span>© 2026 Lucas Da Silveira</span><span>Fait main en Next.js</span></div></footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"red":{"editor":"color","default":"#C4161C","options":["#C4161C","#1A5FD6","#0E8A4F","#141414"]},"$preview":{"width":1440,"height":2900}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { filter: 'all' }; }
+  renderVals() {
+    const red = this.props.red ?? '#C4161C';
+    const track = 'M277 111 L397 148 L412 147 L423 145 L453 125 L491 99 L496 92 L506 74 L520 59 L533 52 L539 49 L555 46 L570 46 L583 50 L593 54 L606 63 L616 74 L623 86 L628 101 L628 114 L626 125 L620 141 L594 185 L577 208 L563 225 L551 236 L424 334 L410 343 L382 359 L358 370 L152 439 L145 440 L141 435 L141 430 L144 425 L189 383 L265 347 L275 343 L412 245 L417 243 L424 244 L441 248 L451 248 L465 244 L477 238 L498 223 L523 199 L546 173 L552 159 L554 145 L551 133 L541 123 L531 121 L523 122 L515 127 L510 134 L501 156 L496 163 L487 173 L473 183 L458 190 L411 203 L399 208 L387 214 L220 329 L212 330 L175 325 L168 327 L151 337 L142 343 L123 359 L114 369 L75 417 L70 417 L60 410 L55 398 L52 386 L53 365 L55 344 L63 318 L87 225 L91 204 L93 173 L89 147 L61 50 L62 45 L67 42 L89 40 L122 44 L130 48 L130 54 L129 60 L131 65 L149 71 Z';
+    const projects = [
+      { no: '1', corner: 'Estoril', key: 'perso', href: 'Article.dc.html', name: 'AC Paddock', month: 'septembre 2026', cat: 'Projet perso', img: 'acPaddock/catalogue.png', stack: 'Next.js, TypeScript, Supabase, Prisma, Cloudflare R2', desc: 'Une appli privée pour un groupe d’amis sur Assetto Corsa : un catalogue de mods qu’on construit ensemble, et un vote avant chaque soirée pour choisir les voitures et le circuit.', extUrl: 'https://ac-paddock.vercel.app', extLabel: 'Voir la démo', seg: 'M496 92 L506 74 L520 59 L533 52 L539 49 L555 46 L570 46 L583 50 L593 54 L606 63 L616 74 L623 86 L628 101 L628 114 L626 125 L620 141' },
+      { no: '2', corner: 'Adélaïde', key: 'perso', href: 'Article.dc.html', name: 'SpotiFiles', month: 'juillet 2026', cat: 'Projet perso', img: 'spotifyStats/StatsP1.png', stack: 'Next.js, TypeScript, Recharts, OAuth Spotify', desc: 'Une appli qui transforme l’historique d’écoute Spotify en tableau de bord : temps d’écoute, top artistes et titres, tendances, toile des collaborations. Tout est traité dans le navigateur.', extUrl: 'https://spoti-files-stats.vercel.app/', extLabel: 'Voir la démo', seg: 'M358 370 L152 439 L145 440 L141 435 L141 430 L144 425 L189 383' },
+      { no: '3', corner: 'Château d’Eau', key: 'equipe', href: 'Article.dc.html', name: 'MrVeto', month: 'juin 2026', cat: 'Projet d’équipe · 7 personnes', img: 'mrveto/hero.png', stack: 'Symfony 7, PostgreSQL, Twig, Leaflet, Playwright', desc: 'Une plateforme qui met en relation propriétaires d’animaux et vétérinaires : recherche sur carte, rendez-vous en ligne, plannings et dossiers. J’y ai construit la chaîne de prise de rendez-vous.', extUrl: 'https://github.com/enzodaloia/MrVeto', extLabel: 'Code source', seg: 'M114 369 L75 417 L70 417 L60 410 L55 398 L52 386' },
+      { no: '4', corner: 'Lycée', key: 'stage', href: 'Article.dc.html', name: 'Stage Agence Élixir', month: 'juin 2025', cat: 'Stage · 4 mois', img: 'stage/graphique-accueil.png', stack: 'Strapi, React, React Native, API REST', desc: 'Refonte du back-office de l’appli « Le Plan des Étudiants de Besançon » : passage de l’ancien PHP à Strapi, migration des données, API adaptée et dashboard React.', extUrl: 'https://www.plan-etudiant-besancon.com/', extLabel: 'Voir le site', seg: 'M89 147 L61 50 L62 45 L67 42 L89 40 L122 44 L130 48 L130 54 L129 60 L131 65 L149 71' }
+    ];
+    const f = this.state.filter;
+    const on = (p) => f === 'all' || p.key === f;
+    const defs = [['all', 'Tous'], ['perso', 'Perso'], ['equipe', 'Équipe'], ['stage', 'Stage']];
+    const filters = defs.map(([key, label]) => ({
+      label, count: key === 'all' ? projects.length : projects.filter((p) => p.key === key).length,
+      pressed: key === f ? 'true' : 'false', bg: key === f ? '#141414' : '#FFFFFF', fg: key === f ? '#FFFFFF' : '#141414',
+      pick: () => this.setState({ filter: key })
+    }));
+    const rows = projects.map((p) => ({ ...p, segColor: on(p) ? '#141414' : 'transparent' }));
+    const visible = projects.filter(on);
+    const c = (i) => (on(projects[i]) ? red : '#B9B8B3');
+    const g = (i) => (on(projects[i]) ? '#141414' : '#D6D5D1');
+    return { red, track, filters, rows, visible, empty: visible.length === 0, f1: c(0), f2: c(1), f3: c(2), f4: c(3), g1: g(0), g2: g(1), g3: g(2), g4: g(3) };
+  }
+}
+</script>
+</body>
+</html>

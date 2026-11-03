@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Mobile — Article AC Paddock</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#FFFFFF}
+a{color:#141414}a:hover{color:#C4161C}
+</style>
+</helmet>
+<div style="width: 390px; height: 5600px; overflow: hidden; background: #FFFFFF; color: #141414; font-family: 'Hanken Grotesk', Helvetica, sans-serif">
+<nav style="height: 60px; padding: 0 16px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #E3E2DE">
+<a href="Mobile-Accueil.dc.html" style="display: flex; align-items: center; gap: 10px; min-height: 44px; text-decoration: none"><svg width="28" height="20" viewBox="0 0 680 480" aria-hidden="true"><path d="{{track}}" fill="none" stroke="#141414" stroke-width="44" stroke-linejoin="round"></path></svg><span style="font-size: 17px; font-weight: 600">Lucas Da Silveira</span></a>
+<a href="Mobile-Menu.dc.html" style="display: inline-flex; align-items: center; height: 44px; padding: 0 14px; border: 1.5px solid #141414; font-size: 15px; font-weight: 600; text-decoration: none">Menu</a>
+</nav>
+<header style="padding: 20px 16px 24px; display: flex; flex-direction: column; gap: 14px; border-bottom: 1px solid #141414">
+<a href="Mobile-Accueil.dc.html" style="font-size: 14px; min-height: 32px; display: flex; align-items: center">← Projets</a>
+<svg width="358" height="252" viewBox="0 0 680 480" role="img" aria-label="Mini-carte de Magny-Cours : le virage d’Estoril est mis en évidence"><path d="{{track}}" fill="none" stroke="#D6D5D1" stroke-width="16" stroke-linejoin="round" stroke-linecap="round"></path><path d="M496 92 L506 74 L520 59 L533 52 L539 49 L555 46 L570 46 L583 50 L593 54 L606 63 L616 74 L623 86 L628 101 L628 114 L626 125 L620 141" fill="none" stroke="#141414" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"></path><circle cx="622" cy="38" r="30" fill="{{red}}"></circle><text x="622" y="49" text-anchor="middle" font-size="30" font-weight="700" fill="#FFFFFF" font-family="Hanken Grotesk, sans-serif">1</text></svg>
+<span style="font-size: 14px; font-weight: 600; color: {{red}}">Virage 1 · Estoril · 5 septembre 2026</span>
+<h1 style="margin: 0; font-size: 40px; line-height: 1; font-weight: 600; letter-spacing: -0.035em">AC Paddock</h1>
+<p style="margin: 0; font-size: 17px; line-height: 1.55; color: #3A3A38">{{intro}}</p>
+<a href="https://ac-paddock.vercel.app" style="display: flex; align-items: center; justify-content: center; height: 48px; background: #141414; color: #FFFFFF; font-size: 16px; font-weight: 600; text-decoration: none">Voir la démo ↗</a>
+<a href="https://github.com/lucasdslvra/AC-Paddock" style="font-size: 16px; min-height: 44px; display: flex; align-items: center; justify-content: center">Code source sur GitHub</a>
+</header>
+<details style="margin: 0 16px; border-bottom: 1px solid #E3E2DE">
+<summary style="min-height: 52px; display: flex; align-items: center; font-size: 15px; font-weight: 600; cursor: pointer">Dans ce projet · 8 parties</summary>
+<div style="display: flex; flex-direction: column; padding-bottom: 12px"><sc-for list="{{sections}}" as="s" hint-placeholder-count="8"><a href="#{{s.id}}" style="display: flex; gap: 10px; min-height: 40px; align-items: center; font-size: 15px; text-decoration: none"><span style="color: #6A6A66; font-size: 13px">{{s.n}}</span>{{s.t}}</a></sc-for></div>
+</details>
+<article style="padding: 28px 16px 0; display: flex; flex-direction: column; gap: 36px">
+<sc-for list="{{sections}}" as="s" hint-placeholder-count="8">
+<section id="{{s.id}}" style="display: flex; flex-direction: column; gap: 12px">
+<span style="font-size: 13px; font-weight: 600; color: {{red}}">{{s.n}}</span>
+<h2 style="margin: 0; font-size: 26px; line-height: 1.1; font-weight: 600; letter-spacing: -0.02em">{{s.t}}</h2>
+<p style="margin: 0; font-size: 17px; line-height: 1.65; color: #2C2C2A">{{s.p}}</p>
+<sc-if value="{{s.hasSteps}}" hint-placeholder-val="{{ false }}"><ol style="margin: 0; padding: 0; list-style: none; border-top: 1px solid #141414"><sc-for list="{{s.steps}}" as="st" hint-placeholder-count="7"><li style="display: grid; grid-template-columns: 36px minmax(0, 1fr); gap: 10px; align-items: center; min-height: 46px; border-bottom: 1px solid #E3E2DE"><span style="width: 24px; height: 24px; border-radius: 12px; border: 2px solid #141414; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700">{{st.n}}</span><span style="font-size: 16px">{{st.t}}</span></li></sc-for></ol></sc-if>
+<sc-if value="{{s.hasImg}}" hint-placeholder-val="{{ true }}"><figure style="margin: 0; display: flex; flex-direction: column; gap: 6px"><div style="aspect-ratio: 16 / 10; background: #EEEDEA; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #55554F; text-align: center; padding: 0 12px">[ {{s.file}} ]</div><figcaption style="font-size: 13px; color: #6A6A66">{{s.cap}}</figcaption></figure></sc-if>
+</section>
+</sc-for>
+<section style="display: flex; flex-direction: column; gap: 10px; border-top: 1px solid #141414; padding-top: 14px">
+<span style="font-size: 13px; font-weight: 600; color: #6A6A66">Stack</span>
+<div style="display: flex; flex-wrap: wrap; gap: 6px"><sc-for list="{{stack}}" as="k" hint-placeholder-count="12"><span style="font-size: 13px; padding: 5px 8px; border: 1px solid #D6D5D1">{{k.t}}</span></sc-for></div>
+</section>
+<a href="Mobile-Accueil.dc.html" style="display: flex; justify-content: space-between; align-items: center; min-height: 64px; border-top: 1px solid #141414; border-bottom: 1px solid #141414; text-decoration: none"><span style="display: flex; flex-direction: column"><span style="font-size: 13px; color: #6A6A66">Virage 2 · Adélaïde</span><span style="font-size: 20px; font-weight: 600">SpotiFiles</span></span><span style="font-size: 20px">→</span></a>
+</article>
+<footer style="margin: 24px 16px 0; padding: 16px 0; border-top: 1px solid #E3E2DE; font-size: 12px; color: #6A6A66; display: flex; justify-content: space-between"><span>© 2026 Lucas Da Silveira</span><a href="mailto:lucasdslvra@gmail.com">Contact</a></footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"red":{"editor":"color","default":"#C4161C","options":["#C4161C","#1A5FD6","#0E8A4F","#141414"]},"$preview":{"width":390,"height":5600}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const red = this.props.red ?? '#C4161C';
+    const track = 'M277 111 L397 148 L412 147 L423 145 L453 125 L491 99 L496 92 L506 74 L520 59 L533 52 L539 49 L555 46 L570 46 L583 50 L593 54 L606 63 L616 74 L623 86 L628 101 L628 114 L626 125 L620 141 L594 185 L577 208 L563 225 L551 236 L424 334 L410 343 L382 359 L358 370 L152 439 L145 440 L141 435 L141 430 L144 425 L189 383 L265 347 L275 343 L412 245 L417 243 L424 244 L441 248 L451 248 L465 244 L477 238 L498 223 L523 199 L546 173 L552 159 L554 145 L551 133 L541 123 L531 121 L523 122 L515 127 L510 134 L501 156 L496 163 L487 173 L473 183 L458 190 L411 203 L399 208 L387 214 L220 329 L212 330 L175 325 L168 327 L151 337 L142 343 L123 359 L114 369 L75 417 L70 417 L60 410 L55 398 L52 386 L53 365 L55 344 L63 318 L87 225 L91 204 L93 173 L89 147 L61 50 L62 45 L67 42 L89 40 L122 44 L130 48 L130 54 L129 60 L131 65 L149 71 Z';
+    const intro = 'Une application web privée pour un groupe d’amis qui joue à Assetto Corsa. Elle remplace les liens de mods perdus sur Discord par un catalogue commun, et un vote décide avant chaque soirée des voitures et du circuit.';
+    const steps = ['Le catalogue reste ouvert en continu', 'Un admin programme la soirée', 'Les membres s’inscrivent', 'Chacun engage ses mods', 'Vote, fermé 30 min avant le départ', 'Téléchargement jusqu’à 2 h après', 'Archivage de la soirée'].map((t, i) => ({ n: String(i + 1), t }));
+    const raw = [
+      { t: 'Le contexte', p: 'Deux contraintes ont guidé tout le projet : un budget d’hébergement nul, en restant sur des offres gratuites, et une maintenance assurée seul, sur mon temps libre. Chaque choix technique devait être simple à faire tourner et à surveiller.', file: 'acPaddock/login.png', cap: 'La page de connexion Discord.' },
+      { t: 'Le cycle d’une soirée', p: 'Une soirée suit toujours le même déroulé, du catalogue jusqu’aux archives :', steps },
+      { t: 'Accès et catalogue', p: 'On se connecte avec Discord et seuls les membres d’un serveur autorisé entrent ; le rôle est relu en base à chaque requête. Chaque fiche du catalogue est modifiable par tous, les tags sont normalisés, les filtres vivent dans l’URL et l’historique des contributions est conservé.', file: 'acPaddock/catalogue.png', cap: 'Le catalogue et ses filtres.' },
+      { t: 'Éviter les doublons', p: 'À la création d’une fiche, une recherche par similarité de nom (pg_trgm) et une comparaison d’URL normalisées signalent les doublons probables, sans jamais bloquer la création.', file: 'acPaddock/ProposeMod.png', cap: 'Le formulaire de proposition d’une fiche.' },
+      { t: 'Un vote sans triche', p: 'Chaque membre dispose de 8 votes pour les véhicules et de 3 pour les circuits. Un verrou consultatif PostgreSQL empêche de dépasser son quota en votant depuis deux onglets à la fois. Les égalités sont départagées par un tirage au sort, fait une seule fois à la fermeture.', file: 'acPaddock/Soiree.png', cap: 'Le classement final d’une soirée passée.' },
+      { t: 'Fichiers et images', p: 'Les mods partent directement vers Cloudflare R2 via des URL pré-signées ; la signature binaire de chaque fichier est vérifiée et tout expire au bout de 24 h. Les images sont ré-encodées avec sharp : WebP, 1 600 px maximum, métadonnées supprimées.' },
+      { t: 'Admin et notifications', p: 'Un espace admin gère la modération, le journal des suppressions, les serveurs autorisés et les réglages de stockage. Les annonces passent par des webhooks Discord, avec un seul rappel 30 minutes avant la fermeture du vote.', file: 'acPaddock/Admin.png', cap: 'L’espace admin.' },
+      { t: 'Ce que j’en retiens', p: 'La gestion de la concurrence en base, une architecture de stockage pensée sous contrainte de budget, la sécurité applicative, et la modélisation d’un domaine qui évolue au fil des soirées.' }
+    ];
+    const sections = raw.map((s, i) => ({ ...s, id: 'm' + (i + 1), n: String(i + 1).padStart(2, '0'), hasImg: !!s.file, hasSteps: !!s.steps, steps: s.steps || [] }));
+    const stack = ['Next.js 16', 'React 19', 'TypeScript', 'PostgreSQL (Supabase)', 'Prisma 7', 'pg_trgm', 'pg_cron', 'Auth.js v5', 'OAuth Discord', 'Cloudflare R2', 'sharp', 'Zod', 'Tailwind CSS 4', 'Vercel'].map((t) => ({ t }));
+    return { red, track, intro, sections, stack };
+  }
+}
+</script>
+</body>
+</html>

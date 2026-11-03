@@ -1,0 +1,6 @@
+.empty {
+  padding: 36px 0;
+  border-top: 1px solid var(--ink);
+  font-size: 18px;
+  color: var(--text-soft);
+}

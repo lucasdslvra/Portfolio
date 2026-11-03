@@ -1,0 +1,25 @@
+.footer {
+  border-top: 1px solid var(--rule);
+}
+
+.inner {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px;
+  padding-top: 18px;
+  padding-bottom: 18px;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.inner a {
+  color: var(--text-muted);
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+}
+
+.inner a:hover {
+  color: var(--red);
+}

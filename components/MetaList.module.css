@@ -1,0 +1,20 @@
+.list {
+  display: grid;
+  grid-template-columns: 90px minmax(0, 1fr);
+  row-gap: 8px;
+  font-size: 15px;
+}
+
+.row {
+  display: contents;
+}
+
+.row dt {
+  color: var(--text-muted);
+}
+
+.compact {
+  grid-template-columns: 70px minmax(0, 1fr);
+  row-gap: 6px;
+  font-size: 14px;
+}

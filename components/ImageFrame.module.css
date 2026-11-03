@@ -1,0 +1,26 @@
+.figure {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.frame {
+  position: relative;
+  background: var(--placeholder);
+  overflow: hidden;
+}
+
+.cover {
+  object-fit: cover;
+  object-position: top center;
+}
+
+.natural {
+  width: 100%;
+  height: auto;
+}
+
+.caption {
+  font-size: 14px;
+  color: var(--text-muted);
+}

@@ -1,0 +1,441 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Accueil — Lucas Da Silveira</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&amp;family=Hanken+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#FFFFFF}
+a{color:#141414}a:hover{color:#C4161C}
+@keyframes ldsBlink{50%{opacity:.2}}
+.lds-live{animation:ldsBlink 1.2s steps(1) infinite}
+@media (prefers-reduced-motion: reduce){.lds-live{animation:none}}
+</style>
+</helmet>
+<div style="background: #FFFFFF; color: #141414; font-family: 'Hanken Grotesk', Helvetica, sans-serif; font-variant-numeric: tabular-nums">
+
+<nav style="border-bottom: 1px solid #E3E2DE">
+<div style="max-width: 1280px; margin: 0 auto; padding: 12px 24px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 32px">
+<a href="Accueil.dc.html" style="display: flex; align-items: center; gap: 12px; min-height: 44px; text-decoration: none"><svg width="34" height="24" viewBox="0 0 680 480" aria-hidden="true"><path d="{{track}}" fill="none" stroke="#141414" stroke-width="34" stroke-linejoin="round"></path></svg><span style="font-size: 19px; font-weight: 600">Lucas Da Silveira</span></a>
+<div style="display: flex; flex-wrap: wrap; gap: 4px 32px; font-size: 16px; font-weight: 500"><a href="Projets.dc.html" style="padding: 12px 0; text-decoration: none">Projets</a><a href="Contact.dc.html" style="padding: 12px 0; text-decoration: none">Contact</a><a href="https://github.com/lucasdslvra" style="padding: 12px 0; text-decoration: none">GitHub ↗</a></div>
+</div>
+</nav>
+
+<header style="max-width: 1280px; margin: 0 auto; padding: 64px 24px 40px; display: flex; flex-wrap: wrap; gap: 48px; align-items: flex-start">
+<div style="flex: 1 1 380px; display: flex; flex-direction: column; gap: 26px">
+<div style="display: flex; flex-direction: column; gap: 10px">
+<h1 style="margin: 0; font-size: clamp(44px, 5vw, 60px); line-height: 1.02; font-weight: 600; letter-spacing: -0.03em">Lucas Da Silveira</h1>
+<span style="font-size: 18px; font-weight: 500; color: {{red}}">Étudiant en informatique</span>
+</div>
+<p style="margin: 0; font-size: 20px; line-height: 1.5; color: #3A3A38">Moi c'est Lucas, étudiant en informatique passionné de développement. Un tour de Magny-Cours, quatre virages, quatre projets : survolez-en un pour monter à bord.</p>
+<ol onMouseLeave="{{leave}}" style="margin: 0; padding: 0; list-style: none; border-top: 1px solid #141414">
+<sc-for list="{{items}}" as="r" hint-placeholder-count="4">
+<li style="border-bottom: 1px solid #E3E2DE"><a href="{{r.href}}" onMouseEnter="{{r.pick}}" onFocus="{{r.pick}}" style="display: grid; grid-template-columns: 40px minmax(0, 1fr) auto; gap: 14px; align-items: center; min-height: 64px; text-decoration: none; background: {{r.bg}}; transition: background 200ms">
+<span style="width: 30px; height: 30px; border-radius: 15px; border: 2px solid {{r.ring}}; background: {{r.fill}}; color: {{r.num}}; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; transition: all 200ms">{{r.no}}</span>
+<span style="display: flex; flex-direction: column; gap: 1px"><span style="font-size: 19px; font-weight: {{r.weight}}">{{r.name}}</span><span style="font-size: 13px; color: #6A6A66">{{r.corner}}</span></span><span style="font-size: 14px; color: #6A6A66; padding-right: 8px">{{r.date}}</span>
+</a></li>
+</sc-for>
+<li><a href="Contact.dc.html" style="display: grid; grid-template-columns: 40px minmax(0, 1fr); gap: 14px; align-items: center; min-height: 60px; text-decoration: none">
+<svg width="30" height="20" viewBox="0 0 30 20" aria-hidden="true"><rect width="30" height="20" fill="#FFFFFF" stroke="#141414" stroke-width="1.5"></rect><rect x="0" y="0" width="7.5" height="10" fill="#141414"></rect><rect x="15" y="0" width="7.5" height="10" fill="#141414"></rect><rect x="7.5" y="10" width="7.5" height="10" fill="#141414"></rect><rect x="22.5" y="10" width="7.5" height="10" fill="#141414"></rect></svg>
+<span style="font-size: 19px; font-weight: 500">Arrivée : me contacter</span></a></li>
+</ol>
+</div>
+
+<div style="flex: 999 1 520px; min-width: 0; position: relative; aspect-ratio: 680 / 480; overflow: hidden; background: #FFFFFF">
+
+<svg style="position: absolute; inset: 0" width="100%" height="100%" viewBox="0 0 680 480" role="img" aria-label="Tracé du circuit de Nevers Magny-Cours, avec 4 virages numérotés : Estoril, Adélaïde, Château d'Eau et Lycée">
+<g style="transform: {{mapT}}; transform-origin: {{mapO}}; opacity: {{mapOp}}; transition: transform 500ms cubic-bezier(.5,0,.2,1), opacity 220ms ease {{mapDelay}}">
+<path d="{{track}}" fill="none" stroke="#141414" stroke-width="12" stroke-linejoin="round" stroke-linecap="round"></path>
+<path d="{{sel.seg}}" fill="none" stroke="{{red}}" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"></path>
+<g transform="translate(277 111) rotate(17)"><rect x="-4" y="-12" width="4" height="6" fill="#141414"></rect><rect x="0" y="-12" width="4" height="6" fill="#FFFFFF"></rect><rect x="-4" y="-6" width="4" height="6" fill="#FFFFFF"></rect><rect x="0" y="-6" width="4" height="6" fill="#141414"></rect><rect x="-4" y="0" width="4" height="6" fill="#141414"></rect><rect x="0" y="0" width="4" height="6" fill="#FFFFFF"></rect><rect x="-4" y="6" width="4" height="6" fill="#FFFFFF"></rect><rect x="0" y="6" width="4" height="6" fill="#141414"></rect></g>
+<g transform="translate(330 113) rotate(17)"><path d="M-8 -6 L4 0 L-8 6" fill="none" stroke="#6A6A66" stroke-width="2"></path></g>
+<text x="664" y="468" text-anchor="end" font-size="13" fill="#6A6A66" font-family="Hanken Grotesk, sans-serif">Circuit de Nevers Magny-Cours · 4,4 km</text>
+<g onClick="{{p1}}" style="cursor: pointer"><circle cx="622" cy="36" r="18" fill="{{f1}}" stroke="{{s1}}" stroke-width="2.5"></circle><text x="622" y="42" text-anchor="middle" font-size="16" font-weight="700" fill="{{t1}}" font-family="Hanken Grotesk, sans-serif">1</text></g>
+<g onClick="{{p2}}" style="cursor: pointer"><circle cx="108" cy="456" r="18" fill="{{f2}}" stroke="{{s2}}" stroke-width="2.5"></circle><text x="108" y="462" text-anchor="middle" font-size="16" font-weight="700" fill="{{t2}}" font-family="Hanken Grotesk, sans-serif">2</text></g>
+<g onClick="{{p3}}" style="cursor: pointer"><circle cx="30" cy="430" r="18" fill="{{f3}}" stroke="{{s3}}" stroke-width="2.5"></circle><text x="30" y="436" text-anchor="middle" font-size="16" font-weight="700" fill="{{t3}}" font-family="Hanken Grotesk, sans-serif">3</text></g>
+<g onClick="{{p4}}" style="cursor: pointer"><circle cx="94" cy="24" r="18" fill="{{f4}}" stroke="{{s4}}" stroke-width="2.5"></circle><text x="94" y="30" text-anchor="middle" font-size="16" font-weight="700" fill="{{t4}}" font-family="Hanken Grotesk, sans-serif">4</text></g>
+</g>
+</svg>
+
+<div aria-hidden="{{sceneHidden}}" style="position: absolute; inset: 0; opacity: {{sceneOp}}; transform: scale({{sceneScale}}); transition: opacity 320ms ease {{sceneDelay}}, transform 600ms ease {{sceneDelay}}; pointer-events: {{scenePe}}; background: #CFDCE7; container-type: inline-size">
+<canvas ref="{{setCv}}" width="1360" height="960" role="img" aria-label="{{sel.sceneAlt}}" style="position: absolute; inset: 0; width: 100%; height: 100%; display: block"></canvas>
+
+<div style="position: absolute; inset: 0; font-family: 'Barlow Condensed', 'Hanken Grotesk', sans-serif; font-variant-numeric: tabular-nums; pointer-events: none">
+
+<div style="position: absolute; left: 2.4cqw; top: 2.4cqw; display: flex; flex-direction: column; align-items: flex-start; gap: 0.8cqw">
+<div style="display: flex; align-items: stretch; font-size: 1.9cqw; font-weight: 700; line-height: 1; letter-spacing: 0.05em; text-transform: uppercase">
+<span style="background: {{red}}; color: #FFFFFF; padding: 0.65cqw 1.1cqw; display: flex; align-items: center; gap: 0.7cqw"><span class="lds-live" style="width: 0.9cqw; height: 0.9cqw; border-radius: 50%; background: #FFFFFF"></span>Onboard</span>
+<span style="background: #FFFFFF; color: #141414; padding: 0.65cqw 1.2cqw">Virage {{sel.no}} · {{sel.cornerUp}}</span>
+</div>
+<span style="background: rgba(20,20,20,0.6); color: #FFFFFF; font-family: 'Hanken Grotesk', sans-serif; font-size: 1.25cqw; padding: 0.45cqw 0.9cqw">Aperçu de synthèse · clip à venir : {{sel.clip}}</span>
+</div>
+
+<div style="position: absolute; right: 2.4cqw; top: 2.4cqw; width: 20cqw; display: flex; flex-direction: column; text-transform: uppercase">
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 1cqw; background: #141414; color: #FFFFFF; padding: 0.6cqw 1.1cqw"><span style="font-size: 1.4cqw; font-weight: 600; letter-spacing: 0.06em; color: #B8B8B4">Chrono</span><span ref="{{setChrono}}" style="font-size: 2.7cqw; font-weight: 700; line-height: 1">0:00.000</span></div>
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 1cqw; background: #FFFFFF; color: #141414; padding: 0.5cqw 1.1cqw; font-size: 1.45cqw; font-weight: 600"><span>Record perso</span><span style="color: {{red}}">[ton temps]</span></div>
+<div style="margin-top: 0.8cqw; background: rgba(255,255,255,0.9); padding: 0.8cqw 0.9cqw 0.5cqw">
+<svg width="100%" viewBox="0 0 680 480" aria-hidden="true" style="display: block">
+<path d="{{track}}" fill="none" stroke="#141414" stroke-width="18" stroke-linejoin="round" stroke-linecap="round"></path>
+<path ref="{{setSegEl}}" d="{{sel.seg}}" fill="none" stroke="{{red}}" stroke-width="18" stroke-linejoin="round" stroke-linecap="round"></path>
+<circle ref="{{setDot}}" cx="{{sel.cx}}" cy="{{sel.cy}}" r="24" fill="#FFFFFF" stroke="{{red}}" stroke-width="10"></circle>
+</svg>
+<div style="font-size: 1.25cqw; font-weight: 600; letter-spacing: 0.04em; color: #3A3A38; padding-top: 0.3cqw">Magny-Cours · 4,4 km</div>
+</div>
+</div>
+
+<div style="position: absolute; left: 2.4cqw; bottom: 2.4cqw; width: 58cqw; display: flex; flex-direction: column; align-items: flex-start">
+<div style="display: flex; align-items: stretch">
+<span style="background: {{red}}; color: #FFFFFF; font-size: 4.6cqw; font-weight: 700; line-height: 1; padding: 0.6cqw 1.4cqw; display: flex; align-items: center">{{sel.no}}</span>
+<span style="background: #FFFFFF; color: #141414; padding: 0.75cqw 1.5cqw; display: flex; flex-direction: column; justify-content: center; gap: 0.25cqw"><span style="font-size: 3.5cqw; font-weight: 700; line-height: 1; text-transform: uppercase; letter-spacing: 0.01em">{{sel.name}}</span><span style="font-family: 'Hanken Grotesk', sans-serif; font-size: 1.45cqw; font-weight: 500; color: #55554F">{{sel.cat}} · {{sel.month}}</span></span>
+</div>
+<div style="background: #141414; color: #FFFFFF; font-family: 'Hanken Grotesk', sans-serif; font-size: 1.65cqw; line-height: 1.35; padding: 0.9cqw 1.5cqw; box-sizing: border-box; max-width: 100%">{{sel.short}}</div>
+<div style="display: flex; flex-wrap: wrap; gap: 0.5cqw; margin-top: 0.6cqw; font-size: 1.45cqw; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase">
+<span style="background: {{red}}; color: #FFFFFF; padding: 0.35cqw 0.8cqw">{{sel.status}}</span>
+<sc-for list="{{sel.chips}}" as="c" hint-placeholder-count="4"><span style="background: rgba(255,255,255,0.92); color: #141414; padding: 0.35cqw 0.8cqw">{{c.t}}</span></sc-for>
+</div>
+</div>
+
+<div style="position: absolute; right: 2.4cqw; bottom: 2.4cqw; width: 27cqw; box-sizing: border-box; background: rgba(20,20,20,0.88); color: #FFFFFF; padding: 1cqw 1.2cqw; display: flex; flex-direction: column; gap: 0.9cqw">
+<div ref="{{setLed}}" style="display: flex; gap: 0.35cqw"><span style="flex: 1; height: 0.7cqw; background: #2BB75C"></span><span style="flex: 1; height: 0.7cqw; background: #2BB75C"></span><span style="flex: 1; height: 0.7cqw; background: #2BB75C"></span><span style="flex: 1; height: 0.7cqw; background: #2BB75C"></span><span style="flex: 1; height: 0.7cqw; background: #2BB75C"></span><span style="flex: 1; height: 0.7cqw; background: #F2C200"></span><span style="flex: 1; height: 0.7cqw; background: #F2C200"></span><span style="flex: 1; height: 0.7cqw; background: #F2C200"></span><span style="flex: 1; height: 0.7cqw; background: #F2C200"></span><span style="flex: 1; height: 0.7cqw; background: #E5322B"></span><span style="flex: 1; height: 0.7cqw; background: #E5322B"></span><span style="flex: 1; height: 0.7cqw; background: #E5322B"></span></div>
+<div style="display: flex; align-items: stretch; gap: 1.2cqw">
+<div style="display: flex; flex-direction: column; align-items: center; justify-content: center; border: 0.2cqw solid #FFFFFF; padding: 0.2cqw 0.9cqw; min-width: 4cqw"><span style="font-size: 1.15cqw; font-weight: 600; letter-spacing: 0.06em; color: #B8B8B4">RAPPORT</span><span ref="{{setGear}}" style="font-size: 4.4cqw; font-weight: 700; line-height: 1">1</span></div>
+<div style="display: flex; flex-direction: column; justify-content: center"><span ref="{{setSpd}}" style="font-size: 4.4cqw; font-weight: 700; line-height: 1">0</span><span style="font-size: 1.15cqw; font-weight: 600; letter-spacing: 0.06em; color: #B8B8B4">KM/H</span></div>
+<div style="margin-left: auto; display: flex; gap: 0.7cqw">
+<div style="display: flex; flex-direction: column; align-items: center; gap: 0.3cqw"><div style="width: 1.4cqw; height: 5.2cqw; background: #3A3B3E; display: flex; align-items: flex-end"><div ref="{{setThr}}" style="width: 100%; height: 0%; background: #2BB75C"></div></div><span style="font-size: 1.05cqw; font-weight: 600; color: #B8B8B4">GAZ</span></div>
+<div style="display: flex; flex-direction: column; align-items: center; gap: 0.3cqw"><div style="width: 1.4cqw; height: 5.2cqw; background: #3A3B3E; display: flex; align-items: flex-end"><div ref="{{setBrk}}" style="width: 100%; height: 0%; background: #E5322B"></div></div><span style="font-size: 1.05cqw; font-weight: 600; color: #B8B8B4">FREIN</span></div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</header>
+
+<section style="max-width: 1280px; margin: 0 auto; padding: 0 24px 72px">
+<div style="border-top: 1px solid #141414; padding-top: 32px; display: flex; flex-wrap: wrap; gap: 40px">
+<div style="flex: 6 1 420px; aspect-ratio: 16 / 10; background: #EEEDEA; display: flex; align-items: center; justify-content: center; font-size: 14px; color: #55554F">[ {{sel.img}} ]</div>
+<div style="flex: 5 1 340px; display: flex; flex-direction: column; gap: 16px">
+<span style="font-size: 14px; font-weight: 600; color: {{red}}">Virage {{sel.no}} · {{sel.corner}} · {{sel.month}}</span>
+<h2 style="margin: 0; font-size: 40px; line-height: 1.05; font-weight: 600; letter-spacing: -0.02em">{{sel.name}}</h2>
+<p style="margin: 0; font-size: 18px; line-height: 1.55; color: #3A3A38">{{sel.desc}}</p>
+<dl style="margin: 0; display: grid; grid-template-columns: 90px minmax(0, 1fr); row-gap: 8px; font-size: 15px"><dt style="color: #6A6A66">Type</dt><dd style="margin: 0">{{sel.cat}}</dd><dt style="color: #6A6A66">Stack</dt><dd style="margin: 0">{{sel.stack}}</dd></dl>
+<div style="display: flex; flex-wrap: wrap; gap: 20px; align-items: center"><a href="{{sel.href}}" style="display: inline-flex; align-items: center; height: 48px; padding: 0 22px; background: #141414; color: #FFFFFF; font-size: 16px; font-weight: 600; text-decoration: none">Lire le projet</a><a href="{{sel.extUrl}}" style="font-size: 16px">{{sel.extLabel}}</a></div>
+</div>
+</div>
+</section>
+
+<section style="border-top: 1px solid #141414">
+<div style="max-width: 1280px; margin: 0 auto; padding: 48px 24px; display: flex; flex-wrap: wrap; gap: 24px; justify-content: space-between; align-items: center">
+<div style="display: flex; align-items: center; gap: 16px"><svg width="44" height="30" viewBox="0 0 30 20" aria-hidden="true"><rect width="30" height="20" fill="#FFFFFF" stroke="#141414" stroke-width="1.5"></rect><rect x="0" y="0" width="7.5" height="10" fill="#141414"></rect><rect x="15" y="0" width="7.5" height="10" fill="#141414"></rect><rect x="7.5" y="10" width="7.5" height="10" fill="#141414"></rect><rect x="22.5" y="10" width="7.5" height="10" fill="#141414"></rect></svg><h2 style="margin: 0; font-size: 34px; font-weight: 600; letter-spacing: -0.02em">Arrivée : me contacter</h2></div>
+<div style="display: flex; flex-wrap: wrap; gap: 8px 24px; font-size: 17px"><a href="mailto:lucasdslvra@gmail.com">lucasdslvra@gmail.com</a><a href="https://www.linkedin.com/in/lucasdslvra/">LinkedIn</a><a href="https://github.com/lucasdslvra">GitHub</a></div>
+</div>
+</section>
+<footer style="border-top: 1px solid #E3E2DE"><div style="max-width: 1280px; margin: 0 auto; padding: 18px 24px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; font-size: 13px; color: #6A6A66"><span>© 2026 Lucas Da Silveira</span><span>Fait main en Next.js</span></div></footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"red":{"editor":"color","default":"#C4161C","options":["#C4161C","#1A5FD6","#0E8A4F","#141414"]},"$preview":{"width":1440,"height":2300}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { sel: 0, view: null };
+    this.cv = null; this.spdEl = null; this.gearEl = null; this.ledEl = null;
+    this.thrEl = null; this.brkEl = null; this.chronoEl = null; this.segEl = null; this.dotEl = null;
+    this.raf = null; this.built = null; this.time = 0;
+    this.setCv = (el) => { this.cv = el; };
+    this.setThr = (el) => { this.thrEl = el; };
+    this.setBrk = (el) => { this.brkEl = el; };
+    this.setChrono = (el) => { this.chronoEl = el; };
+    this.setSegEl = (el) => { this.segEl = el; };
+    this.setDot = (el) => { this.dotEl = el; };
+    this.setSpd = (el) => { this.spdEl = el; };
+    this.setGear = (el) => { this.gearEl = el; };
+    this.setLed = (el) => { this.ledEl = el; };
+  }
+
+  componentDidMount() { this.sync(); }
+  componentDidUpdate() { this.sync(); }
+  componentWillUnmount() { if (this.raf) cancelAnimationFrame(this.raf); this.raf = null; }
+
+  sync() {
+    const on = this.state.view !== null;
+    if (!on) { if (this.raf) { cancelAnimationFrame(this.raf); this.raf = null; } return; }
+    const scene = ['A', 'B', 'C', 'D'][this.state.sel];
+    if (this.built !== scene) this.build(scene);
+    if (!this.raf && this.cv) {
+      const reduce = typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      this.last = performance.now();
+      const tick = (t) => {
+        const dt = Math.min(0.05, Math.max(0, (t - this.last) / 1000));
+        this.last = t;
+        this.step(reduce ? 0 : dt);
+        this.draw();
+        this.raf = reduce ? null : requestAnimationFrame(tick);
+      };
+      this.raf = requestAnimationFrame(tick);
+    }
+  }
+
+  build(scene) {
+    const segs = [];
+    let y = 0;
+    const add = (n, c0, c1, opt) => {
+      opt = opt || {};
+      for (let i = 0; i < n; i++) {
+        const t = n > 1 ? i / (n - 1) : 1;
+        const e = t * t * (3 - 2 * t);
+        const y1 = y; y += (opt.hill || 0);
+        segs.push({ curve: c0 + (c1 - c0) * e, y1, y2: y, kerbL: !!opt.kerbL, kerbR: !!opt.kerbR, gravel: opt.gravel || null, speed: opt.speed || 9000, sprites: [] });
+      }
+    };
+    if (scene === 'A') {
+      add(36, 0, 0, { speed: 9000 });
+      add(14, 0, 2.6, { speed: 7200, kerbR: true });
+      add(70, 2.6, 2.6, { speed: 6700, kerbR: true, gravel: 'L' });
+      add(14, 2.6, 0, { speed: 7600, kerbL: true, gravel: 'L' });
+      add(30, 0, 0, { speed: 9000 });
+    } else if (scene === 'B') {
+      add(80, 0, 0, { speed: 9800 });
+      add(10, 0, 0, { speed: 4200 });
+      add(8, 0, 6.5, { speed: 3700, kerbR: true, gravel: 'L' });
+      add(26, 6.5, 6.5, { speed: 3500, kerbR: true, gravel: 'L' });
+      add(8, 6.5, 0, { speed: 4600, kerbL: true });
+      add(30, 0, 0, { speed: 8200 });
+    } else if (scene === 'C') {
+      add(30, 0, 0, { speed: 8400, hill: -14 });
+      add(12, 0, 3.4, { speed: 6600, kerbR: true, hill: -34 });
+      add(50, 3.4, 3.4, { speed: 6200, kerbR: true, gravel: 'L', hill: -34 });
+      add(12, 3.4, 0, { speed: 7000, kerbL: true, hill: -12 });
+      const back = -y / 44;
+      add(44, 0, 0, { speed: 8600, hill: back });
+    } else {
+      add(34, 0, 0, { speed: 8400 });
+      add(8, 0, 4.6, { speed: 5000, kerbR: true });
+      add(16, 4.6, 4.6, { speed: 4700, kerbR: true, gravel: 'L' });
+      add(10, 4.6, -4.6, { speed: 5000, kerbL: true, kerbR: true });
+      add(16, -4.6, -4.6, { speed: 5500, kerbL: true });
+      add(8, -4.6, 0, { speed: 6800 });
+      add(60, 0, 0, { speed: 9200 });
+    }
+    const N = segs.length;
+    const spr = (i, type, side, off, extra) => { if (segs[i]) segs[i].sprites.push(Object.assign({ type, side, off }, extra || {})); };
+    for (let i = 0; i < N; i += 4) {
+      spr(i, 'tree', -1, 3 + ((i * 37) % 23) / 10);
+      if (scene !== 'D' || i < 86) spr((i + 2) % N, 'tree', 1, 2.8 + ((i * 53) % 21) / 10);
+    }
+    segs.forEach((s, i) => { if (s.gravel && i % 3 === 0) spr(i, 'tyres', s.gravel === 'L' ? -1 : 1, 2.4); });
+    for (let i = 14; i < N; i += 48) spr(i, 'post', 1, 1.6);
+    if (scene === 'B') { spr(52, 'board', -1, 1.35, { label: '150' }); spr(64, 'board', -1, 1.35, { label: '100' }); spr(76, 'board', -1, 1.35, { label: '50' }); }
+    if (scene === 'C') spr(26, 'tower', 1, 4.2);
+    if (scene === 'D') { for (let i = 92; i < N - 4; i += 4) spr(i, 'pit', 1, 1.45); }
+    this.segs = segs; this.N = N; this.SEG = 200; this.L = N * 200;
+    this.pos = 0; this.speed = segs[0].speed; this.prevSpeed = this.speed; this.bg = 0; this.steer = 0;
+    this.thr = 1; this.brk = 0; this.lapT = 0;
+    this.carAhead = scene === 'B';
+    this.built = scene;
+  }
+
+  step(dt) {
+    const SEG = this.SEG, N = this.N;
+    const bi = Math.floor(this.pos / SEG);
+    const seg = this.segs[bi % N];
+    let target = seg.speed;
+    for (let k = 1; k <= 40; k++) target = Math.min(target, this.segs[(bi + k) % N].speed + k * 160);
+    this.prevSpeed = this.speed;
+    const rate = target < this.speed ? 2.4 : 1.2;
+    this.speed += (target - this.speed) * Math.min(1, dt * rate);
+    const brkT = target < this.speed - 60 ? Math.min(1, (this.speed - target) / 2200 + 0.35) : 0;
+    const thrT = brkT > 0 ? 0 : (target > this.speed + 60 ? 1 : 0.35 + 0.6 * seg.speed / 9800);
+    this.thr += (thrT - this.thr) * Math.min(1, dt * 10);
+    this.brk += (brkT - this.brk) * Math.min(1, dt * 12);
+    const old = this.pos;
+    this.pos = (this.pos + this.speed * dt) % this.L;
+    this.lapT = this.pos < old ? 0 : this.lapT + dt;
+    this.bg += seg.curve * this.speed * dt * 0.0018;
+    this.steer += (seg.curve - this.steer) * Math.min(1, dt * 5);
+    this.time += dt;
+  }
+
+  quad(ctx, x1, y1, x2, y2, x3, y3, x4, y4, c) {
+    ctx.fillStyle = c; ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.lineTo(x3, y3); ctx.lineTo(x4, y4); ctx.closePath(); ctx.fill();
+  }
+
+  sprite(ctx, sp, x, y, f) {
+    if (f < 0.003) return;
+    const r = (X, Y, w, h, c) => { ctx.fillStyle = c; ctx.fillRect(X, Y, w, h); };
+    if (sp.type === 'tree') {
+      const w = 1000 * f, h = 1900 * f;
+      r(x - w * 0.06, y - h * 0.34, w * 0.12, h * 0.34, '#5A4A3A');
+      ctx.fillStyle = sp.side < 0 ? '#4E6241' : '#557046';
+      ctx.beginPath(); ctx.ellipse(x, y - h * 0.62, w * 0.5, h * 0.42, 0, 0, Math.PI * 2); ctx.fill();
+    } else if (sp.type === 'tyres') {
+      const w = 1000 * f, h = 320 * f;
+      r(x - w / 2, y - h, w, h, '#1A1B1D'); r(x - w / 2, y - h * 0.64, w, h * 0.24, '#E9E9E9');
+    } else if (sp.type === 'post') {
+      const w = 560 * f, h = 820 * f;
+      r(x - w / 2, y - h, w, h, '#F2F2F2'); r(x - w / 2, y - h, w, h * 0.22, '#E8590C'); r(x - w * 0.35, y - h * 0.68, w * 0.7, h * 0.26, '#2F3A44');
+    } else if (sp.type === 'board') {
+      const w = 460 * f, h = 280 * f, pole = 640 * f;
+      r(x - w * 0.04, y - pole, w * 0.08, pole, '#8E9196');
+      r(x - w / 2, y - pole - h, w, h, '#FFFFFF');
+      ctx.strokeStyle = '#141414'; ctx.lineWidth = Math.max(1, 14 * f); ctx.strokeRect(x - w / 2, y - pole - h, w, h);
+      ctx.fillStyle = '#141414'; ctx.font = '700 ' + Math.max(4, 180 * f) + 'px "Hanken Grotesk", sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.fillText(sp.label, x, y - pole - h / 2);
+    } else if (sp.type === 'tower') {
+      const cw = 340 * f, ch = 3600 * f, bw = 1800 * f, bh = 1050 * f;
+      r(x - cw / 2, y - ch, cw, ch, '#B4B8BC');
+      ctx.fillStyle = '#C3C7CB'; ctx.beginPath(); ctx.moveTo(x - bw / 2, y - ch - bh); ctx.lineTo(x + bw / 2, y - ch - bh); ctx.lineTo(x + bw * 0.22, y - ch); ctx.lineTo(x - bw * 0.22, y - ch); ctx.closePath(); ctx.fill();
+      r(x - bw * 0.52, y - ch - bh - 130 * f, bw * 1.04, 150 * f, '#A4A9AE');
+    } else if (sp.type === 'pit') {
+      const w = 900 * f, h = 950 * f;
+      r(x, y - h, w, h, '#E2E3E4'); r(x, y - h, w, h * 0.14, '#4A4D52'); r(x + w * 0.1, y - h * 0.72, w * 0.8, h * 0.72, '#2F3236');
+    }
+  }
+
+  car(ctx, x, y, f, braking) {
+    const w = 760 * f, h = 300 * f;
+    ctx.fillStyle = '#141414'; ctx.fillRect(x - w * 0.58, y - h * 0.62, w * 0.17, h * 0.62); ctx.fillRect(x + w * 0.41, y - h * 0.62, w * 0.17, h * 0.62);
+    ctx.fillStyle = '#1A5FD6'; ctx.fillRect(x - w / 2, y - h, w, h * 0.8);
+    ctx.fillStyle = '#0E2F6B'; ctx.fillRect(x - w * 0.3, y - h * 1.18, w * 0.6, h * 0.26);
+    ctx.fillStyle = '#141414'; ctx.fillRect(x - w * 0.56, y - h * 1.34, w * 1.12, h * 0.1); ctx.fillRect(x - w * 0.26, y - h * 1.26, w * 0.04, h * 0.28); ctx.fillRect(x + w * 0.22, y - h * 1.26, w * 0.04, h * 0.28);
+    ctx.fillStyle = '#1C1C1C'; ctx.fillRect(x - w * 0.46, y - h * 0.3, w * 0.92, h * 0.22);
+    ctx.fillStyle = braking ? '#FF2A2A' : '#6E1414';
+    ctx.fillRect(x - w * 0.46, y - h * 0.84, w * 0.17, h * 0.11); ctx.fillRect(x + w * 0.29, y - h * 0.84, w * 0.17, h * 0.11); ctx.fillRect(x - w * 0.05, y - h * 1.39, w * 0.1, h * 0.05);
+  }
+
+  draw() {
+    const cv = this.cv; if (!cv || !this.segs) return;
+    const ctx = cv.getContext('2d'); if (!ctx) return;
+    const W = 680, H = 480, CY = 198, RW = 2000, CAMH = 1000, D = 0.84, DRAW = 170, SEG = this.SEG, N = this.N;
+    ctx.setTransform(2, 0, 0, 2, 0, 0);
+    ctx.save();
+    const roll = -this.steer * 0.8 * Math.PI / 180;
+    const vib = Math.sin(this.time * 95) * 0.5 * (this.speed / 9000);
+    ctx.translate(W / 2, H / 2); ctx.rotate(roll); ctx.translate(-W / 2, -H / 2 + vib);
+
+    ctx.fillStyle = '#CFDCE7'; ctx.fillRect(-80, -80, W + 160, CY + 90);
+    const bg = this.bg;
+    ctx.fillStyle = '#A3AE96'; ctx.beginPath(); ctx.moveTo(-80, CY + 12);
+    for (let x = -80; x <= W + 80; x += 10) ctx.lineTo(x, CY - 24 - 12 * Math.sin((x + bg * 0.45) / 70) - 6 * Math.sin((x + bg * 0.45) / 23));
+    ctx.lineTo(W + 80, CY + 12); ctx.closePath(); ctx.fill();
+    ctx.fillStyle = '#6E7D62'; ctx.beginPath(); ctx.moveTo(-80, CY + 12);
+    for (let x = -80; x <= W + 80; x += 6) ctx.lineTo(x, CY - 9 - 8 * Math.abs(Math.sin((x + bg) / 19)) - 5 * Math.sin((x + bg) / 41));
+    ctx.lineTo(W + 80, CY + 12); ctx.closePath(); ctx.fill();
+    ctx.fillStyle = '#8FA870'; ctx.fillRect(-80, CY, W + 160, H - CY + 80);
+
+    const bi = Math.floor(this.pos / SEG);
+    const base = this.segs[bi % N];
+    const pct = (this.pos % SEG) / SEG;
+    const camY = CAMH + base.y1 + (base.y2 - base.y1) * pct;
+    const camX = this.steer * 0.1 * RW;
+    const proj = (wx, wy, wz) => { const z = wz - this.pos; const s = D / z; return { x: W / 2 + s * (wx - camX) * W / 2, y: CY - s * (wy - camY) * H / 2, w: s * RW * W / 2, z }; };
+    let x = 0, dx = -(base.curve * pct);
+    let maxy = H + 80;
+    const drawn = [];
+    for (let n = 0; n < DRAW; n++) {
+      const idx = bi + n; const seg = this.segs[idx % N];
+      const p1 = proj(x, seg.y1, idx * SEG);
+      const p2 = proj(x + dx, seg.y2, (idx + 1) * SEG);
+      x += dx; dx += seg.curve;
+      if (p1.z <= 1 || p2.y >= maxy || p2.y >= p1.y) { drawn.push(null); continue; }
+      const light = Math.floor(idx / 3) % 2 === 0;
+      ctx.fillStyle = light ? '#93AB73' : '#88A069'; ctx.fillRect(-80, p2.y, W + 160, p1.y - p2.y + 1);
+      if (seg.gravel) {
+        const sd = seg.gravel === 'L' ? -1 : 1;
+        this.quad(ctx, p1.x + sd * p1.w, p1.y, p1.x + sd * p1.w * 3.6, p1.y, p2.x + sd * p2.w * 3.6, p2.y, p2.x + sd * p2.w, p2.y, light ? '#DCCFAF' : '#D2C5A3');
+      }
+      this.quad(ctx, p1.x - p1.w, p1.y, p1.x + p1.w, p1.y, p2.x + p2.w, p2.y, p2.x - p2.w, p2.y, light ? '#56575C' : '#505156');
+      const kc = idx % 2 === 0 ? '#D62A1E' : '#F2F2F2';
+      const k1 = p1.w * 0.16, k2 = p2.w * 0.16, e1 = p1.w * 0.025, e2 = p2.w * 0.025;
+      if (seg.kerbL) this.quad(ctx, p1.x - p1.w - k1 * 0.4, p1.y, p1.x - p1.w + k1, p1.y, p2.x - p2.w + k2, p2.y, p2.x - p2.w - k2 * 0.4, p2.y, kc);
+      else this.quad(ctx, p1.x - p1.w * 0.97, p1.y, p1.x - p1.w * 0.97 + e1, p1.y, p2.x - p2.w * 0.97 + e2, p2.y, p2.x - p2.w * 0.97, p2.y, '#EDEDED');
+      if (seg.kerbR) this.quad(ctx, p1.x + p1.w + k1 * 0.4, p1.y, p1.x + p1.w - k1, p1.y, p2.x + p2.w - k2, p2.y, p2.x + p2.w + k2 * 0.4, p2.y, kc);
+      else this.quad(ctx, p1.x + p1.w * 0.97, p1.y, p1.x + p1.w * 0.97 - e1, p1.y, p2.x + p2.w * 0.97 - e2, p2.y, p2.x + p2.w * 0.97, p2.y, '#EDEDED');
+      if (Math.floor(idx / 2) % 6 === 0) this.quad(ctx, p1.x - p1.w * 0.05, p1.y, p1.x + p1.w * 0.05, p1.y, p2.x + p2.w * 0.05, p2.y, p2.x - p2.w * 0.05, p2.y, light ? '#4E4F54' : '#4A4B50');
+      drawn.push({ p1, p2, clip: maxy, seg });
+      maxy = p2.y;
+    }
+
+    const carZ = this.carAhead ? this.pos + 2600 : -1;
+    const carN = this.carAhead ? Math.floor(carZ / SEG) - bi : -1;
+    for (let n = drawn.length - 1; n > 0; n--) {
+      const d = drawn[n]; if (!d) continue;
+      const f = d.p1.w / RW;
+      if (d.seg.sprites.length) {
+        ctx.save(); ctx.beginPath(); ctx.rect(-80, -80, W + 160, d.clip + 80); ctx.clip();
+        for (const sp of d.seg.sprites) this.sprite(ctx, sp, d.p1.x + sp.side * d.p1.w * sp.off, d.p1.y, f);
+        ctx.restore();
+      }
+      if (n === carN) {
+        const fr = (carZ % SEG) / SEG;
+        const cx = d.p1.x + (d.p2.x - d.p1.x) * fr, cy = d.p1.y + (d.p2.y - d.p1.y) * fr;
+        const cf = (d.p1.w + (d.p2.w - d.p1.w) * fr) / RW;
+        ctx.save(); ctx.beginPath(); ctx.rect(-80, -80, W + 160, d.clip + 80); ctx.clip();
+        this.car(ctx, cx + 0.18 * cf * RW, cy, cf, this.speed < this.prevSpeed - 1);
+        ctx.restore();
+      }
+    }
+    ctx.restore();
+
+    const kmh = Math.round(this.speed / 9500 * 240);
+    const th = [0, 72, 108, 142, 176, 210, 999];
+    let g = 1; while (g < 6 && kmh >= th[g]) g++;
+    const fr = Math.max(0, Math.min(1, (kmh - th[g - 1]) / (th[g] - th[g - 1])));
+    if (this.spdEl) this.spdEl.textContent = String(kmh);
+    if (this.gearEl) this.gearEl.textContent = String(g);
+    if (this.ledEl) { const kids = this.ledEl.children; const lit = Math.round(fr * kids.length); for (let i = 0; i < kids.length; i++) kids[i].style.opacity = i < lit ? '1' : '0.18'; }
+    if (this.thrEl) this.thrEl.style.height = Math.round(this.thr * 100) + '%';
+    if (this.brkEl) this.brkEl.style.height = Math.round(this.brk * 100) + '%';
+    if (this.chronoEl) { const t = this.lapT, mn = Math.floor(t / 60), sc = t - mn * 60; this.chronoEl.textContent = mn + ':' + (sc < 10 ? '0' : '') + sc.toFixed(3); }
+    if (this.segEl && this.dotEl && this.segEl.getTotalLength) {
+      const len = this.segEl.getTotalLength();
+      const pt = this.segEl.getPointAtLength(len * (this.pos / this.L));
+      this.dotEl.setAttribute('cx', pt.x.toFixed(1)); this.dotEl.setAttribute('cy', pt.y.toFixed(1));
+    }
+  }
+
+  renderVals() {
+    const red = this.props.red ?? '#C4161C';
+    const track = 'M277 111 L397 148 L412 147 L423 145 L453 125 L491 99 L496 92 L506 74 L520 59 L533 52 L539 49 L555 46 L570 46 L583 50 L593 54 L606 63 L616 74 L623 86 L628 101 L628 114 L626 125 L620 141 L594 185 L577 208 L563 225 L551 236 L424 334 L410 343 L382 359 L358 370 L152 439 L145 440 L141 435 L141 430 L144 425 L189 383 L265 347 L275 343 L412 245 L417 243 L424 244 L441 248 L451 248 L465 244 L477 238 L498 223 L523 199 L546 173 L552 159 L554 145 L551 133 L541 123 L531 121 L523 122 L515 127 L510 134 L501 156 L496 163 L487 173 L473 183 L458 190 L411 203 L399 208 L387 214 L220 329 L212 330 L175 325 L168 327 L151 337 L142 343 L123 359 L114 369 L75 417 L70 417 L60 410 L55 398 L52 386 L53 365 L55 344 L63 318 L87 225 L91 204 L93 173 L89 147 L61 50 L62 45 L67 42 L89 40 L122 44 L130 48 L130 54 L129 60 L131 65 L149 71 Z';
+    const projects = [
+      { no: '1', corner: 'Estoril', cornerUp: 'ESTORIL', href: 'Article.dc.html', name: 'AC Paddock', clip: 'clips/01-estoril.mp4', status: 'Démo en ligne', date: 'sept. 2026', month: 'septembre 2026', monthUp: 'SEPT. 2026', cat: 'Projet perso', img: 'acPaddock/catalogue.png', stack: 'Next.js, TypeScript, Supabase, Prisma, Cloudflare R2', stackShort: 'NEXT.JS · SUPABASE · PRISMA · R2', short: 'Catalogue de mods partagé et vote avant chaque soirée Assetto Corsa.', desc: 'Une appli privée pour un groupe d’amis sur Assetto Corsa : un catalogue de mods qu’on construit ensemble, et un vote avant chaque soirée pour choisir les voitures et le circuit.', extUrl: 'https://ac-paddock.vercel.app', extLabel: 'Voir la démo', seg: 'M496 92 L506 74 L520 59 L533 52 L539 49 L555 46 L570 46 L583 50 L593 54 L606 63 L616 74 L623 86 L628 101 L628 114 L626 125 L620 141', cx: 593, cy: 54, sceneAlt: 'Aperçu de la caméra embarquée à Estoril : long virage à droite en appui, vibreur intérieur et graviers à l’extérieur' },
+      { no: '2', corner: 'Adélaïde', cornerUp: 'ADÉLAÏDE', href: 'Article.dc.html', name: 'SpotiFiles', clip: 'clips/02-adelaide.mp4', status: 'Démo en ligne', date: 'juil. 2026', month: 'juillet 2026', monthUp: 'JUIL. 2026', cat: 'Projet perso', img: 'spotifyStats/StatsP1.png', stack: 'Next.js, TypeScript, Recharts, OAuth Spotify', stackShort: 'NEXT.JS · RECHARTS · OAUTH SPOTIFY', short: 'L’historique d’écoute Spotify en tableau de bord, traité dans le navigateur.', desc: 'Une appli qui transforme l’historique d’écoute Spotify en tableau de bord : temps d’écoute, top artistes et titres, tendances, toile des collaborations. Tout est traité dans le navigateur.', extUrl: 'https://spoti-files-stats.vercel.app/', extLabel: 'Voir la démo', seg: 'M358 370 L152 439 L145 440 L141 435 L141 430 L144 425 L189 383', cx: 141, cy: 435, sceneAlt: 'Aperçu de la caméra embarquée au bout de la ligne droite : panneaux 150, 100, 50, gros freinage derrière une autre voiture et épingle d’Adélaïde à droite' },
+      { no: '3', corner: 'Château d’Eau', cornerUp: 'CHÂTEAU D’EAU', href: 'Article.dc.html', name: 'MrVeto', clip: 'clips/03-chateau-deau.mp4', status: 'Code source public', date: 'juin 2026', month: 'juin 2026', monthUp: 'JUIN 2026', cat: 'Projet d’équipe · 7 personnes', img: 'mrveto/hero.png', stack: 'Symfony 7, PostgreSQL, Twig, Leaflet, Playwright', stackShort: 'SYMFONY 7 · POSTGRESQL · TWIG', short: 'Rendez-vous en ligne chez le vétérinaire, développé à 7.', desc: 'Une plateforme qui met en relation propriétaires d’animaux et vétérinaires : recherche sur carte, rendez-vous en ligne, plannings et dossiers. J’y ai construit la chaîne de prise de rendez-vous.', extUrl: 'https://github.com/enzodaloia/MrVeto', extLabel: 'Code source', seg: 'M114 369 L75 417 L70 417 L60 410 L55 398 L52 386', cx: 60, cy: 410, sceneAlt: 'Aperçu de la caméra embarquée au Château d’Eau : droite en descente, le château d’eau au-dessus des arbres' },
+      { no: '4', corner: 'Lycée', cornerUp: 'LYCÉE', href: 'Article.dc.html', name: 'Stage Agence Élixir', clip: 'clips/04-lycee.mp4', status: 'Site en ligne', date: 'juin 2025', month: 'juin 2025', monthUp: 'JUIN 2025', cat: 'Stage · 4 mois', img: 'stage/graphique-accueil.png', stack: 'Strapi, React, React Native, API REST', stackShort: 'STRAPI · REACT · REACT NATIVE', short: 'Refonte du back-office de l’appli « Le Plan des Étudiants de Besançon ».', desc: 'Refonte du back-office de l’appli « Le Plan des Étudiants de Besançon » : passage de l’ancien PHP à Strapi, migration des données, API adaptée et dashboard React.', extUrl: 'https://www.plan-etudiant-besancon.com/', extLabel: 'Voir le site', seg: 'M89 147 L61 50 L62 45 L67 42 L89 40 L122 44 L130 48 L130 54 L129 60 L131 65 L149 71', cx: 122, cy: 44, sceneAlt: 'Aperçu de la caméra embarquée au Lycée : droite-gauche puis accélération sur la ligne droite des stands, garages à droite' }
+    ];
+    const s = this.state.sel;
+    const v = this.state.view;
+    const on = v !== null;
+    const pick = (i) => () => this.setState({ sel: i, view: i });
+    const leave = () => this.setState({ view: null });
+    const items = projects.map((p, i) => ({ ...p, pick: pick(i), ring: i === s ? red : '#141414', fill: i === s ? red : '#FFFFFF', num: i === s ? '#FFFFFF' : '#141414', weight: i === s ? 600 : 400, bg: on && i === v ? '#F4F3F0' : 'transparent' }));
+    const m = [0, 1, 2, 3].map((i) => ({ f: i === s ? red : '#FFFFFF', st: i === s ? red : '#141414', t: i === s ? '#FFFFFF' : '#141414' }));
+    const p = { ...projects[s], chips: projects[s].stack.split(', ').slice(0, 4).map((t) => ({ t })) };
+    return {
+      red, track, items, sel: p, leave,
+      setCv: this.setCv, setSpd: this.setSpd, setGear: this.setGear, setLed: this.setLed, setThr: this.setThr, setBrk: this.setBrk, setChrono: this.setChrono, setSegEl: this.setSegEl, setDot: this.setDot,
+      mapT: on ? 'scale(3.4)' : 'scale(1)',
+      mapO: p.cx + 'px ' + p.cy + 'px',
+      mapOp: on ? 0 : 1,
+      mapDelay: on ? '280ms' : '0ms',
+      sceneOp: on ? 1 : 0,
+      sceneScale: on ? 1 : 1.12,
+      sceneDelay: on ? '300ms' : '0ms',
+      scenePe: on ? 'auto' : 'none',
+      sceneHidden: on ? 'false' : 'true',
+      f1: m[0].f, s1: m[0].st, t1: m[0].t, p1: pick(0),
+      f2: m[1].f, s2: m[1].st, t2: m[1].t, p2: pick(1),
+      f3: m[2].f, s3: m[2].st, t3: m[2].t, p3: pick(2),
+      f4: m[3].f, s4: m[3].st, t4: m[3].t, p4: pick(3)
+    };
+  }
+}
+</script>
+</body>
+</html>

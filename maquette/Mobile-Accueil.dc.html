@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Mobile — Accueil</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#FFFFFF}
+a{color:#141414}a:hover{color:#C4161C}
+</style>
+</helmet>
+<div style="width: 390px; height: 2600px; overflow: hidden; background: #FFFFFF; color: #141414; font-family: 'Hanken Grotesk', Helvetica, sans-serif; font-variant-numeric: tabular-nums">
+<nav style="height: 60px; padding: 0 16px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #E3E2DE">
+<a href="Mobile-Accueil.dc.html" style="display: flex; align-items: center; gap: 10px; min-height: 44px; text-decoration: none"><svg width="28" height="20" viewBox="0 0 680 480" aria-hidden="true"><path d="{{track}}" fill="none" stroke="#141414" stroke-width="44" stroke-linejoin="round"></path></svg><span style="font-size: 17px; font-weight: 600">Lucas Da Silveira</span></a>
+<a href="Mobile-Menu.dc.html" style="display: inline-flex; align-items: center; height: 44px; padding: 0 14px; border: 1.5px solid #141414; font-size: 15px; font-weight: 600; text-decoration: none">Menu</a>
+</nav>
+<header style="padding: 32px 16px 8px; display: flex; flex-direction: column; gap: 14px">
+<h1 style="margin: 0; font-size: 38px; line-height: 1.02; font-weight: 600; letter-spacing: -0.03em">Lucas Da Silveira</h1>
+<span style="font-size: 16px; font-weight: 500; color: {{red}}">Étudiant en informatique</span>
+<p style="margin: 0; font-size: 17px; line-height: 1.5; color: #3A3A38">Moi c'est Lucas, étudiant en informatique passionné de développement. Un tour de Magny-Cours, quatre virages : mes projets.</p>
+</header>
+<svg width="390" height="276" viewBox="0 0 680 480" role="img" aria-label="Tracé du circuit de Nevers Magny-Cours, 4 virages numérotés" style="display: block">
+<path d="{{track}}" fill="none" stroke="#141414" stroke-width="16" stroke-linejoin="round" stroke-linecap="round"></path>
+<path d="{{sel.seg}}" fill="none" stroke="{{red}}" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"></path>
+<g transform="translate(277 111) rotate(17)"><rect x="-6" y="-16" width="6" height="8" fill="#141414"></rect><rect x="0" y="-16" width="6" height="8" fill="#FFFFFF"></rect><rect x="-6" y="-8" width="6" height="8" fill="#FFFFFF"></rect><rect x="0" y="-8" width="6" height="8" fill="#141414"></rect><rect x="-6" y="0" width="6" height="8" fill="#141414"></rect><rect x="0" y="0" width="6" height="8" fill="#FFFFFF"></rect><rect x="-6" y="8" width="6" height="8" fill="#FFFFFF"></rect><rect x="0" y="8" width="6" height="8" fill="#141414"></rect></g>
+<g onClick="{{p1}}"><circle cx="622" cy="38" r="28" fill="{{f1}}" stroke="{{s1}}" stroke-width="3"></circle><text x="622" y="48" text-anchor="middle" font-size="28" font-weight="700" fill="{{t1}}" font-family="Hanken Grotesk, sans-serif">1</text></g>
+<g onClick="{{p2}}"><circle cx="110" cy="450" r="28" fill="{{f2}}" stroke="{{s2}}" stroke-width="3"></circle><text x="110" y="460" text-anchor="middle" font-size="28" font-weight="700" fill="{{t2}}" font-family="Hanken Grotesk, sans-serif">2</text></g>
+<g onClick="{{p3}}"><circle cx="30" cy="430" r="28" fill="{{f3}}" stroke="{{s3}}" stroke-width="3"></circle><text x="30" y="440" text-anchor="middle" font-size="28" font-weight="700" fill="{{t3}}" font-family="Hanken Grotesk, sans-serif">3</text></g>
+<g onClick="{{p4}}"><circle cx="94" cy="30" r="28" fill="{{f4}}" stroke="{{s4}}" stroke-width="3"></circle><text x="94" y="40" text-anchor="middle" font-size="28" font-weight="700" fill="{{t4}}" font-family="Hanken Grotesk, sans-serif">4</text></g>
+</svg>
+<section style="margin: 8px 16px 0; padding: 18px 0 24px; border-top: 1px solid #141414; display: flex; flex-direction: column; gap: 12px">
+<span style="font-size: 13px; font-weight: 600; color: {{red}}">Virage {{sel.no}} · {{sel.corner}} · {{sel.month}}</span>
+<div style="aspect-ratio: 16 / 10; background: #EEEDEA; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #55554F">[ {{sel.img}} ]</div>
+<h2 style="margin: 0; font-size: 28px; font-weight: 600; letter-spacing: -0.02em">{{sel.name}}</h2>
+<p style="margin: 0; font-size: 16px; line-height: 1.55; color: #3A3A38">{{sel.desc}}</p>
+<span style="font-size: 14px; color: #6A6A66">{{sel.stack}}</span>
+<a href="{{sel.href}}" style="display: flex; align-items: center; justify-content: center; height: 48px; background: #141414; color: #FFFFFF; font-size: 16px; font-weight: 600; text-decoration: none">Lire le projet</a>
+</section>
+<ol style="margin: 0 16px; padding: 0; list-style: none; border-top: 1px solid #141414">
+<sc-for list="{{items}}" as="r" hint-placeholder-count="4">
+<li style="border-bottom: 1px solid #E3E2DE"><a href="{{r.href}}" style="display: grid; grid-template-columns: 36px minmax(0, 1fr) auto; gap: 12px; align-items: center; min-height: 56px; text-decoration: none"><span style="width: 28px; height: 28px; border-radius: 14px; border: 2px solid {{r.ring}}; background: {{r.fill}}; color: {{r.num}}; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700">{{r.no}}</span><span style="font-size: 17px; font-weight: {{r.weight}}">{{r.name}}</span><span style="font-size: 13px; color: #6A6A66">{{r.date}}</span></a></li>
+</sc-for>
+</ol>
+<section style="margin: 32px 16px 0; padding-top: 20px; border-top: 1px solid #141414; display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; align-items: center; gap: 12px"><svg width="36" height="24" viewBox="0 0 30 20" aria-hidden="true"><rect width="30" height="20" fill="#FFFFFF" stroke="#141414" stroke-width="1.5"></rect><rect x="0" y="0" width="7.5" height="10" fill="#141414"></rect><rect x="15" y="0" width="7.5" height="10" fill="#141414"></rect><rect x="7.5" y="10" width="7.5" height="10" fill="#141414"></rect><rect x="22.5" y="10" width="7.5" height="10" fill="#141414"></rect></svg><h2 style="margin: 0; font-size: 24px; font-weight: 600">Arrivée : me contacter</h2></div>
+<a href="mailto:lucasdslvra@gmail.com" style="font-size: 18px; min-height: 44px; display: flex; align-items: center">lucasdslvra@gmail.com</a>
+<div style="display: flex; gap: 24px; font-size: 16px"><a href="https://www.linkedin.com/in/lucasdslvra/" style="min-height: 44px; display: flex; align-items: center">LinkedIn</a><a href="https://github.com/lucasdslvra" style="min-height: 44px; display: flex; align-items: center">GitHub</a></div>
+</section>
+<footer style="margin: 32px 16px 0; padding: 16px 0; border-top: 1px solid #E3E2DE; font-size: 12px; color: #6A6A66">© 2026 Lucas Da Silveira</footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"red":{"editor":"color","default":"#C4161C","options":["#C4161C","#1A5FD6","#0E8A4F","#141414"]},"$preview":{"width":390,"height":2600}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { sel: 0 }; }
+  renderVals() {
+    const red = this.props.red ?? '#C4161C';
+    const track = 'M277 111 L397 148 L412 147 L423 145 L453 125 L491 99 L496 92 L506 74 L520 59 L533 52 L539 49 L555 46 L570 46 L583 50 L593 54 L606 63 L616 74 L623 86 L628 101 L628 114 L626 125 L620 141 L594 185 L577 208 L563 225 L551 236 L424 334 L410 343 L382 359 L358 370 L152 439 L145 440 L141 435 L141 430 L144 425 L189 383 L265 347 L275 343 L412 245 L417 243 L424 244 L441 248 L451 248 L465 244 L477 238 L498 223 L523 199 L546 173 L552 159 L554 145 L551 133 L541 123 L531 121 L523 122 L515 127 L510 134 L501 156 L496 163 L487 173 L473 183 L458 190 L411 203 L399 208 L387 214 L220 329 L212 330 L175 325 L168 327 L151 337 L142 343 L123 359 L114 369 L75 417 L70 417 L60 410 L55 398 L52 386 L53 365 L55 344 L63 318 L87 225 L91 204 L93 173 L89 147 L61 50 L62 45 L67 42 L89 40 L122 44 L130 48 L130 54 L129 60 L131 65 L149 71 Z';
+    const projects = [
+      { no: '1', href: 'Mobile-Article.dc.html', name: 'AC Paddock', date: 'sept. 26', month: 'septembre 2026', img: 'acPaddock/catalogue.png', stack: 'Next.js, Supabase, Prisma, R2', desc: 'Catalogue de mods partagé et vote avant chaque soirée, pour un groupe d’amis sur Assetto Corsa.', corner: 'Estoril', seg: 'M496 92 L506 74 L520 59 L533 52 L539 49 L555 46 L570 46 L583 50 L593 54 L606 63 L616 74 L623 86 L628 101 L628 114 L626 125 L620 141' },
+      { no: '2', href: 'Mobile-Article.dc.html', name: 'SpotiFiles', date: 'juil. 26', month: 'juillet 2026', img: 'spotifyStats/StatsP1.png', stack: 'Next.js, Recharts, OAuth Spotify', desc: 'L’historique d’écoute Spotify en tableau de bord, traité entièrement dans le navigateur.', corner: 'Adélaïde', seg: 'M358 370 L152 439 L145 440 L141 435 L141 430 L144 425 L189 383' },
+      { no: '3', href: 'Mobile-Article.dc.html', name: 'MrVeto', date: 'juin 26', month: 'juin 2026', img: 'mrveto/hero.png', stack: 'Symfony 7, PostgreSQL, Twig', desc: 'Rendez-vous en ligne entre propriétaires d’animaux et vétérinaires, développé à 7.', corner: 'Château d’Eau', seg: 'M114 369 L75 417 L70 417 L60 410 L55 398 L52 386' },
+      { no: '4', href: 'Mobile-Article.dc.html', name: 'Agence Élixir', date: 'juin 25', month: 'juin 2025', img: 'stage/graphique-accueil.png', stack: 'Strapi, React, React Native', desc: 'Stage de 4 mois : refonte du back-office de l’appli « Le Plan des Étudiants de Besançon ».', corner: 'Lycée', seg: 'M89 147 L61 50 L62 45 L67 42 L89 40 L122 44 L130 48 L130 54 L129 60 L131 65 L149 71' }
+    ];
+    const s = this.state.sel;
+    const pick = (i) => () => this.setState({ sel: i });
+    const items = projects.map((p, i) => ({ ...p, ring: i === s ? red : '#141414', fill: i === s ? red : '#FFFFFF', num: i === s ? '#FFFFFF' : '#141414', weight: i === s ? 600 : 400 }));
+    const m = [0, 1, 2, 3].map((i) => ({ f: i === s ? red : '#FFFFFF', st: i === s ? red : '#141414', t: i === s ? '#FFFFFF' : '#141414' }));
+    return {
+      red, track, items, sel: projects[s],
+      f1: m[0].f, s1: m[0].st, t1: m[0].t, p1: pick(0),
+      f2: m[1].f, s2: m[1].st, t2: m[1].t, p2: pick(1),
+      f3: m[2].f, s3: m[2].st, t3: m[2].t, p3: pick(2),
+      f4: m[3].f, s4: m[3].st, t4: m[3].t, p4: pick(3)
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -3,7 +3,6 @@ allowBuilds:
   contentlayer: true
   esbuild: true
   protobufjs: true
-  rome: true
 
 overrides:
   '@opentelemetry/api': 1.4.1
