@@ -56,3 +56,13 @@ coverage/
 *.swp
 *.swo
 .idea/
+
+# TypeScript
+*.tsbuildinfo
+
+# Playwright
+test-results/
+playwright-report/
+
+# Sources des clips embarqués (vidéos brutes, télémétrie du tour) : non publiées
+clips-source/

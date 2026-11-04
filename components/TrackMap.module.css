@@ -1,0 +1,66 @@
+.map {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.label {
+  font-family: var(--font-sans);
+}
+
+/* ——— Variante Accueil : zoom vers la vue embarquée ——— */
+
+.zoom {
+  transform-box: view-box;
+  transform: scale(1);
+  opacity: 1;
+  transition:
+    transform 500ms var(--ease-zoom),
+    opacity 220ms ease 0ms;
+}
+
+.zoom[data-zoomed='true'] {
+  transform: scale(3.4);
+  opacity: 0;
+  transition:
+    transform 500ms var(--ease-zoom),
+    opacity 220ms ease 280ms;
+}
+
+.hit {
+  cursor: pointer;
+}
+
+.pin {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.pin circle,
+.pin text {
+  transition: fill 200ms, stroke 200ms;
+}
+
+/* Petites cartes (mobile) : pastilles et tracé plus épais pour rester lisibles,
+   légendes trop petites masquées (l'information est donnée en HTML à côté). */
+@media (max-width: 719px) {
+  .home .zoom > path:first-child {
+    stroke-width: 16;
+  }
+  .pin {
+    transform: scale(1.5);
+  }
+  .caption {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .zoom,
+  .zoom[data-zoomed='true'],
+  .pin circle,
+  .pin text {
+    transition: none;
+  }
+}

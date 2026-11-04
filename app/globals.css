@@ -1,0 +1,257 @@
+:root {
+  --ink: #141414;
+  --red: #c4161c;
+  --text-soft: #3a3a38;
+  --text-muted: #6a6a66;
+  --track-bg: #d6d5d1;
+  --dot-off: #b9b8b3;
+  --rule: #e3e2de;
+  --hover: #f4f3f0;
+  --placeholder: #eeedea;
+  --bg: #ffffff;
+  --code-bg: #f1f0ec;
+
+  --tv-green: #2bb75c;
+  --tv-yellow: #f2c200;
+  --tv-red: #e5322b;
+  --tv-panel: rgba(20, 20, 20, 0.88);
+
+  --font-sans: var(--font-hanken), Helvetica, Arial, sans-serif;
+  --font-tv: var(--font-barlow), var(--font-hanken), sans-serif;
+
+  --container: 1280px;
+  --gutter: 24px;
+  --ease-zoom: cubic-bezier(0.5, 0, 0.2, 1);
+
+  color-scheme: light;
+}
+
+@media (max-width: 719px) {
+  :root {
+    --gutter: 16px;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: 24px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.5;
+  font-variant-numeric: tabular-nums;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1 0 auto;
+}
+
+img,
+svg,
+video {
+  display: block;
+  max-width: 100%;
+}
+
+h1,
+h2,
+h3,
+p,
+figure,
+dl,
+dd,
+ol,
+ul {
+  margin: 0;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}
+
+a {
+  color: var(--ink);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+}
+
+a:hover {
+  color: var(--red);
+}
+
+:focus-visible {
+  outline: 2px solid var(--red);
+  outline-offset: 3px;
+}
+
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.9em;
+  background: var(--code-bg);
+  padding: 1px 5px;
+}
+
+/* ——— Utilitaires ——— */
+
+.container {
+  width: 100%;
+  max-width: var(--container);
+  margin: 0 auto;
+  padding-left: var(--gutter);
+  padding-right: var(--gutter);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  left: var(--gutter);
+  top: -100px;
+  z-index: 100;
+  display: inline-flex;
+  align-items: center;
+  height: 48px;
+  padding: 0 22px;
+  background: var(--ink);
+  color: var(--bg);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.skip-link:focus {
+  top: 8px;
+  color: var(--bg);
+}
+
+.h1 {
+  font-size: clamp(44px, 5vw, 64px);
+  line-height: 1;
+  font-weight: 600;
+  letter-spacing: -0.035em;
+}
+
+.lead {
+  font-size: 20px;
+  line-height: 1.5;
+  color: var(--text-soft);
+}
+
+.surtitle {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--red);
+}
+
+@media (max-width: 719px) {
+  .h1 {
+    font-size: 38px;
+    line-height: 1.02;
+  }
+  .lead {
+    font-size: 17px;
+  }
+  .surtitle {
+    font-size: 14px;
+  }
+}
+
+/* ——— Transitions entre les pages (View Transitions API, voir PageTransitions) ——— */
+
+@keyframes page-out {
+  to {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+
+@keyframes page-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+
+::view-transition-old(root) {
+  animation: page-out 160ms ease-in both;
+}
+
+::view-transition-new(root) {
+  animation: page-in 320ms var(--ease-zoom) 80ms both;
+}
+
+/* L'en-tête reste en place, au-dessus des éléments qui glissent. */
+::view-transition-group(site-header) {
+  animation: none;
+  z-index: 10;
+}
+::view-transition-old(site-header) {
+  display: none;
+}
+::view-transition-new(site-header) {
+  animation: none;
+}
+
+/* Le tracé et le titre du projet glissent d'une page à l'autre. */
+::view-transition-group(*) {
+  animation-duration: 480ms;
+  animation-timing-function: var(--ease-zoom);
+}
+
+::view-transition-old(circuit),
+::view-transition-new(circuit) {
+  height: 100%;
+  object-fit: contain;
+}
+
+.vt-circuit {
+  view-transition-name: circuit;
+}
+
+.vt-title {
+  view-transition-name: var(--vt-title);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}

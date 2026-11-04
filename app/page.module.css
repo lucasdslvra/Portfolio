@@ -1,0 +1,39 @@
+.intro {
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+}
+
+.titles {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.role {
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--red);
+}
+
+.touchOnly {
+  display: none;
+}
+
+@media not all and (hover: hover) and (pointer: fine) {
+  .hoverOnly {
+    display: none;
+  }
+  .touchOnly {
+    display: inline;
+  }
+}
+
+@media (max-width: 719px) {
+  .intro {
+    gap: 14px;
+  }
+  .role {
+    font-size: 16px;
+  }
+}

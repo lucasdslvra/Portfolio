@@ -1,0 +1,31 @@
+.nav {
+  font-size: 15px;
+  color: var(--text-muted);
+}
+
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0;
+  list-style: none;
+}
+
+.list li {
+  white-space: pre;
+}
+
+.list a {
+  color: var(--text-muted);
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+
+.list li {
+  display: flex;
+  align-items: center;
+}
+
+.list a:hover {
+  color: var(--red);
+}

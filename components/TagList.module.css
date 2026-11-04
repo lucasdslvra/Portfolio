@@ -1,0 +1,13 @@
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 0;
+  list-style: none;
+}
+
+.tag {
+  font-size: 13px;
+  padding: 5px 8px;
+  border: 1px solid var(--track-bg);
+}

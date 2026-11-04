@@ -1,0 +1,101 @@
+.cover {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background: var(--placeholder);
+  border: 1px solid var(--rule);
+  container-type: inline-size;
+}
+
+.zoom {
+  display: block;
+  flex: 1 1 auto;
+  width: 100%;
+  min-height: 0;
+  transition: transform 600ms var(--ease-zoom);
+}
+
+.svgText {
+  font-family: var(--font-sans);
+}
+
+/* Bande d'informations, comme une fiche de guide de circuit. */
+.band {
+  position: relative;
+  z-index: 1;
+  flex: 0 0 22%;
+  display: flex;
+  align-items: center;
+  gap: 3cqw;
+  padding: 0 3.5cqw;
+  background: var(--bg);
+  border-top: 1px solid var(--ink);
+}
+
+.locator {
+  flex: none;
+  width: 11cqw;
+  height: auto;
+}
+
+.title {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7cqw;
+  min-width: 0;
+}
+
+.name {
+  font-size: 3.9cqw;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.meta {
+  font-size: 2.1cqw;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.label {
+  margin-left: auto;
+  font-size: 2.1cqw;
+  font-weight: 500;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+/* Survol de la fiche : le gros plan s'approche légèrement. */
+:global(article):hover .zoom {
+  transform: scale(1.04);
+}
+
+@media (max-width: 719px) {
+  .band {
+    flex-basis: 25%;
+  }
+  .name {
+    font-size: 5cqw;
+  }
+  .meta {
+    font-size: 3cqw;
+  }
+  .label {
+    display: none;
+  }
+  .locator {
+    width: 13cqw;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .zoom {
+    transition: none;
+  }
+  :global(article):hover .zoom {
+    transform: none;
+  }
+}

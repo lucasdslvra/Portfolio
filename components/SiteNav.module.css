@@ -1,0 +1,66 @@
+.header {
+  position: relative;
+  /* Au-dessus du contenu : view-transition-name fait de l'en-tête un contexte
+     d'empilement, le menu mobile (position: fixed) y est donc enfermé. */
+  z-index: 20;
+  background: var(--bg);
+  border-bottom: 1px solid var(--rule);
+}
+
+.inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 32px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 44px;
+  font-size: 19px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 32px;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  text-decoration: none;
+}
+
+.links a[aria-current='page'] {
+  color: var(--red);
+}
+
+@media (max-width: 719px) {
+  .inner {
+    min-height: 60px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+  .brand {
+    gap: 10px;
+    font-size: 17px;
+  }
+  .brand svg {
+    width: 28px;
+    height: 20px;
+  }
+  .links {
+    display: none;
+  }
+}

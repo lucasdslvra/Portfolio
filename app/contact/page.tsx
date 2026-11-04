@@ -1,64 +1,55 @@
-"use client";
-import { Github, Mail, Linkedin } from "lucide-react";
-import Link from "next/link";
-import { Navigation } from "../components/nav";
-import { Card } from "../components/card";
+import type { Metadata } from 'next';
+import { CheckeredFlag } from '@/components/CheckeredFlag';
+import { ContactLinkRow, ContactRow } from '@/components/ContactRow';
+import { SiteFooter } from '@/components/SiteFooter';
+import { SiteNav } from '@/components/SiteNav';
+import { TextLink } from '@/components/TextLink';
+import { TrackMap } from '@/components/TrackMap';
+import { toMapCorner } from '@/lib/map';
+import { getProjects } from '@/lib/projects';
+import { EMAIL, GITHUB_URL, LINKEDIN_URL, OG_IMAGE } from '@/lib/site';
+import styles from './page.module.css';
 
-const socials = [
-	{
-		icon: <Linkedin size={20} />,
-		href: "https://www.linkedin.com/in/lucasdslvra/",
-		label: "Linkedin",
-		handle: "Lucas Da Silveira",
-	},
-	{
-		icon: <Mail size={20} />,
-		href: "mailto:lucasdslvra@gmail.com",
-		label: "Email",
-		handle: "lucasdslvra@gmail.com",
-	},
-	{
-		icon: <Github size={20} />,
-		href: "https://github.com/lucasdslvra",
-		label: "Github",
-		handle: "lucasdslvra",
-	},
-];
+const LEAD =
+  "Une question sur un projet, une opportunité ou juste envie de parler simracing ? Le plus simple, c'est l'e-mail.";
 
-export default function Example() {
-	return (
-		<div className=" bg-gradient-to-tl from-zinc-900/0 via-zinc-900 to-zinc-900/0">
-			<Navigation />
-			<div className="container flex items-center justify-center min-h-screen px-4 mx-auto">
-				<div className="grid w-full grid-cols-1 gap-8 mx-auto mt-32 sm:mt-0 sm:grid-cols-3 lg:gap-16">
-					{socials.map((s) => (
-						<Card key={s.href}>
-							<Link
-								href={s.href}
-								target="_blank"
-								rel={s.href.startsWith("mailto:") ? undefined : "me noopener"}
-								className="p-4 relative flex flex-col items-center gap-4 duration-700 group md:gap-8 md:py-24  lg:pb-48  md:p-16"
-							>
-								<span
-									className="absolute w-px h-2/3 bg-gradient-to-b from-zinc-500 via-zinc-500/50 to-transparent"
-									aria-hidden="true"
-								/>
-								<span className="relative z-10 flex items-center justify-center w-12 h-12 text-sm duration-1000 border rounded-full text-zinc-200 group-hover:text-white group-hover:bg-zinc-900 border-zinc-500 bg-zinc-900 group-hover:border-zinc-200 drop-shadow-orange">
-									{s.icon}
-								</span>{" "}
-								<div className="z-10 flex flex-col items-center">
-									<span className="lg:text-xl font-medium duration-150 xl:text-3xl text-zinc-200 group-hover:text-white font-display">
-										{s.handle}
-									</span>
-									<span className="mt-4 text-sm text-center duration-1000 text-zinc-400 group-hover:text-zinc-200">
-										{s.label}
-									</span>
-								</div>
-							</Link>
-						</Card>
-					))}
-				</div>
-			</div>
-		</div>
-	);
+export const metadata: Metadata = {
+  title: 'Me contacter',
+  description: LEAD,
+  alternates: { canonical: '/contact' },
+  openGraph: { title: 'Me contacter — Lucas Da Silveira', description: LEAD, url: '/contact', images: [OG_IMAGE] },
+};
+
+export default function ContactPage() {
+  const corners = getProjects().map(toMapCorner);
+  return (
+    <>
+      <SiteNav current="contact" />
+      <main id="contenu" className={`container ${styles.main}`}>
+        <div className={styles.content}>
+          <p className={styles.flag}>
+            <CheckeredFlag size="large" />
+            <span className="surtitle">Arrivée</span>
+          </p>
+          <h1 className="h1">Me contacter</h1>
+          <p className={`lead ${styles.lead}`}>{LEAD}</p>
+          <div className={styles.rows}>
+            <ContactRow email={EMAIL} />
+            <ContactLinkRow label="LinkedIn" value="in/lucasdslvra" href={LINKEDIN_URL} />
+            <ContactLinkRow label="GitHub" value="lucasdslvra" href={GITHUB_URL} />
+          </div>
+        </div>
+        <aside className={styles.side} aria-label="La ligne d'arrivée">
+          <div className="vt-circuit">
+            <TrackMap variant="finish" corners={corners} />
+          </div>
+          <p className={styles.note}>
+            Sortie du Lycée, ligne droite des stands : vous êtes sur la ligne d&apos;arrivée.{' '}
+            <TextLink href="/projets">Refaire un tour des projets</TextLink>
+          </p>
+        </aside>
+      </main>
+      <SiteFooter />
+    </>
+  );
 }
