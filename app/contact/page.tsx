@@ -7,7 +7,7 @@ import { TextLink } from '@/components/TextLink';
 import { TrackMap } from '@/components/TrackMap';
 import { toMapCorner } from '@/lib/map';
 import { getProjects } from '@/lib/projects';
-import { EMAIL, GITHUB_URL, LINKEDIN_URL } from '@/lib/site';
+import { EMAIL, GITHUB_URL, LINKEDIN_URL, OG_IMAGE } from '@/lib/site';
 import styles from './page.module.css';
 
 const LEAD =
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   title: 'Me contacter',
   description: LEAD,
   alternates: { canonical: '/contact' },
-  openGraph: { title: 'Me contacter — Lucas Da Silveira', description: LEAD, url: '/contact', images: ['/og.png'] },
+  openGraph: { title: 'Me contacter — Lucas Da Silveira', description: LEAD, url: '/contact', images: [OG_IMAGE] },
 };
 
 export default function ContactPage() {

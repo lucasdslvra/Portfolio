@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import { Barlow_Condensed, Hanken_Grotesk } from 'next/font/google';
 import { Suspense, type ReactNode } from 'react';
 import { Analytics } from '@/components/Analytics';
+import AnimatedFavicon from '@/components/AnimatedFavicon';
 import { PageTransitions } from '@/components/PageTransitions';
 import { SITE_NAME, SITE_URL } from '@/lib/site';
 import './globals.css';
@@ -56,7 +57,6 @@ export const metadata: Metadata = {
     description,
     url: SITE_URL,
     siteName: SITE_NAME,
-    images: [{ url: '/og.png', width: 1920, height: 1080, alt: 'Lucas Da Silveira — Portfolio' }],
     locale: 'fr_FR',
     type: 'website',
   },
@@ -64,14 +64,12 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Lucas Da Silveira — Portfolio',
     description,
-    images: ['/og.png'],
   },
   robots: {
     index: true,
     follow: true,
     googleBot: { index: true, follow: true, 'max-video-preview': -1, 'max-image-preview': 'large', 'max-snippet': -1 },
   },
-  icons: { shortcut: '/favicon.png' },
   themeColor: '#FFFFFF',
   colorScheme: 'light',
   verification: {
@@ -92,6 +90,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <PageTransitions />
         </Suspense>
         <SpeedInsights />
+        <AnimatedFavicon />
       </body>
     </html>
   );

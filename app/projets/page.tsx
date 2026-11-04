@@ -9,6 +9,7 @@ import { TrackMap } from '@/components/TrackMap';
 import { plural } from '@/lib/format';
 import { toMapCorner } from '@/lib/map';
 import { CATEGORIES, countByCategory, filterProjects, getProjects, isCategory } from '@/lib/projects';
+import { OG_IMAGE } from '@/lib/site';
 import type { Category } from '@/lib/types';
 import styles from './page.module.css';
 
@@ -31,7 +32,7 @@ export function generateMetadata({ searchParams }: Props): Metadata {
     title,
     description: LEAD,
     alternates: { canonical: path },
-    openGraph: { title: `${title} — Lucas Da Silveira`, description: LEAD, url: path, images: ['/og.png'] },
+    openGraph: { title: `${title} — Lucas Da Silveira`, description: LEAD, url: path, images: [OG_IMAGE] },
   };
 }
 

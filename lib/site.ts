@@ -5,6 +5,14 @@ export const LINKEDIN_URL = 'https://www.linkedin.com/in/lucasdslvra/';
 export const GITHUB_URL = 'https://github.com/lucasdslvra';
 export const YEAR = 2026;
 
+// Image d'aperçu par défaut (app/opengraph-image.png, servie à cette URL par Next.js).
+export const OG_IMAGE = {
+  url: '/opengraph-image.png',
+  width: 1200,
+  height: 630,
+  alt: 'Lucas Da Silveira, étudiant en informatique passionné de développement. Portfolio sur ldasilveira.fr.',
+};
+
 export const personJsonLd = {
   '@context': 'https://schema.org',
   '@graph': [
@@ -14,7 +22,7 @@ export const personJsonLd = {
       name: SITE_NAME,
       alternateName: ['Lucas da Silveira', 'lucasdslvra', 'ldasilveira'],
       url: SITE_URL,
-      image: `${SITE_URL}/og.png`,
+      image: `${SITE_URL}${OG_IMAGE.url}`,
       jobTitle: 'Étudiant en informatique',
       description:
         'Étudiant en informatique et développeur web. Projets en Next.js, React, TypeScript et Symfony.',
