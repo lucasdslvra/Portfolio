@@ -13,7 +13,8 @@
     "validate:telemetry": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/validate-telemetry.ts",
     "test:e2e": "playwright test",
     "clips:encode": "scripts/encode-clips.sh",
-    "telemetry:split": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/split-telemetry.ts"
+    "telemetry:split": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/split-telemetry.ts",
+    "lap:build": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/build-lap.ts"
   },
   "dependencies": {
     "@vercel/analytics": "^1.6.1",

@@ -2,6 +2,48 @@ import { expect, test } from '@playwright/test';
 
 const cornerList = 'ol[aria-label="Les virages du tour"]';
 
+// Les feux de départ se jouent à chaque chargement : on les coupe
+// pour que l'overlay ne gêne pas les interactions des autres tests.
+test.beforeEach(async ({ page }, testInfo) => {
+  if (testInfo.titlePath.includes('Feux de départ')) return;
+  await page.addInitScript(() => sessionStorage.setItem('ld-intro', 'off'));
+});
+
+test.describe('Feux de départ', () => {
+  test("se jouent à chaque chargement, pas en navigation interne", async ({ page }) => {
+    await page.goto('/projets');
+    const root = page.locator('html');
+    await expect(root).toHaveAttribute('data-intro', '');
+    await expect(root).not.toHaveAttribute('data-intro', /.*/, { timeout: 6000 });
+
+    // Retour à l'accueil par un lien : pas de feux.
+    await page.locator('header').getByRole('link', { name: 'Lucas Da Silveira' }).click();
+    await expect(page).toHaveURL(/\/$/);
+    await expect(root).not.toHaveAttribute('data-intro', /.*/);
+
+    // Rafraîchissement : les feux reviennent.
+    await page.reload();
+    await expect(root).toHaveAttribute('data-intro', '');
+  });
+
+  test("attendent que les vidéos de l'accueil puissent démarrer", async ({ page }) => {
+    await page.goto('/');
+    await page.waitForFunction(() => document.documentElement.getAttribute('data-intro') === 'go');
+    const states = await page.locator('video').evaluateAll((videos) =>
+      videos.map((v) => (v as HTMLVideoElement).readyState),
+    );
+    expect(states.length).toBeGreaterThan(0);
+    // HAVE_FUTURE_DATA (3) : la vidéo démarre dès le premier survol, sans écran noir.
+    for (const state of states) expect(state).toBeGreaterThanOrEqual(3);
+  });
+
+  test('un clic passe l’intro', async ({ page }) => {
+    await page.goto('/');
+    await page.mouse.click(10, 10);
+    await expect(page.locator('html')).not.toHaveAttribute('data-intro', /.*/, { timeout: 1500 });
+  });
+});
+
 test.describe('Accueil', () => {
   test('la liste des virages se parcourt au clavier et sélectionne le projet', async ({ page }) => {
     await page.goto('/');
@@ -21,6 +63,28 @@ test.describe('Accueil', () => {
     // Entrée suit le lien : chaque ligne est un vrai lien vers l'article.
     await page.keyboard.press('Enter');
     await expect(page).toHaveURL(/\/projets\/spotifystats$/);
+  });
+
+  test('le hot lap joue le tour complet puis revient à la carte', async ({ page }) => {
+    await page.goto('/');
+    const scene = page.locator('[class*="Onboard_scene"]');
+    await page.getByRole('button', { name: 'Lancer un hot lap' }).click();
+    await expect(scene).toHaveAttribute('data-open', 'true');
+    await expect(scene).toHaveAttribute('aria-label', /hot lap/);
+    await expect(scene.getByText('Hot lap', { exact: true })).toBeVisible();
+
+    // La souris quitte la carte : le tour continue.
+    await page.mouse.move(5, 5);
+    await expect(scene).toHaveAttribute('data-open', 'true');
+
+    // Fin du tour : retour à la carte.
+    const video = page.locator('video:has(source[src*="/clips/tour"])');
+    await expect.poll(() => video.evaluate((v: HTMLVideoElement) => v.readyState)).toBeGreaterThan(0);
+    await video.evaluate((v: HTMLVideoElement) => {
+      v.currentTime = v.duration - 0.5;
+    });
+    await expect(scene).toHaveAttribute('data-open', 'false', { timeout: 5000 });
+    await expect(page.getByRole('button', { name: 'Lancer un hot lap' })).toBeVisible();
   });
 
   test('le survol ouvre la vue embarquée du bon projet', async ({ page }) => {
