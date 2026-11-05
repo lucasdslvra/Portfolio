@@ -21,8 +21,12 @@
   padding-bottom: 32px;
 }
 
-.visual {
+.visualColumn {
   grid-area: visual;
+  min-width: 0;
+}
+
+.visual {
   position: relative;
   aspect-ratio: 680 / 480;
   overflow: hidden;
@@ -44,8 +48,37 @@
 @media (max-width: 959px) {
   .visual {
     overflow: visible;
-    margin: 12px 0 20px;
+    margin-top: 12px;
   }
+  .visualColumn {
+    margin-bottom: 20px;
+  }
+}
+
+/* Hot lap : sous la carte, la mention du tour et le bouton. */
+.lapBar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 16px;
+  padding-top: 14px;
+}
+
+.lapCaption {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.lapTime {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.lapBar .lapButton {
+  height: 40px;
+  padding: 0 16px;
+  font-size: 15px;
 }
 
 .card {
@@ -71,7 +104,7 @@
   .list {
     padding-bottom: 40px;
   }
-  .visual {
+  .visualColumn {
     align-self: start;
   }
   .card {

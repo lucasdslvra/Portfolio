@@ -211,6 +211,11 @@
   align-items: center;
 }
 
+.lowerFlag svg {
+  width: 4.4cqw;
+  height: auto;
+}
+
 .lowerName {
   background: #fff;
   color: var(--ink);

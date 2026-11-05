@@ -5,7 +5,7 @@
 //         npm run telemetry:split -- <fichier-du-tour.json>
 import { existsSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { basename, join } from 'node:path';
-import { CORNERS } from '../lib/circuit.ts';
+import { CORNERS, conventionalClip } from '../lib/circuit.ts';
 import { validateTelemetry, type Telemetry, type TelemetrySample } from '../lib/telemetry.ts';
 
 type LapSample = {
@@ -115,7 +115,10 @@ console.log(`Régime : ${hasRpm ? `oui (max ${lap.meta.maxRpm ?? '?'} tr/min)` :
 
 let failures = 0;
 for (const clip of lap.clips) {
-  const name = basename(clip.file, '.mp4');
+  // Nom de fichier selon la convention du site (numéro officiel du virage), pas celui de l'export :
+  // il suit les changements de numérotation de lib/circuit.ts.
+  const corner = CORNERS.find((c) => c.id === clip.id);
+  const name = basename(corner ? conventionalClip(corner) : clip.file, '.mp4');
   const telemetry = convert(clip, lap.meta);
   const result = validateTelemetry(telemetry);
   if (!result.ok) {
@@ -128,7 +131,6 @@ for (const clip of lap.clips) {
   const source = { carId, trackId, lapNum, lapTime: lapTimeFormatted, clip: clip.id };
   writeFileSync(out, `${JSON.stringify({ source, ...telemetry })}\n`);
   // Le secteur dessiné sur les cartes vient de lib/circuit.ts : il doit correspondre au clip.
-  const corner = CORNERS.find((c) => c.id === clip.id);
   if (corner && clip.distanceStart !== undefined && clip.distanceEnd !== undefined) {
     const [from, to] = corner.distance;
     if (Math.abs(from - clip.distanceStart) > 2 || Math.abs(to - clip.distanceEnd) > 2) {

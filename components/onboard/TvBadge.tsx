@@ -1,9 +1,9 @@
 import { turnLabel } from '@/lib/circuit';
 import styles from './Onboard.module.css';
 
-type Props = { turn: string; cornerName: string; clipHint?: string };
+type Props = { turn: string; cornerName: string | null; clipHint?: string };
 
-/** A · Badge « ● ONBOARD | VIRAGE n · NOM » ; B · mention du clip (développement uniquement). */
+/** A · Badge « ● ONBOARD | VIRAGE n · NOM » (sans nom pour les virages qui n'en ont pas) ; B · mention du clip (développement uniquement). */
 export function TvBadge({ turn, cornerName, clipHint }: Props) {
   return (
     <div className={styles.badgeBox}>
@@ -13,7 +13,8 @@ export function TvBadge({ turn, cornerName, clipHint }: Props) {
           Onboard
         </span>
         <span className={styles.badgeCorner}>
-          {turnLabel(turn)} · {cornerName}
+          {turnLabel(turn)}
+          {cornerName && ` · ${cornerName}`}
         </span>
       </div>
       {clipHint && <span className={styles.clipHint}>Aperçu · clip à venir : {clipHint}</span>}

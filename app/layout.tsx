@@ -5,6 +5,7 @@ import { Suspense, type ReactNode } from 'react';
 import { Analytics } from '@/components/Analytics';
 import AnimatedFavicon from '@/components/AnimatedFavicon';
 import { PageTransitions } from '@/components/PageTransitions';
+import { START_LIGHTS_SCRIPT, StartLights } from '@/components/StartLights';
 import { SITE_NAME, SITE_URL } from '@/lib/site';
 import './globals.css';
 
@@ -80,11 +81,14 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="fr" className={`${hanken.variable} ${barlow.variable}`}>
+    // suppressHydrationWarning : le script des feux de départ ajoute data-intro et --intro-hold avant l'hydratation.
+    <html lang="fr" className={`${hanken.variable} ${barlow.variable}`} suppressHydrationWarning>
       <head>
+        <script dangerouslySetInnerHTML={{ __html: START_LIGHTS_SCRIPT }} />
         <Analytics />
       </head>
       <body>
+        <StartLights />
         {children}
         <Suspense fallback={null}>
           <PageTransitions />

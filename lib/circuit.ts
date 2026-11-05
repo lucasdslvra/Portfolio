@@ -66,13 +66,14 @@ export function sectorPath(fromM: number, toM: number): string {
   return pts.map(([x, y], i) => `${i === 0 ? 'M' : 'L'}${x} ${y}`).join(' ');
 }
 
-// Les 10 virages nommés, dans l'ordre du tour depuis la ligne de départ.
+// Les 10 virages nommés (secteurs des clips), dans l'ordre du tour depuis la ligne de départ.
+// Le circuit compte 17 virages officiels : le détail virage par virage est dans lib/lap.ts.
 // turn = numérotation officielle du circuit (guide WorldSBK), affichée sur le site.
 // distance = secteur couvert par le clip embarqué (mètres depuis la ligne, export de télémétrie du tour) ;
 //   le segment dessiné sur les cartes en est déduit, pour coller à la vidéo.
 // zoomOrigin = centre du zoom ×3,4 ; marker = position de la pastille (calculée pour ne pas toucher la piste).
 const CORNER_DATA = [
-  { id: 'grande-courbe', name: 'Grande Courbe', turn: '1', direction: 'gauche',
+  { id: 'grande-courbe', name: 'Grande Courbe', turn: '1-2', direction: 'gauche',
     distance: [2.71, 569.17], zoomOrigin: [423, 145], marker: [407, 117] },
   { id: 'estoril', name: 'Estoril', turn: '3', direction: 'droite',
     distance: [570.1, 886.62], zoomOrigin: [593, 54], marker: [622, 36] },
@@ -80,7 +81,7 @@ const CORNER_DATA = [
     distance: [887.42, 1424.71], zoomOrigin: [577, 208], marker: [602, 225] },
   { id: 'adelaide', name: 'Adélaïde', turn: '5', direction: 'droite',
     distance: [1425.5, 1930.06], zoomOrigin: [141, 435], marker: [108, 456] },
-  { id: 'nurburgring', name: 'Nürburgring', turn: '6', direction: 'chicane',
+  { id: 'nurburgring', name: 'Nürburgring', turn: '7-8', direction: 'chicane',
     distance: [1931.42, 2427.78], zoomOrigin: [430, 246], marker: [427, 276] },
   { id: '180', name: '180°', turn: '9', direction: 'gauche',
     distance: [2428.73, 2722.17], zoomOrigin: [541, 123], marker: [544, 93] },
