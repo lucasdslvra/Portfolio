@@ -13,6 +13,22 @@ export const OG_IMAGE = {
   alt: 'Lucas Da Silveira, étudiant en informatique passionné de développement. Portfolio sur ldasilveira.fr.',
 };
 
+// Version carrée (public/og-square.png) : Google s'en sert pour la vignette à droite
+// du résultat de recherche, au lieu de recadrer l'image 1200 × 630.
+export const SQUARE_IMAGE = {
+  url: '/og-square.png',
+  width: 1200,
+  height: 1200,
+};
+
+const imageObject = (img: { url: string; width: number; height: number }) => ({
+  '@type': 'ImageObject',
+  url: `${SITE_URL}${img.url}`,
+  contentUrl: `${SITE_URL}${img.url}`,
+  width: img.width,
+  height: img.height,
+});
+
 export const personJsonLd = {
   '@context': 'https://schema.org',
   '@graph': [
@@ -22,7 +38,7 @@ export const personJsonLd = {
       name: SITE_NAME,
       alternateName: ['Lucas da Silveira', 'lucasdslvra', 'ldasilveira'],
       url: SITE_URL,
-      image: `${SITE_URL}${OG_IMAGE.url}`,
+      image: [imageObject(SQUARE_IMAGE), imageObject(OG_IMAGE)],
       jobTitle: 'Étudiant en informatique',
       description:
         'Étudiant en informatique et développeur web. Projets en Next.js, React, TypeScript et Symfony.',
@@ -48,6 +64,7 @@ export const personJsonLd = {
       isPartOf: { '@id': `${SITE_URL}/#website` },
       mainEntity: { '@id': `${SITE_URL}/#person` },
       about: { '@id': `${SITE_URL}/#person` },
+      primaryImageOfPage: imageObject(SQUARE_IMAGE),
       inLanguage: 'fr-FR',
     },
   ],
