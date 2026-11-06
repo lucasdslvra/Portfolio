@@ -32,7 +32,7 @@ export function generateMetadata({ searchParams }: Props): Metadata {
     title,
     description: LEAD,
     alternates: { canonical: path },
-    openGraph: { title: `${title} — Lucas Da Silveira`, description: LEAD, url: path, images: [OG_IMAGE] },
+    openGraph: { title: `${title} - Lucas Da Silveira`, description: LEAD, url: path, images: [OG_IMAGE] },
   };
 }
 

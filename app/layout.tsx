@@ -31,8 +31,8 @@ const description =
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: 'Lucas Da Silveira — Portfolio | Étudiant en informatique',
-    template: '%s — Lucas Da Silveira',
+    default: 'Lucas Da Silveira - Portfolio | Étudiant en informatique',
+    template: '%s - Lucas Da Silveira',
   },
   description,
   applicationName: SITE_NAME,
@@ -54,7 +54,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: '/' },
   openGraph: {
-    title: 'Lucas Da Silveira — Portfolio',
+    title: 'Lucas Da Silveira - Portfolio',
     description,
     url: SITE_URL,
     siteName: SITE_NAME,
@@ -63,7 +63,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Lucas Da Silveira — Portfolio',
+    title: 'Lucas Da Silveira - Portfolio',
     description,
   },
   robots: {

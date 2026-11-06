@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   title: 'Me contacter',
   description: LEAD,
   alternates: { canonical: '/contact' },
-  openGraph: { title: 'Me contacter — Lucas Da Silveira', description: LEAD, url: '/contact', images: [OG_IMAGE] },
+  openGraph: { title: 'Me contacter - Lucas Da Silveira', description: LEAD, url: '/contact', images: [OG_IMAGE] },
 };
 
 export default function ContactPage() {
