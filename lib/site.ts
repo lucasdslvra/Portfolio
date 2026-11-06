@@ -60,7 +60,7 @@ export const personJsonLd = {
       '@type': 'ProfilePage',
       '@id': `${SITE_URL}/#profilepage`,
       url: SITE_URL,
-      name: 'Lucas Da Silveira — Portfolio',
+      name: 'Lucas Da Silveira - Portfolio',
       isPartOf: { '@id': `${SITE_URL}/#website` },
       mainEntity: { '@id': `${SITE_URL}/#person` },
       about: { '@id': `${SITE_URL}/#person` },
